@@ -4,6 +4,7 @@
 | --- | --- |
 | Coding agent implementation and review | Completed; see development log and source |
 | Local DynamoDB transaction verification | Executed; see local verification record |
+| Combined local scenario and restart recovery | Executed; [22 tests and 46 browser-observed checks](scenario-verification.md) |
 | CDK synthesis and real Lambda bundling | Executed locally |
 | Authenticated coding-agent-to-AWS connection | **Pending** — local-only milestone selected by user |
 | Deployment and cloud end-to-end smoke test | **Pending** |

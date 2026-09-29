@@ -27,11 +27,13 @@ Keep DynamoDB Local running. In a second terminal:
 npm run dev
 ```
 
-Open **http://127.0.0.1:3000**. Follow the four buttons from left to right. Data persists in `.local/dynamodb/`. Refreshing or retrying the same event IDs preserves the existing result. No reset or delete endpoint is exposed.
+Open **http://127.0.0.1:3000**. The local page offers an **eight-step correctness scenario**: ledger 750 / projection 350, close, five retries, older post-close events, an interrupted adjustment, recovery to **$10.50**, a final **$11.00** snapshot, and a rejected conflicting payload. Follow the next-step button and inspect the returned evidence.
 
-The local screen is marked **LOCAL DEMO**. It runs the real DynamoDB transaction implementation against AWS's downloadable DynamoDB Local. A local polling worker simulates asynchronous delivery; it is not an AWS Lambda event-source mapping. Neither local command reads AWS credentials or creates AWS resources.
+Data persists in `.local/dynamodb/`; scenario progress persists in a target-specific `.local/scenario-<hash>.json`. Refreshing or restarting resumes the active run. **New run** creates an isolated namespace and preserves prior runs and the original $7.50 / $8.50 demonstration. See [the complete scenario](docs/scenario.md).
 
-For a fresh local demonstration, use new local table names when starting the app:
+The combined local screen is marked **LOCAL SCENARIO**. It runs the real DynamoDB transaction implementation against AWS's downloadable DynamoDB Local. The basic demo uses a local polling worker. The eight-step scenario explicitly controls deliveries and injects an interruption after a real durable fence. Neither is an AWS Lambda event-source mapping or an actual Lambda process crash. Neither local command reads AWS credentials or creates AWS resources.
+
+Use **New run** to repeat the local scenario without deleting data. To use a separate pair of local tables instead:
 
 ```sh
 LEDGER_TABLE=MeterProofDemo2Ledger STATE_TABLE=MeterProofDemo2State npm run dev
@@ -45,7 +47,7 @@ npm run check
 npm run test:integration
 ```
 
-The checks include TypeScript validation, domain/handler tests, CDK assertions, real Lambda asset bundling, and CloudFormation synthesis. Integration tests use isolated local tables and remove only those test tables on completion. They cover the full $7.50 → +$1.00 → $8.50 scenario, duplicate delivery, payload mismatch, lag at close, forced query pagination, crash recovery, and transaction races.
+The checks include TypeScript validation, domain/handler tests, CDK assertions, real Lambda asset bundling, and CloudFormation synthesis. Integration tests use isolated local tables and remove only those test tables on completion. They cover the original $7.50 → +$1.00 → $8.50 scenario, duplicate delivery, payload mismatch, lag at close, forced query pagination, crash recovery, and transaction races. Additional scenario tests verify the complete eight-step sequence, checkpoint retry/restart behavior and namespace isolation.
 
 ## Project structure
 
@@ -71,6 +73,8 @@ evidence/            Verification record and honest AWS evidence status
 | POST | `/api/adjust` | `{ "expected_version": 1 }`; creates or recovers v2 |
 
 Event IDs are unique within the fixed customer/period. Reusing an ID with a different canonical payload returns 409. Retry 503 responses with the same event ID or expected version. `expected_version` is also the adjustment operation's idempotency key; resubmitting it returns that operation's result, even if a later version now exists.
+
+Local-only scenario routes are `GET /api/demo`, `POST /api/demo/start`, and `POST /api/demo/step` with `{ "run_id": "...", "expected_step": 0 }`. They are absent from the deployed API Gateway and Lambda handler.
 
 The sample usage dates are synthetic. `accepted_at` and `processed_at` show actual server timestamps during the demonstration; they are never forged as October 1. Period close is an explicit action, so the scenario can run on any date.
 

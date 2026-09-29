@@ -32,6 +32,10 @@ test('synthesized Lambda bundles serve the UI and complete the real local transa
     assert.match(html.body, /MeterProof/);
     const health = await call('GET', '/api/health');
     assert.equal(JSON.parse(health.body).mode, 'local');
+    assert.notEqual(JSON.parse(health.body).demo, true, 'deployed handler never enables local scenario controls');
+    assert.equal((await call('GET', '/api/demo')).statusCode, 404);
+    assert.equal((await call('POST', '/api/demo/start', {})).statusCode, 404);
+    assert.equal((await call('POST', '/api/demo/step', { run_id: 'local-only', expected_step: 0 })).statusCode, 404);
     const originalEvent = { event_id: 'bundled', occurred_at: '2026-09-20T12:00:00Z', units: 750 };
     const accepted = await call('POST', '/api/events', originalEvent);
     assert.equal(accepted.statusCode, 201);

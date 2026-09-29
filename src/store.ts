@@ -8,11 +8,11 @@ import {
   type Snapshot, type StateContents, type Store, type UsageEvent,
 } from './domain.js';
 
-const periodKey = { pk: PARTITION, sk: 'PERIOD' };
-const snapshotKey = (version: number) => ({ pk: PARTITION, sk: `SNAPSHOT#${String(version).padStart(12, '0')}` });
-export const eventKey = (event: Pick<UsageEvent, 'epoch' | 'event_id'>) => ({ pk: PARTITION, sk: `EVENT#${String(event.epoch).padStart(16, '0')}#${event.event_id}` });
-const idempotencyKey = (eventId: string) => ({ pk: PARTITION, sk: `IDEMPOTENCY#${eventId}` });
-const receiptKey = (eventId: string) => ({ pk: PARTITION, sk: `PROCESSED#${eventId}` });
+const periodKey = (partition = PARTITION) => ({ pk: partition, sk: 'PERIOD' });
+const snapshotKey = (version: number, partition = PARTITION) => ({ pk: partition, sk: `SNAPSHOT#${String(version).padStart(12, '0')}` });
+export const eventKey = (event: Pick<UsageEvent, 'epoch' | 'event_id'>, partition = PARTITION) => ({ pk: partition, sk: `EVENT#${String(event.epoch).padStart(16, '0')}#${event.event_id}` });
+const idempotencyKey = (eventId: string, partition = PARTITION) => ({ pk: partition, sk: `IDEMPOTENCY#${eventId}` });
+const receiptKey = (eventId: string, partition = PARTITION) => ({ pk: partition, sk: `PROCESSED#${eventId}` });
 
 function conditionalFailure(error: unknown): boolean {
   const candidate = error as { name?: string; CancellationReasons?: { Code?: string }[] };
@@ -35,13 +35,15 @@ export class DynamoStore implements Store {
     public readonly client: DynamoDBDocumentClient,
     public readonly ledgerTable: string,
     public readonly stateTable: string,
+    // Local scenario runs can isolate data; deployed callers keep the original namespace.
+    public readonly partition: string = PARTITION,
   ) {}
 
   async ensurePeriod(): Promise<void> {
     try {
       await this.client.send(new PutCommand({
         TableName: this.stateTable,
-        Item: { ...periodKey, entity: 'PERIOD', phase: 'OPEN', epoch: 0, latest_version: 0 },
+        Item: { ...periodKey(this.partition), entity: 'PERIOD', phase: 'OPEN', epoch: 0, latest_version: 0 },
         ConditionExpression: 'attribute_not_exists(pk)',
       }));
     } catch (error) {
@@ -50,14 +52,14 @@ export class DynamoStore implements Store {
   }
 
   async getPeriod(): Promise<PeriodState> {
-    const result = await this.client.send(new GetCommand({ TableName: this.stateTable, Key: periodKey, ConsistentRead: true }));
+    const result = await this.client.send(new GetCommand({ TableName: this.stateTable, Key: periodKey(this.partition), ConsistentRead: true }));
     if (!result.Item) throw new ApiError(503, 'Period initialization has not completed.', 'MISSING_PERIOD');
     const { phase, epoch, latest_version, building } = result.Item;
     return { phase, epoch, latest_version, ...(building ? { building } : {}) } as PeriodState;
   }
 
   async findEvent(eventId: string): Promise<ExistingEvent | undefined> {
-    const key = await this.client.send(new GetCommand({ TableName: this.ledgerTable, Key: idempotencyKey(eventId), ConsistentRead: true }));
+    const key = await this.client.send(new GetCommand({ TableName: this.ledgerTable, Key: idempotencyKey(eventId, this.partition), ConsistentRead: true }));
     if (!key.Item) return undefined;
     const result = await this.client.send(new GetCommand({ TableName: this.ledgerTable, Key: key.Item.event_key, ConsistentRead: true }));
     if (!result.Item) throw new ApiError(503, 'An accepted event could not be loaded.', 'MISSING_EVENT');
@@ -68,18 +70,18 @@ export class DynamoStore implements Store {
     try {
       await this.client.send(new TransactWriteCommand({ TransactItems: [
         { ConditionCheck: {
-          TableName: this.stateTable, Key: periodKey,
+          TableName: this.stateTable, Key: periodKey(this.partition),
           ConditionExpression: '#phase = :phase AND #epoch = :epoch',
           ExpressionAttributeNames: { '#phase': 'phase', '#epoch': 'epoch' },
           ExpressionAttributeValues: { ':phase': expected.phase, ':epoch': expected.epoch },
         } },
         { Put: {
-          TableName: this.ledgerTable, Item: { ...eventKey(event), entity: 'EVENT', event },
+          TableName: this.ledgerTable, Item: { ...eventKey(event, this.partition), entity: 'EVENT', event },
           ConditionExpression: 'attribute_not_exists(pk)',
         } },
         { Put: {
           TableName: this.ledgerTable,
-          Item: { ...idempotencyKey(event.event_id), entity: 'IDEMPOTENCY', event_key: eventKey(event), fingerprint },
+          Item: { ...idempotencyKey(event.event_id, this.partition), entity: 'IDEMPOTENCY', event_key: eventKey(event, this.partition), fingerprint },
           ConditionExpression: 'attribute_not_exists(pk)',
         } },
       ] }));
@@ -93,7 +95,7 @@ export class DynamoStore implements Store {
   async reserveBuild(expected: PeriodState, build: Build): Promise<boolean> {
     try {
       await this.client.send(new UpdateCommand({
-        TableName: this.stateTable, Key: periodKey,
+        TableName: this.stateTable, Key: periodKey(this.partition),
         UpdateExpression: 'SET #phase = :closed, #epoch = :next, #building = :building',
         ConditionExpression: '#phase = :phase AND #epoch = :epoch AND #latest = :latest AND attribute_not_exists(#building)',
         ExpressionAttributeNames: { '#phase': 'phase', '#epoch': 'epoch', '#latest': 'latest_version', '#building': 'building' },
@@ -117,7 +119,7 @@ export class DynamoStore implements Store {
         TableName: this.ledgerTable, ConsistentRead: true,
         KeyConditionExpression: 'pk = :pk AND sk BETWEEN :start AND :end',
         ExpressionAttributeValues: {
-          ':pk': PARTITION, ':start': 'EVENT#',
+          ':pk': this.partition, ':start': 'EVENT#',
           ':end': throughEpoch === undefined ? 'EVENT#~' : `EVENT#${String(throughEpoch).padStart(16, '0')}#~`,
         },
         ExclusiveStartKey: cursor,
@@ -129,7 +131,7 @@ export class DynamoStore implements Store {
   }
 
   async getSnapshot(version: number): Promise<Snapshot | undefined> {
-    const result = await this.client.send(new GetCommand({ TableName: this.stateTable, Key: snapshotKey(version), ConsistentRead: true }));
+    const result = await this.client.send(new GetCommand({ TableName: this.stateTable, Key: snapshotKey(version, this.partition), ConsistentRead: true }));
     return result.Item?.snapshot as Snapshot | undefined;
   }
 
@@ -137,11 +139,11 @@ export class DynamoStore implements Store {
     try {
       await this.client.send(new TransactWriteCommand({ TransactItems: [
         { Put: {
-          TableName: this.stateTable, Item: { ...snapshotKey(snapshot.version), entity: 'SNAPSHOT', snapshot },
+          TableName: this.stateTable, Item: { ...snapshotKey(snapshot.version, this.partition), entity: 'SNAPSHOT', snapshot },
           ConditionExpression: 'attribute_not_exists(pk)',
         } },
         { Update: {
-          TableName: this.stateTable, Key: periodKey,
+          TableName: this.stateTable, Key: periodKey(this.partition),
           UpdateExpression: 'SET #latest = :version REMOVE #building',
           ConditionExpression: '#building.#operation = :operation AND #latest = :base',
           ExpressionAttributeNames: { '#latest': 'latest_version', '#building': 'building', '#operation': 'operation_id' },
@@ -164,7 +166,7 @@ export class DynamoStore implements Store {
     do {
       const result = await this.client.send(new QueryCommand({
         TableName: this.stateTable, ConsistentRead: true,
-        KeyConditionExpression: 'pk = :pk', ExpressionAttributeValues: { ':pk': PARTITION },
+        KeyConditionExpression: 'pk = :pk', ExpressionAttributeValues: { ':pk': this.partition },
         ExclusiveStartKey: cursor,
       }));
       for (const item of result.Items ?? []) {
@@ -189,12 +191,12 @@ export class DynamoStore implements Store {
     const writes: NonNullable<ConstructorParameters<typeof TransactWriteCommand>[0]['TransactItems']> = [
       { Put: {
         TableName: this.stateTable,
-        Item: { ...receiptKey(event.event_id), entity: 'PROCESSED', event_id: event.event_id, classification: event.classification, processed_at: processedAt },
+        Item: { ...receiptKey(event.event_id, this.partition), entity: 'PROCESSED', event_id: event.event_id, classification: event.classification, processed_at: processedAt },
         ConditionExpression: 'attribute_not_exists(pk)',
       } },
     ];
     if (event.classification === 'ON_TIME') writes.push({ Update: {
-      TableName: this.stateTable, Key: { pk: PARTITION, sk: 'AGGREGATE' },
+      TableName: this.stateTable, Key: { pk: this.partition, sk: 'AGGREGATE' },
       UpdateExpression: 'SET #entity = :entity ADD #units :units, #amount :amount, #count :one',
       ExpressionAttributeNames: { '#entity': 'entity', '#units': 'units', '#amount': 'amount_cents', '#count': 'processed_events' },
       ExpressionAttributeValues: { ':entity': 'AGGREGATE', ':units': event.units, ':amount': event.amount_cents, ':one': 1 },
