@@ -1,0 +1,36 @@
+{
+  "name": "meterproof",
+  "version": "0.1.0",
+  "private": true,
+  "description": "An upstream usage-metering trust layer: preserve the snapshot, explain the adjustment.",
+  "scripts": {
+    "typecheck": "tsc --noEmit",
+    "test": "node --import tsx --test test/*.test.ts",
+    "test:integration": "node --import tsx --test test/integration/*.test.ts",
+    "dev": "node --import tsx scripts/local.ts",
+    "cdk": "cdk",
+    "synth": "cdk synth",
+    "check": "npm run typecheck && npm test && npm run synth",
+    "evidence:aws": "node --import tsx scripts/aws-evidence.ts",
+    "setup:local": "node --import tsx scripts/setup-local.ts",
+    "db": "java -Djava.library.path=.local/dynamodb/DynamoDBLocal_lib -jar .local/dynamodb/DynamoDBLocal.jar -sharedDb -dbPath .local/dynamodb -port 8000 -disableTelemetry"
+  },
+  "engines": {
+    "node": ">=22"
+  },
+  "dependencies": {
+    "@aws-sdk/client-dynamodb": "^3.0.0",
+    "@aws-sdk/lib-dynamodb": "^3.0.0",
+    "@aws-sdk/util-dynamodb": "^3.0.0",
+    "aws-cdk-lib": "^2.0.0",
+    "constructs": "^10.0.0"
+  },
+  "devDependencies": {
+    "@types/aws-lambda": "^8.10.0",
+    "@types/node": "^22.0.0",
+    "aws-cdk": "^2.0.0",
+    "esbuild": "^0.25.0",
+    "tsx": "^4.0.0",
+    "typescript": "^5.9.0"
+  }
+}

@@ -1,0 +1,12 @@
+node_modules/
+cdk.out/
+.local/
+work/
+*.log
+.DS_Store
+.env
+.env.*
+!example.env
+cdk.context.json
+outputs.json
+evidence/aws-connection*.json

@@ -1,0 +1,181 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#172f2a">
+  <title>MeterProof — Usage with evidence</title>
+  <style>
+    :root{color-scheme:light;--paper:#f7f8f4;--white:#fff;--ink:#172f2a;--muted:#65736d;--line:#dfe5dc;--teal:#1b725a;--mint:#e5f1e8;--amber:#94641d;--sand:#fbf1de;--red:#a03932;--radius:16px}
+    *{box-sizing:border-box}body{margin:0;background:var(--paper);color:var(--ink);font:14px/1.5 -apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif}button{font:inherit;cursor:pointer}button:disabled{cursor:default}button:focus-visible,a:focus-visible{outline:3px solid #4ba687;outline-offset:4px}button{touch-action:manipulation}svg{display:block}button svg{pointer-events:none}.mono{font-family:ui-monospace,SFMono-Regular,Menlo,monospace}.wrap{max-width:1280px;margin:0 auto;padding:0 40px}.topbar{border-bottom:1px solid var(--line);background:#fffefb}.topbar .wrap{height:82px;display:flex;align-items:center;justify-content:space-between}.brand{display:flex;align-items:center;gap:11px;font-size:22px;font-weight:720;letter-spacing:-.8px}.brand-mark{display:grid;place-items:center;width:33px;height:37px;color:var(--teal)}.brand-caption{font-size:12px;font-weight:400;color:var(--muted);letter-spacing:.1px;border-left:1px solid var(--line);margin-left:14px;padding-left:24px}.connection{display:flex;align-items:center;gap:8px;font-size:12px;color:var(--muted)}.dot{width:6px;height:6px;border-radius:50%;background:#9da99f}.dot.ok{background:var(--teal)}.dot.error{background:var(--red)}main.wrap{padding-top:37px;padding-bottom:30px}.heading{display:flex;align-items:flex-end;justify-content:space-between;gap:24px;margin-bottom:24px}.eyebrow{font-size:10px;letter-spacing:1.65px;text-transform:uppercase;font-weight:750;color:var(--teal);margin-bottom:8px}h1{font-size:34px;line-height:1.2;letter-spacing:-1.1px;margin:0 0 9px;font-weight:650}.subtitle{margin:0;color:var(--muted);font-size:13px}.subtitle span{display:inline-block;margin:0 9px;color:#a6afa6}.heading-tools{display:flex;align-items:center;gap:12px;padding-bottom:5px}.badge{display:inline-flex;align-items:center;gap:6px;border-radius:6px;background:var(--mint);color:var(--teal);font-size:10px;line-height:1;letter-spacing:.7px;font-weight:750;padding:8px 9px;text-transform:uppercase}.badge.open{background:#eef0eb;color:#58665d}.badge.amber{color:var(--amber);background:var(--sand)}.refresh{width:32px;height:32px;border:1px solid var(--line);border-radius:7px;background:transparent;color:var(--muted);display:grid;place-items:center}.refresh:disabled{opacity:.4}.summary{display:grid;grid-template-columns:1fr 1fr 1fr;gap:16px;margin-bottom:20px}.metric{border:1px solid var(--line);border-radius:var(--radius);padding:21px 23px 19px;background:var(--white);min-height:164px;position:relative;overflow:hidden}.metric.latest{background:var(--ink);color:white;border-color:var(--ink)}.metric-title{display:flex;align-items:center;justify-content:space-between;font-size:12px;gap:10px;color:var(--muted)}.metric.latest .metric-title{color:#bfd2c9}.metric-icon{opacity:.8}.metric-value{font-size:39px;line-height:1.2;font-weight:550;letter-spacing:-1.7px;margin-top:15px;white-space:nowrap}.metric-value small{font-size:23px;letter-spacing:-1px;font-weight:450}.metric.pending .metric-value{color:var(--amber)}.metric-value.empty{color:#9aa89f}.metric.latest .metric-value.empty{color:#829c91}.metric-foot{margin-top:8px;font-size:11px;color:var(--muted);display:flex;gap:6px;align-items:center}.metric.latest .metric-foot{color:#bfd2c9}.metric-foot .version{font-weight:700;color:var(--teal);background:var(--mint);border-radius:4px;padding:0 5px;font-size:10px}.metric.latest .metric-foot .version{color:#d5f3dd;background:#315446}.actions{background:#eeeee7;border:1px solid #e1e4d9;padding:13px 16px;border-radius:11px;display:flex;align-items:center;justify-content:space-between;gap:18px;margin-bottom:25px}.action-label{font-size:11px;color:var(--muted);display:flex;align-items:center;gap:9px;white-space:nowrap}.action-label b{font-weight:650;color:var(--ink)}.action-buttons{display:flex;gap:7px;align-items:center}.action{border:1px solid #d0d9cc;background:#fffefb;color:var(--ink);padding:8px 11px;line-height:1.1;min-height:34px;font-size:11px;font-weight:600;border-radius:7px;display:flex;align-items:center;gap:7px;white-space:nowrap;transition:background .15s}.action:not(:disabled):hover{background:#e2ece0}.action.primary{background:var(--teal);border-color:var(--teal);color:white}.action.primary:not(:disabled):hover{background:#125a47}.action:disabled{opacity:.42}.step{border:1px solid currentColor;border-radius:50%;width:15px;height:15px;display:grid;place-items:center;font-size:9px;opacity:.72}.status{display:none;border-radius:9px;border:1px solid var(--line);padding:11px 14px;margin:-9px 0 23px;font-size:12px;color:var(--teal);background:#edf5ec}.status.visible{display:block}.status.error{background:#fff1ef;border-color:#efd7d1;color:var(--red)}.workarea{display:grid;grid-template-columns:minmax(0,1fr) 320px;gap:20px;align-items:start}.panel{background:var(--white);border:1px solid var(--line);border-radius:var(--radius);overflow:hidden}.panel-heading{display:flex;align-items:center;justify-content:space-between;gap:16px;padding:21px 23px 18px}.panel-title{font-size:16px;line-height:1.3;font-weight:650;letter-spacing:-.25px;margin:0}.panel-subtitle{font-size:11px;color:var(--muted);margin-top:5px}.subtle-tag{display:flex;align-items:center;gap:5px;font-size:10px;color:var(--teal);white-space:nowrap}.table-head{display:grid;grid-template-columns:1.2fr 1.1fr 82px 72px 14px;gap:10px;padding:10px 23px;background:#fafbf8;border-top:1px solid #edf0e9;border-bottom:1px solid #edf0e9;font-size:9px;letter-spacing:.65px;text-transform:uppercase;color:#7d897e}.right{text-align:right}.ledger-item{border-bottom:1px solid #edf0e9}.ledger-item:last-child{border-bottom:0}.ledger-row{display:grid;grid-template-columns:1.2fr 1.1fr 82px 72px 14px;gap:10px;align-items:center;width:100%;border:0;text-align:left;background:transparent;padding:16px 23px;color:var(--ink)}.ledger-row:hover{background:#fafbf8}.event-id{font:11px/1.4 ui-monospace,SFMono-Regular,Menlo,monospace;font-weight:600}.event-caption{display:flex;gap:5px;align-items:center;font-size:10px;color:var(--muted);margin-top:4px}.event-caption .dot{width:4px;height:4px}.date-short{font-size:11px;color:#53665a}.date-short small{font-size:10px;color:#879487}.class-tag{display:inline-block;font-size:9px;line-height:1;letter-spacing:.2px;padding:6px 7px;border-radius:5px;background:var(--mint);color:var(--teal);white-space:nowrap}.class-tag.post-close{background:var(--sand);color:var(--amber)}.units{font-size:12px;font-variant-numeric:tabular-nums;font-weight:600}.units small{font-weight:400;font-size:10px;color:var(--muted)}.chevron{color:#899589;transition:transform .15s}.ledger-row[aria-expanded=true] .chevron{transform:rotate(90deg)}.event-details{padding:0 23px 17px;background:#fafbf8}.event-details[hidden]{display:none}.event-details-inner{display:grid;grid-template-columns:1fr 1fr 1fr;gap:12px;padding-top:13px;border-top:1px solid var(--line)}.time-label{font-size:9px;font-weight:700;color:var(--muted);letter-spacing:.5px;text-transform:uppercase}.time-value{font-size:10px;line-height:1.7;margin-top:5px;color:var(--ink);overflow-wrap:anywhere}.time-value em{font-style:normal;color:var(--amber)}.time-note{font-size:9px;line-height:1.4;color:var(--muted);margin-top:3px}.empty-ledger{padding:36px 23px 39px;text-align:center}.empty-symbol{margin:0 auto 14px;border:1px solid var(--line);border-radius:10px;color:var(--teal);width:40px;height:44px;display:grid;place-items:center}.empty-title{font-size:13px;font-weight:600;margin-bottom:5px}.empty-description{font-size:11px;color:var(--muted);max-width:310px;margin:0 auto}.ledger-footer{padding:15px 23px;border-top:1px solid var(--line);display:flex;gap:9px;align-items:flex-start;font-size:10px;line-height:1.6;color:var(--muted);background:#fdfefa}.ledger-footer svg{flex-shrink:0;margin-top:2px;color:var(--teal)}.derivation{padding:21px 22px 20px}.derivation-header{display:flex;justify-content:space-between;align-items:center;gap:10px}.snapshot-pills{display:flex;gap:4px;flex-wrap:wrap;justify-content:flex-end}.snapshot-pill{font-size:10px;padding:4px 7px;border-radius:5px;border:1px solid transparent;background:#f1f4ed;color:var(--muted)}.snapshot-pill.active{color:var(--teal);background:var(--mint);border-color:#c8dbca;font-weight:700}.derivation-caption{font-size:11px;color:var(--muted);margin:7px 0 20px}.derivation-list{display:flex;flex-direction:column;gap:10px}.calculation-row{display:flex;justify-content:space-between;gap:12px;font-size:11px}.calculation-row .mono{font-size:10px;color:var(--muted)}.calculation-row .added{color:var(--amber)}.calculation-total{display:flex;justify-content:space-between;gap:12px;border-top:1px solid var(--line);padding-top:13px;margin-top:14px;font-size:12px;font-weight:650}.rate{font-size:10px;color:var(--muted);text-align:right;margin-top:5px}.calculation-charge{background:#edf3e9;border-radius:8px;padding:12px;margin-top:16px;display:flex;justify-content:space-between;align-items:center;font-size:10px;color:var(--teal)}.calculation-charge strong{font-size:19px;font-weight:650;letter-spacing:-.5px}.snapshot-date{font-size:9px;line-height:1.65;color:var(--muted);margin-top:13px}.preservation{border-top:1px solid var(--line);padding:17px 22px;display:flex;align-items:flex-start;gap:10px;background:#fafbf7;font-size:11px;line-height:1.6;color:var(--muted)}.preservation svg{flex-shrink:0;color:var(--teal);margin-top:3px}.preservation strong{font-weight:600;color:var(--ink)}.empty-derivation{padding:24px 0 32px;font-size:12px;color:var(--muted);line-height:1.7}.history{margin-top:19px;padding:0 3px}.history-heading{display:flex;justify-content:space-between;font-size:10px;font-weight:650;letter-spacing:.5px;text-transform:uppercase;color:var(--muted);margin-bottom:10px}.history-item{display:flex;gap:10px;align-items:flex-start;padding:9px 0}.history-dot{width:6px;height:6px;border:1px solid var(--teal);border-radius:50%;margin-top:6px;flex-shrink:0}.history-item:last-child .history-dot{background:var(--teal)}.history-text{flex:1;font-size:11px}.history-text small{display:block;font-size:9px;color:var(--muted);margin-top:2px}.history-amount{font-size:11px;font-weight:600}.footnote{display:flex;justify-content:space-between;gap:20px;align-items:center;font-size:10px;color:#82907f;margin-top:26px;padding-top:16px;border-top:1px solid var(--line)}.footnote strong{font-weight:500;color:#657760}.loading{opacity:.65}.spinner{animation:spin 1.1s linear infinite}@keyframes spin{to{transform:rotate(360deg)}}
+    [hidden]{display:none!important}
+    @media(min-width:1400px){main.wrap{padding-top:44px}.heading{margin-bottom:29px}.summary{margin-bottom:29px}.actions{margin-bottom:29px}.metric{min-height:175px;padding-top:23px}.metric-value{margin-top:18px}}
+    @media(max-width:1050px){.wrap{padding-left:24px;padding-right:24px}.workarea{grid-template-columns:minmax(0,1fr) 285px;gap:15px}.actions{align-items:flex-start;flex-direction:column;gap:10px}.action-buttons{width:100%}.action{flex:1;justify-content:center}.ledger-row,.table-head{padding-left:16px;padding-right:16px;grid-template-columns:1fr 1fr 75px 48px 12px;gap:7px}.metric{padding-left:18px;padding-right:18px}.event-details{padding-left:16px;padding-right:16px}.brand-caption{display:none}}
+    @media(max-width:760px){.wrap{padding-left:18px;padding-right:18px}.topbar .wrap{height:68px}main.wrap{padding-top:27px}.heading{gap:12px;align-items:flex-start}.heading-tools{padding-top:5px;gap:8px}h1{font-size:28px}.subtitle{font-size:11px}.subtitle span{margin:0 5px}.summary{gap:8px}.metric{padding:14px 12px;min-height:145px;border-radius:11px}.metric-title{font-size:10px;line-height:1.5;align-items:flex-start}.metric-icon{display:none}.metric-value{font-size:30px;letter-spacing:-1px;margin-top:16px}.metric-value small{font-size:19px}.metric-foot{font-size:9px;line-height:1.6;flex-wrap:wrap;gap:3px}.actions{padding:12px}.action-buttons{display:grid;grid-template-columns:1fr 1fr;gap:7px}.action{font-size:10px;justify-content:flex-start}.workarea{grid-template-columns:1fr}.panel-heading{padding:19px 17px}.table-head,.ledger-row{grid-template-columns:1.1fr 1fr 75px 45px 12px}.event-details-inner{gap:8px}.time-value{font-size:9px}.subtle-tag{font-size:9px}.history{margin-top:15px}.footnote{font-size:9px;align-items:flex-start}.connection{font-size:10px}.brand{font-size:20px}.badge{font-size:9px}}
+    @media(prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}}
+  </style>
+</head>
+<body>
+  <header class="topbar"><div class="wrap">
+    <div class="brand"><span class="brand-mark" aria-hidden="true"><svg width="31" height="35" viewBox="0 0 31 35" fill="none"><path d="M15.5 1.6 28 6.1v11.1c0 7.1-5.5 12.7-12.5 16.1C8.5 29.9 3 24.3 3 17.2V6.1L15.5 1.6Z" stroke="currentColor" stroke-width="1.7"/><path d="M9 23V12l6.5 6.5L22 12v11" stroke="currentColor" stroke-width="2" stroke-linejoin="round"/></svg></span>MeterProof<span class="brand-caption">Usage with evidence</span></div>
+    <div class="connection"><span class="badge open" id="environment-badge" hidden></span><span class="dot" id="connection-dot"></span><span id="connection-label">Connecting to API</span></div>
+  </div></header>
+  <main class="wrap">
+    <section class="heading" aria-label="Period overview">
+      <div><div class="eyebrow">Usage workspace / ACME</div><h1>September 2026</h1><p class="subtitle">API requests<span>·</span>$0.01 per unit<span>·</span>All times UTC</p></div>
+      <div class="heading-tools"><span class="badge open" id="period-badge">Loading</span><button class="refresh" id="refresh" aria-label="Refresh period" title="Refresh period"><svg width="14" height="14" viewBox="0 0 20 20" fill="none"><path d="M16.8 7a7 7 0 1 0 .2 5M17 2v5h-5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></button></div>
+    </section>
+    <section class="summary" aria-label="Preserved usage snapshots">
+      <article class="metric"><div class="metric-title">Original closed snapshot<span class="metric-icon" aria-hidden="true"><svg width="16" height="16" viewBox="0 0 20 20" fill="none"><rect x="4" y="8" width="12" height="9" rx="2" stroke="currentColor" stroke-width="1.25"/><path d="M6.5 8V5a3.5 3.5 0 0 1 7 0v3M10 12v2" stroke="currentColor" stroke-width="1.25"/></svg></span></div><div class="metric-value empty" id="original-value">—</div><div class="metric-foot" id="original-foot">Created when this period closes</div></article>
+      <article class="metric pending"><div class="metric-title">Post-close usage<span class="metric-icon" aria-hidden="true"><svg width="16" height="16" viewBox="0 0 20 20" fill="none"><path d="M10 3v14M3 10h14" stroke="currentColor" stroke-width="1.3"/></svg></span></div><div class="metric-value empty" id="adjustment-value">—</div><div class="metric-foot" id="adjustment-foot">Explicitly recorded after close</div></article>
+      <article class="metric latest"><div class="metric-title">Latest preserved snapshot<span class="metric-icon" aria-hidden="true"><svg width="17" height="17" viewBox="0 0 20 20" fill="none"><path d="m4 10 4 4 8-8" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/></svg></span></div><div class="metric-value empty" id="latest-value">—</div><div class="metric-foot" id="latest-foot">Every version remains available</div></article>
+    </section>
+    <section class="actions" aria-label="Demo controls"><div class="action-label"><svg width="14" height="14" viewBox="0 0 20 20" fill="none" aria-hidden="true"><path d="m7 4 8 6-8 6V4Z" stroke="currentColor" stroke-width="1.4" stroke-linejoin="round"/></svg><span><b>Walk the record</b> <span id="live-view"></span></span></div><div class="action-buttons">
+      <button id="seed" class="action" disabled><span class="step">1</span>Load sample usage</button><button id="close" class="action" disabled><span class="step">2</span>Close snapshot</button><button id="late" class="action" disabled><span class="step">3</span>Add post-close usage</button><button id="adjust" class="action primary" disabled><span class="step">4</span>Create adjusted snapshot</button>
+    </div></section>
+    <div class="status" id="status" role="status" aria-live="polite"></div>
+    <div class="workarea">
+      <section class="panel" aria-labelledby="ledger-title"><div class="panel-heading"><div><h2 class="panel-title" id="ledger-title">Event ledger</h2><div class="panel-subtitle" id="event-count">The source behind every snapshot</div></div><span class="subtle-tag"><svg width="12" height="12" viewBox="0 0 20 20" fill="none" aria-hidden="true"><path d="m4 10 4 4 8-8" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>Authoritative source</span></div><div class="table-head" aria-hidden="true"><span>Event</span><span>Occurred at</span><span>Cutoff</span><span class="right">Units</span><span></span></div><div id="events"><div class="empty-ledger"><div class="empty-symbol" aria-hidden="true"><svg width="19" height="23" viewBox="0 0 20 24" fill="none"><rect x="3" y="2" width="14" height="20" rx="2" stroke="currentColor" stroke-width="1.2"/><path d="M7 8h6M7 12h6M7 16h4" stroke="currentColor" stroke-width="1.2"/></svg></div><div class="empty-title">Your evidence starts here</div><p class="empty-description">Load three sample usage events, then close the period to preserve its first snapshot.</p></div></div><div class="ledger-footer"><svg width="13" height="15" viewBox="0 0 16 18" fill="none" aria-hidden="true"><path d="M8 1 14 3.5V9c0 3.7-3.2 6.6-6 8-2.8-1.4-6-4.3-6-8V3.5L8 1Z" stroke="currentColor" stroke-width="1.2"/><path d="m5 8.5 2 2 4-4" stroke="currentColor" stroke-width="1.2"/></svg><span>Cutoff is decided at ingestion. Processing lag never changes an event’s classification. Select an event to inspect all three timestamps.</span></div></section>
+      <aside><section class="panel" aria-labelledby="derivation-title"><div class="derivation"><div class="derivation-header"><h2 class="panel-title" id="derivation-title">Show the math</h2><div class="snapshot-pills" id="snapshot-pills"></div></div><div id="derivation"><div class="empty-derivation">Close a snapshot to see exactly which ledger events make up its total.</div></div></div><div class="preservation"><svg width="14" height="16" viewBox="0 0 20 22" fill="none" aria-hidden="true"><path d="M5 8V5a5 5 0 0 1 10 0v3" stroke="currentColor" stroke-width="1.3"/><rect x="2" y="8" width="16" height="12" rx="2" stroke="currentColor" stroke-width="1.3"/><path d="M10 12v4" stroke="currentColor" stroke-width="1.3"/></svg><span><strong>History stays intact.</strong><br>Adjustments create a new snapshot. Prior versions are preserved.</span></div></section><div class="history" id="history"></div></aside>
+    </div>
+    <footer class="footnote"><span><strong>MeterProof</strong> · Upstream usage metering</span><span>Estimated usage charges · Ledger-backed snapshots</span></footer>
+  </main>
+  <script>
+    'use strict';
+    const $ = id => document.getElementById(id);
+    const seedEvents = [
+      {event_id:'evt_001',occurred_at:'2026-09-02T10:15:00.000Z',units:100},
+      {event_id:'evt_002',occurred_at:'2026-09-12T14:30:00.000Z',units:250},
+      {event_id:'evt_003',occurred_at:'2026-09-28T18:45:00.000Z',units:400}
+    ];
+    const lateEvent = {event_id:'evt_004',occurred_at:'2026-09-29T09:00:00.000Z',units:100};
+    let period = null, busy = false, selectedVersion = null, userSelectedVersion = false, pollGeneration = 0;
+    const expanded = new Set();
+    const esc = value => String(value ?? '').replace(/[&<>"']/g, char => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[char]));
+    const number = value => new Intl.NumberFormat('en-US').format(value);
+    const money = value => new Intl.NumberFormat('en-US',{style:'currency',currency:'USD'}).format(value / 100);
+    const date = value => value ? new Intl.DateTimeFormat('en-US',{timeZone:'UTC',month:'short',day:'2-digit',year:'numeric',hour:'2-digit',minute:'2-digit',second:'2-digit',hour12:false}).format(new Date(value)) + ' UTC' : null;
+    function compactDate(value) {
+      const stamp = new Date(value);
+      return esc(new Intl.DateTimeFormat('en-US',{timeZone:'UTC',month:'short',day:'2-digit'}).format(stamp)) + '<br><small>' + esc(new Intl.DateTimeFormat('en-US',{timeZone:'UTC',hour:'2-digit',minute:'2-digit',second:'2-digit',hour12:false}).format(stamp)) + '</small>';
+    }
+    function setStatus(message, error = false) {
+      $('status').textContent = message;
+      $('status').className = 'status' + (message ? ' visible' : '') + (error ? ' error' : '');
+    }
+    async function api(path, body) {
+      const controller = new AbortController();
+      const timeout = setTimeout(() => controller.abort(), 18000);
+      try {
+        const response = await fetch('/api/' + path, {method:body === undefined ? 'GET' : 'POST',headers:body === undefined ? {} : {'Content-Type':'application/json'},body:body === undefined ? undefined : JSON.stringify(body),signal:controller.signal,cache:'no-store'});
+        const text = await response.text();
+        let payload;
+        try { payload = JSON.parse(text); } catch { throw new Error('The API returned an unexpected response. Check that the MeterProof server is running.'); }
+        if (!response.ok) throw new Error(typeof payload.message === 'string' ? payload.message : typeof payload.error === 'string' ? payload.error : 'Request failed (' + response.status + '). Please refresh and retry.');
+        return payload;
+      } catch (error) {
+        if (error.name === 'AbortError') throw new Error('The request timed out. Its result may already be saved; refresh or retry safely.');
+        throw error;
+      } finally { clearTimeout(timeout); }
+    }
+    function render() {
+      if (!period) return;
+      const snapshots = [...period.snapshots].sort((a,b) => a.version - b.version);
+      const original = snapshots.find(s => s.version === 1);
+      const latest = snapshots.find(s => s.version === period.latest_version);
+      const afterClose = period.events.filter(e => e.classification === 'POST_CLOSE');
+      const postCloseUnits = afterClose.reduce((sum,e) => sum + e.units, 0);
+      const postCloseCents = afterClose.reduce((sum,e) => sum + e.amount_cents, 0);
+      $('period-badge').textContent = period.building ? 'Snapshot building' : period.phase === 'OPEN' ? 'Period open' : 'Period closed';
+      $('period-badge').className = 'badge' + (period.building ? ' amber' : period.phase === 'OPEN' ? ' open' : '');
+      $('original-value').textContent = original ? money(original.amount_cents) : '—';
+      $('original-value').className = 'metric-value' + (original ? '' : ' empty');
+      $('original-foot').innerHTML = original ? '<span class="version">v1</span> ' + number(original.units) + ' units · preserved' : 'Created when this period closes';
+      $('adjustment-value').textContent = afterClose.length ? '+' + money(postCloseCents) : '—';
+      $('adjustment-value').className = 'metric-value' + (afterClose.length ? '' : ' empty');
+      $('adjustment-foot').textContent = afterClose.length ? number(postCloseUnits) + ' units · ' + (period.pending.event_ids.length ? number(period.pending.units) + ' pending adjustment' : 'included in latest snapshot') : 'Explicitly recorded after close';
+      $('latest-value').textContent = latest ? money(latest.amount_cents) : '—';
+      $('latest-value').className = 'metric-value' + (latest ? '' : ' empty');
+      $('latest-foot').innerHTML = latest ? '<span class="version">v' + latest.version + '</span> ' + number(latest.units) + ' units · ' + (latest.kind === 'ADJUST' ? 'adjusted' : 'closed') : 'Every version remains available';
+      $('live-view').textContent = period.phase === 'OPEN' ? '· live view ' + money(period.aggregate.amount_cents) : '';
+      $('event-count').textContent = number(period.events.length) + ' events · ' + number(period.events.reduce((sum,e) => sum + e.units, 0)) + ' units accepted';
+      if (period.events.length) {
+        $('events').innerHTML = [...period.events].sort((a,b) => a.accepted_at.localeCompare(b.accepted_at) || a.event_id.localeCompare(b.event_id)).map((event,index) => {
+          const isExpanded = expanded.has(event.event_id);
+          return '<div class="ledger-item"><button class="ledger-row" data-event="' + esc(event.event_id) + '" aria-expanded="' + isExpanded + '" aria-controls="event-details-' + index + '"><span><span class="event-id">' + esc(event.event_id) + '</span><span class="event-caption"><span class="dot ' + (event.processed_at ? 'ok' : '') + '"></span>' + (event.processed_at ? 'Processed' : 'Awaiting stream') + '</span></span><span class="date-short">' + compactDate(event.occurred_at) + '</span><span><span class="class-tag' + (event.classification === 'POST_CLOSE' ? ' post-close' : '') + '">' + (event.classification === 'POST_CLOSE' ? 'Post-close' : 'On time') + '</span></span><span class="units right">' + number(event.units) + '<br><small>' + money(event.amount_cents) + '</small></span><svg class="chevron" width="10" height="12" viewBox="0 0 10 12" fill="none" aria-hidden="true"><path d="m3 2 4 4-4 4" stroke="currentColor" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"/></svg></button><div class="event-details" id="event-details-' + index + '"' + (isExpanded ? '' : ' hidden') + '><div class="event-details-inner"><div><div class="time-label">Occurred at</div><div class="time-value">' + esc(date(event.occurred_at)) + '</div><div class="time-note">When the usage happened</div></div><div><div class="time-label">Accepted at</div><div class="time-value">' + esc(date(event.accepted_at)) + '</div><div class="time-note">Recorded during ingestion</div></div><div><div class="time-label">Processed at</div><div class="time-value">' + (event.processed_at ? esc(date(event.processed_at)) : '<em>Awaiting stream delivery</em>') + '</div><div class="time-note">Async metering completed</div></div></div></div></div>';
+        }).join('');
+      }
+      if (!userSelectedVersion || !snapshots.some(s => s.version === selectedVersion)) selectedVersion = period.latest_version;
+      const selected = snapshots.find(s => s.version === selectedVersion);
+      $('snapshot-pills').innerHTML = snapshots.map(s => '<button class="snapshot-pill' + (selectedVersion === s.version ? ' active' : '') + '" data-version="' + s.version + '" aria-label="Show snapshot version ' + s.version + '" aria-pressed="' + (selectedVersion === s.version) + '">v' + s.version + '</button>').join('');
+      if (selected) {
+        const eventById = new Map(period.events.map(e => [e.event_id,e]));
+        const added = new Set(selected.kind === 'ADJUST' ? selected.added_event_ids : []);
+        $('derivation').innerHTML = '<div class="derivation-caption">Snapshot v' + selected.version + ' · derived from the ledger</div><div class="derivation-list">' + selected.event_ids.map(id => {const event = eventById.get(id);return '<div class="calculation-row"><span class="mono' + (added.has(id) ? ' added' : '') + '">' + esc(id) + (added.has(id) ? ' <span aria-label="added in this snapshot">+</span>' : '') + '</span><span>' + (event ? number(event.units) : '—') + ' units</span></div>';}).join('') + '</div><div class="calculation-total"><span>Total usage</span><span>' + number(selected.units) + ' units</span></div><div class="rate">× ' + money(period.rate_cents_per_unit) + ' / unit</div><div class="calculation-charge"><span>Estimated charge</span><strong>' + money(selected.amount_cents) + '</strong></div><div class="snapshot-date">' + (selected.kind === 'ADJUST' ? 'Adjusted' : 'Closed') + ' ' + esc(date(selected.created_at)) + '</div>';
+      }
+      $('history').innerHTML = snapshots.length ? '<div class="history-heading"><span>Snapshot history</span><span>' + snapshots.length + ' preserved</span></div>' + snapshots.map(s => '<div class="history-item"><span class="history-dot"></span><span class="history-text">v' + s.version + ' · ' + (s.kind === 'ADJUST' ? 'Adjusted snapshot' : 'Original closed snapshot') + '<small>' + number(s.units) + ' units · ' + s.event_ids.length + ' events</small></span><span class="history-amount">' + money(s.amount_cents) + '</span></div>').join('') : '';
+      renderButtons();
+    }
+    function renderButtons() {
+      const blocked = busy || !period;
+      const building = period?.building;
+      const allSeeded = period && seedEvents.every(seed => period.events.some(event => event.event_id === seed.event_id));
+      $('seed').disabled = blocked || !!building || period?.phase !== 'OPEN' || allSeeded;
+      $('close').disabled = blocked || (building ? building.kind !== 'CLOSE' : period?.phase !== 'OPEN' || !period?.events.length);
+      $('late').disabled = blocked || !!building || period?.phase !== 'CLOSED' || !period?.latest_version || period?.events.some(e => e.event_id === lateEvent.event_id);
+      $('adjust').disabled = blocked || (building ? building.kind !== 'ADJUST' : period?.phase !== 'CLOSED' || !period?.pending.event_ids.length);
+      $('refresh').disabled = busy;
+      $('refresh').querySelector('svg').classList.toggle('spinner', busy);
+    }
+    async function refresh() {
+      try {
+        const result = await api('period');
+        if (!Array.isArray(result.events) || !Array.isArray(result.snapshots)) throw new Error('The API response does not contain a MeterProof period.');
+        period = result;
+        $('connection-dot').className = 'dot ok';
+        $('connection-label').textContent = 'API connected';
+        render();
+        return result;
+      } catch (error) {
+        $('connection-dot').className = 'dot error';
+        $('connection-label').textContent = 'API unavailable';
+        throw error;
+      }
+    }
+    async function pollReceipts() {
+      const generation = ++pollGeneration;
+      for (let attempt = 0; attempt < 6; attempt++) {
+        if (generation !== pollGeneration || !period?.events.some(event => !event.processed_at)) return;
+        await new Promise(resolve => setTimeout(resolve, 1500));
+        if (generation !== pollGeneration) return;
+        try { await refresh(); } catch { return; }
+      }
+    }
+    async function act(operation, pendingMessage, successMessage) {
+      if (busy) return;
+      pollGeneration++;
+      busy = true;
+      renderButtons();
+      setStatus(pendingMessage);
+      try {
+        await operation();
+        await refresh();
+        setStatus(successMessage);
+        void pollReceipts();
+      } catch (error) {
+        setStatus(error.message || 'Something went wrong. Refresh and retry safely.', true);
+        try { await refresh(); } catch { /* Preserve the original action error. */ }
+      } finally { busy = false; renderButtons(); }
+    }
+    $('seed').addEventListener('click', () => act(async () => { for (const event of seedEvents) await api('events',event); }, 'Recording sample events in the ledger…', 'Three sample events recorded. The live aggregate catches up asynchronously; close always reads the ledger.'));
+    $('close').addEventListener('click', () => act(async () => {await api('close',{});userSelectedVersion = false;}, 'Closing the ingestion boundary and deriving the snapshot…', 'Original snapshot preserved. New usage for September will be recorded as a post-close adjustment.'));
+    $('late').addEventListener('click', () => act(() => api('events',lateEvent), 'Recording post-close usage…', '100 post-close units recorded. The original snapshot is unchanged.'));
+    $('adjust').addEventListener('click', () => act(async () => {await api('adjust',{expected_version:period.latest_version});userSelectedVersion = false;}, 'Creating a new snapshot from the ledger…', 'Adjusted snapshot preserved. Select v1 to inspect the original result.'));
+    $('refresh').addEventListener('click', () => act(async () => {}, 'Refreshing the saved period…', 'Period refreshed from the API.'));
+    $('events').addEventListener('click', event => {const row = event.target.closest('[data-event]');if (!row) return;const id = row.dataset.event;expanded.has(id) ? expanded.delete(id) : expanded.add(id);render();const restored = [...document.querySelectorAll('[data-event]')].find(button => button.dataset.event === id);restored?.focus({preventScroll:true});});
+    $('snapshot-pills').addEventListener('click', event => {const button = event.target.closest('[data-version]');if (!button) return;selectedVersion = Number(button.dataset.version);userSelectedVersion = true;render();document.querySelector('[data-version="' + selectedVersion + '"]')?.focus({preventScroll:true});});
+    (async () => {try {const health = await api('health');if (health.mode === 'local') {$('environment-badge').textContent = 'Local demo';$('environment-badge').title = 'DynamoDB Local · Stream delivery simulated by the local worker';$('environment-badge').hidden = false;}} catch { /* The period request reports connection errors. */ }})();
+    (async () => {try {await refresh();void pollReceipts();} catch (error) {setStatus(error.message || 'Cannot connect to the MeterProof API. Start the server, then refresh.',true);$('period-badge').textContent = 'Not connected';}})();
+  </script>
+</body>
+</html>
