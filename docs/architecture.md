@@ -48,13 +48,19 @@ The stream mapping accepts only `INSERT` records with `NewImage.entity.S = EVENT
 
 The Lambda handler reports per-record failures using DynamoDB sequence numbers; the event-source mapping enables `ReportBatchItemFailures`. Independent successes can be redelivered and remain idempotent. Pending usage is derived directly from ledger membership minus the latest observed snapshot, so it does not depend on stream progress.
 
+## Read and business boundaries
+
+The [API contract](api-contract.md) documents timestamps, retry identity and the non-atomic period view. `snapshot.created_at` is the reserved build start time, not its publication time. Pending is computed against the latest snapshot observed in the same response. Period flags can temporarily differ from later snapshot reads during concurrent work; each saved snapshot remains immutable.
+
+The [operating policy](operating-policy.md) separates source completeness, human close/adjust decisions and implemented transaction controls. No identity, authorization, approval or operator audit is enforced. Ledger authority covers accepted reports; it does not prove actual usage or all usage was reported.
+
 ## Intentional limits
 
 - The period control item and per-customer aggregate are contention points. This is a small correctness demonstration, not a high-throughput or multi-region system.
-- Snapshot membership lists must fit DynamoDB's 400 KB item limit; recomputation must fit the API/Lambda timeout. The demo has four events. Large-period pagination and scalable membership storage are outside this milestone.
-- DynamoDB Streams expires records after 24 hours. A long consumer outage can leave the aggregate incomplete. Ledger-derived close still works. Automated repair and dead-letter infrastructure are outside the frozen MVP.
+- Snapshot membership lists must fit DynamoDB's 400 KB item limit; recomputation must fit the API/Lambda timeout. The base demonstration has four events and the combined local scenario has six. Large-period pagination and scalable membership storage are outside this milestone.
+- DynamoDB Streams expires records after 24 hours. A long consumer outage can leave the aggregate incomplete. Ledger-derived close still works. The UI can compare ON_TIME ledger usage with the projection and show missing receipts, but cannot diagnose the cause from that difference alone. Automated alerting, repair and dead-letter infrastructure are outside the frozen MVP.
 - The UI is a read of current observations, not a cross-table read transaction. Immutable displayed snapshots remain reproducible; concurrent actions may require refresh.
-- IAM denies ledger update/delete to the application roles, but administrators can still alter tables. This is not cryptographic tamper resistance.
+- Application ledger writes use conditional creates. The application roles are not granted ledger UpdateItem/DeleteItem, but PutItem permission itself does not enforce append-only storage: other code or administrators with sufficient permissions can replace records. Immutability relies on the trusted application path and administration; this is not cryptographic tamper resistance.
 - Domain tests and DynamoDB Local cannot prove AWS IAM enforcement or cloud delivery. Deployment and an AWS smoke run remain required before submission.
 
 ## Primary references used during implementation

@@ -5,11 +5,11 @@
 MeterProof is an upstream usage-metering trust layer. Its frozen demonstration covers **ACME · September 2026**, at **1 cent per unit**:
 
 1. Accept `evt_001` (100), `evt_002` (250), and `evt_003` (400).
-2. Close an authoritative ledger-derived snapshot: **750 units / $7.50**.
+2. Close a ledger-derived snapshot of accepted usage: **750 units / $7.50**.
 3. Accept `evt_004` after close: **+100 units / +$1.00**, explicitly pending.
 4. Publish adjusted snapshot v2: **850 units / $8.50**. Preserve v1 and show both derivations.
 
-These are usage snapshots and estimated charges. MeterProof does not issue invoices or move money.
+These are usage snapshots of accepted reports and estimated charges. Source truth and completeness are not independently verified. MeterProof does not issue invoices or move money. Read the [operating policy and responsibility matrix](docs/operating-policy.md) for the demonstration controls and their limits.
 
 ## Run locally
 
@@ -57,7 +57,7 @@ infra/               CDK application and stack
 web/index.html       One screen, no frontend framework or remote dependencies
 scripts/             Local runner, local database setup, AWS evidence capture
 test/                Domain, handler, infrastructure, and local integration tests
-docs/                Frozen architecture and concise development log
+docs/                Architecture, API contract, operating policy, verification plans
 evidence/            Verification record and honest AWS evidence status
 ```
 
@@ -76,7 +76,9 @@ Event IDs are unique within the fixed customer/period. Reusing an ID with a diff
 
 Local-only scenario routes are `GET /api/demo`, `POST /api/demo/start`, and `POST /api/demo/step` with `{ "run_id": "...", "expected_step": 0 }`. They are absent from the deployed API Gateway and Lambda handler.
 
-The sample usage dates are synthetic. `accepted_at` and `processed_at` show actual server timestamps during the demonstration; they are never forged as October 1. Period close is an explicit action, so the scenario can run on any date.
+The sample usage dates are synthetic. `accepted_at` is a server sample taken before the successful ingestion transaction completes, not its exact commit time or a total event order. Cutoff is decided by transactional phase/epoch membership. `processed_at` belongs to the first successful processing receipt and never determines cutoff. `snapshot.created_at` records build start, not publication time. Period close is an explicit action, so the scenario can run on any date.
+
+`GET /api/period` combines separate reads. Its pending amount is relative to the latest snapshot returned in that response; concurrent activity may require refresh. Published snapshot contents remain fixed. The ON_TIME projection can lag or stay incomplete without changing snapshot totals. Full response, retry and timestamp semantics are in the [API contract](docs/api-contract.md).
 
 ## Deploy later
 
@@ -84,7 +86,7 @@ The sample usage dates are synthetic. `accepted_at` and `processed_at` show actu
 
 The CDK stack creates API Gateway HTTP API, two Lambda functions, two DynamoDB tables, a DynamoDB Stream event-source mapping, and their IAM/logging resources. The API Lambda serves the HTML, avoiding extra frontend hosting services. Standard CDK bootstrap asset storage is deployment tooling, not a product service.
 
-Once an AWS account/profile and Region have been selected, deployment commands are:
+Use the [cloud verification runbook](docs/cloud-verification.md) after an AWS target has been selected. It separates actual cloud evidence from local results and preserves existing demonstration data. Deployment commands are:
 
 ```sh
 export AWS_PROFILE=your-selected-profile
@@ -104,4 +106,4 @@ Auth is intentionally absent: a deployed endpoint permits any caller to change t
 
 No auth, Stripe/payments/invoices, quotas, WebSockets, SQS, EventBridge, Step Functions, Kinesis, Athena, hash chains, charts, multi-currency, customer-management UI, or AI inside the product. The coding agent contributes to implementation and verification.
 
-Read [architecture](docs/architecture.md), [development log](docs/development-log.md), and [evidence status](evidence/README.md).
+Read [architecture](docs/architecture.md), [operating policy](docs/operating-policy.md), [API contract](docs/api-contract.md), [development log](docs/development-log.md), and [evidence status](evidence/README.md).

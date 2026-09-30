@@ -21,3 +21,11 @@ Final executed verification is recorded in `evidence/local-verification.md`. Thi
 - Isolated each run in a partition namespace, retained the original demonstration, and added a target-specific atomic checkpoint so the local scenario can resume after refresh or server restart.
 - Kept scenario routes and fault orchestration outside the deployed Lambda entry points. No additional AWS service or cloud deployment was introduced.
 - Added tests for the composed sequence, repeated requests, persisted progress recovery and namespace isolation. Final executed results for this revision are recorded separately in `evidence/scenario-verification.md`.
+
+## 2026-09-29 — Review closeout: policy and interface contract
+
+- Reviewed the external findings against the code. Kept the frozen domain/transaction implementation and added a controlled-demo operating policy, responsibility matrix and explicit distinction between human procedures and enforced controls.
+- Documented acceptance/build timestamps, cumulative snapshot semantics, operation retry identities, separate period reads and pending relative to the returned snapshot. Qualified ledger authority to accepted reports and clarified source-completeness and privileged-write limits.
+- Added compact record guidance to the screen and enabled the existing ON_TIME ledger/projection comparison in basic mode. Kept simulated held-delivery wording local and avoided diagnosing cloud faults from a gap alone.
+- Prepared a selected-target cloud verification runbook without executing AWS calls. Distinguished the ordinary local ledger-polling worker from the deployed path, which has no automatic ledger replay.
+- Re-ran 22 automated tests and verified both UI modes in the browser, including the synthesized API handler against DynamoDB Local. Results and limits are recorded in `evidence/review-closeout.md`.
