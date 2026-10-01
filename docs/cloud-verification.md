@@ -1,6 +1,6 @@
 # Cloud verification runbook
 
-**Status: prepared, not executed.** Current verification is local. Begin AWS work only after the user selects the profile, account and Region. Once selected, proceed within the existing authorization; the review below checks that the actual changes stay within that scope.
+**Status: executed for the selected us-east-1 deployment on September 30, 2026.** See [actual results and limits](../evidence/cloud-verification.md). The deployed demonstration now contains preserved snapshots; do not rerun the fresh-state sequence or reset its data. For any future deployment, begin AWS work only after the user selects the profile, account and Region. Once selected, proceed within the existing authorization; the review below checks that the actual changes stay within that scope.
 
 The cloud API is unauthenticated and fixed to **ACME / September 2026 / 1 cent per unit**. Use synthetic usage only. Other callers can alter its demo state. The local eight-step controller and its fault injection are not deployed.
 

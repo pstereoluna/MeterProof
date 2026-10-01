@@ -10,3 +10,4 @@ work/
 cdk.context.json
 outputs.json
 evidence/aws-connection*.json
+__pycache__/

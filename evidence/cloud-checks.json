@@ -1,0 +1,288 @@
+{
+  "source_commit": "819c512",
+  "executor": "Codex",
+  "region": "us-east-1",
+  "local_date": "2026-09-30",
+  "status": "passed",
+  "infrastructure_checks": [
+    {
+      "check": "stack CREATE_COMPLETE in selected account and Region",
+      "passed": true
+    },
+    {
+      "check": "two tables and two functions",
+      "passed": true
+    },
+    {
+      "check": "saved CDK outputs match actual stack",
+      "passed": true
+    },
+    {
+      "check": "actual HTTP endpoint matches stack output",
+      "passed": true
+    },
+    {
+      "check": "six frozen routes, no local scenario routes",
+      "passed": true
+    },
+    {
+      "check": "demo routes are explicitly unauthenticated",
+      "passed": true
+    },
+    {
+      "check": "ledger active and on-demand",
+      "passed": true
+    },
+    {
+      "check": "state active and on-demand",
+      "passed": true
+    },
+    {
+      "check": "ledger NEW_IMAGE stream",
+      "passed": true
+    },
+    {
+      "check": "api uses deployed tables, no local endpoint",
+      "passed": true
+    },
+    {
+      "check": "api active Node22 256MB",
+      "passed": true
+    },
+    {
+      "check": "api role trusts Lambda only",
+      "passed": true
+    },
+    {
+      "check": "api managed policy only basic Lambda logging",
+      "passed": true
+    },
+    {
+      "check": "api inline allow policy",
+      "passed": true
+    },
+    {
+      "check": "api inline allow policy",
+      "passed": true
+    },
+    {
+      "check": "api actual DynamoDB permissions match reviewed scope",
+      "passed": true
+    },
+    {
+      "check": "meter uses deployed tables, no local endpoint",
+      "passed": true
+    },
+    {
+      "check": "meter active Node22 256MB",
+      "passed": true
+    },
+    {
+      "check": "meter role trusts Lambda only",
+      "passed": true
+    },
+    {
+      "check": "meter managed policy only basic Lambda logging",
+      "passed": true
+    },
+    {
+      "check": "meter inline allow policy",
+      "passed": true
+    },
+    {
+      "check": "meter inline allow policy",
+      "passed": true
+    },
+    {
+      "check": "meter inline allow policy",
+      "passed": true
+    },
+    {
+      "check": "meter actual DynamoDB permissions match reviewed scope",
+      "passed": true
+    },
+    {
+      "check": "HTTP API targets actual API function",
+      "passed": true
+    },
+    {
+      "check": "stage limits 10 req/s burst20",
+      "passed": true
+    },
+    {
+      "check": "enabled real stream to meter",
+      "passed": true
+    },
+    {
+      "check": "mapping batch/retry/partial failures",
+      "passed": true
+    },
+    {
+      "check": "mapping filters EVENT inserts",
+      "passed": true
+    }
+  ],
+  "api_smoke": {
+    "executor": "Codex",
+    "started_at": "2026-10-01T04:03:42.343880+00:00",
+    "status": "passed",
+    "checks": [
+      {
+        "name": "01-health HTTP 200",
+        "passed": true
+      },
+      {
+        "name": "health reports AWS handler",
+        "passed": true
+      },
+      {
+        "name": "02-before HTTP 200",
+        "passed": true
+      },
+      {
+        "name": "fresh ACME September state",
+        "passed": true
+      },
+      {
+        "name": "03-seed-1 HTTP 201",
+        "passed": true
+      },
+      {
+        "name": "evt_001 accepted ON_TIME once",
+        "passed": true
+      },
+      {
+        "name": "03-seed-2 HTTP 201",
+        "passed": true
+      },
+      {
+        "name": "evt_002 accepted ON_TIME once",
+        "passed": true
+      },
+      {
+        "name": "03-seed-3 HTTP 201",
+        "passed": true
+      },
+      {
+        "name": "evt_003 accepted ON_TIME once",
+        "passed": true
+      },
+      {
+        "name": "04-close-v1 HTTP 200",
+        "passed": true
+      },
+      {
+        "name": "v1 includes exact 750-unit ledger membership",
+        "passed": true
+      },
+      {
+        "name": "05-late HTTP 201",
+        "passed": true
+      },
+      {
+        "name": "older occurrence accepted POST_CLOSE epoch1",
+        "passed": true
+      },
+      {
+        "name": "06-pending HTTP 200",
+        "passed": true
+      },
+      {
+        "name": "late 100 pending and v1 unchanged",
+        "passed": true
+      },
+      {
+        "name": "07-duplicate HTTP 200",
+        "passed": true
+      },
+      {
+        "name": "duplicate returns original acceptance",
+        "passed": true
+      },
+      {
+        "name": "08-conflict HTTP 409",
+        "passed": true
+      },
+      {
+        "name": "changed payload rejected",
+        "passed": true
+      },
+      {
+        "name": "09-close-retry HTTP 200",
+        "passed": true
+      },
+      {
+        "name": "close retry returns original v1",
+        "passed": true
+      },
+      {
+        "name": "10-adjust-v2 HTTP 200",
+        "passed": true
+      },
+      {
+        "name": "v2 exact 850 with explicit addition",
+        "passed": true
+      },
+      {
+        "name": "11-adjust-retry HTTP 200",
+        "passed": true
+      },
+      {
+        "name": "adjust retry returns same v2",
+        "passed": true
+      },
+      {
+        "name": "12-close-after-adjust HTTP 200",
+        "passed": true
+      },
+      {
+        "name": "close after adjustment still returns v1",
+        "passed": true
+      },
+      {
+        "name": "13-adjusted HTTP 200",
+        "passed": true
+      },
+      {
+        "name": "final versions, pending, build and membership intact",
+        "passed": true
+      },
+      {
+        "name": "14-receipts-1 HTTP 200",
+        "passed": true
+      },
+      {
+        "name": "observation 1 preserves snapshots and projection bounds",
+        "passed": true
+      },
+      {
+        "name": "all receipts and ON_TIME-only 750 projection",
+        "passed": true
+      }
+    ],
+    "http_requests": 16,
+    "stream_observation_attempts": 1,
+    "stream_receipts_observed": true,
+    "limits": [
+      "No forced cloud crash, race, load, stream redelivery or expiry test.",
+      "No manual meter invocation or receipt repair.",
+      "Existing synthetic snapshots retained; no reset."
+    ],
+    "finished_at": "2026-10-01T04:03:48.971066+00:00"
+  },
+  "lambda_log_observation": [
+    {
+      "function": "api",
+      "log_events": 68,
+      "report_lines": 22,
+      "application_error_lines": 0
+    },
+    {
+      "function": "meter",
+      "log_events": 10,
+      "report_lines": 3,
+      "application_error_lines": 0
+    }
+  ],
+  "privacy": "Account IDs, role ARNs, physical resource names and writable endpoint omitted. Raw deployment and request records retained privately."
+}

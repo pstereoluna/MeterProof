@@ -29,3 +29,13 @@ Final executed verification is recorded in `evidence/local-verification.md`. Thi
 - Added compact record guidance to the screen and enabled the existing ON_TIME ledger/projection comparison in basic mode. Kept simulated held-delivery wording local and avoided diagnosing cloud faults from a gap alone.
 - Prepared a selected-target cloud verification runbook without executing AWS calls. Distinguished the ordinary local ledger-polling worker from the deployed path, which has no automatic ledger replay.
 - Re-ran 22 automated tests and verified both UI modes in the browser, including the synthesized API handler against DynamoDB Local. Results and limits are recorded in `evidence/review-closeout.md`.
+
+
+## 2026-09-30 — First AWS deployment and observed Streams verification
+
+- User selected their personal AWS account and us-east-1. Old profiles could not authenticate (expired temporary credentials / no credentials); a separate browser-login profile was created and Codex saved a sanitized successful STS connection record.
+- Reused the existing CDK bootstrap version 30, reviewed the actual template diff, and deployed application commit `819c512` without changing product scope. CloudFormation reached CREATE_COMPLETE.
+- Re-ran type checking, 13 unit/infrastructure tests and synthesis/bundling. Verified 29 actual cloud configuration/IAM conditions, then 33 API/data assertions across 16 HTTP requests using four synthetic events.
+- Observed all four real stream-processing receipts, an ON_TIME-only aggregate of 750, immutable v1 at $7.50, and adjusted v2 at $8.50. No manual consumer invocation, data reset or cloud fault injection was performed.
+- Saved private deployment/API/log evidence and published a sanitized verification summary, assertion results and screenshot. Retained the executed standard-library API smoke verifier for reproducibility. Browser verification checked both snapshot derivations.
+- The execution used temporary root-session credentials with CDK same-account fallback after helper-role assumption warnings. No bootstrap permission changes were made. No cost alert, automatic shutdown, production authorization control or spending cap was added. See `evidence/cloud-verification.md` for evidence and limits.

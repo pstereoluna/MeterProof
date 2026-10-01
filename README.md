@@ -80,9 +80,9 @@ The sample usage dates are synthetic. `accepted_at` is a server sample taken bef
 
 `GET /api/period` combines separate reads. Its pending amount is relative to the latest snapshot returned in that response; concurrent activity may require refresh. Published snapshot contents remain fixed. The ON_TIME projection can lag or stay incomplete without changing snapshot totals. Full response, retry and timestamp semantics are in the [API contract](docs/api-contract.md).
 
-## Deploy later
+## AWS deployment
 
-**This build has not been deployed to AWS. The requested milestone is local and deployable.**
+**Deployed and verified in us-east-1 on September 30, 2026.** The cloud smoke preserved $7.50 → +$1.00 → $8.50, checked actual application IAM and Streams wiring, and observed all four real processing receipts. See the [cloud verification evidence](evidence/cloud-verification.md) for exact checks and limits. The local eight-step fault scenario is not deployed.
 
 The CDK stack creates API Gateway HTTP API, two Lambda functions, two DynamoDB tables, a DynamoDB Stream event-source mapping, and their IAM/logging resources. The API Lambda serves the HTML, avoiding extra frontend hosting services. Standard CDK bootstrap asset storage is deployment tooling, not a product service.
 
@@ -93,9 +93,9 @@ export AWS_PROFILE=your-selected-profile
 export AWS_REGION=us-east-1
 EVIDENCE_ACTOR=Codex npm run evidence:aws
 # Bootstrap the selected account/Region only if it is not already bootstrapped.
-npm run cdk -- bootstrap --profile "$AWS_PROFILE"
-npm run cdk -- diff --profile "$AWS_PROFILE"
-npm run cdk -- deploy --profile "$AWS_PROFILE" --outputs-file outputs.json
+npm run cdk -- bootstrap --profile "$AWS_PROFILE" --region "$AWS_REGION"
+npm run cdk -- diff MeterProof --method template --profile "$AWS_PROFILE" --region "$AWS_REGION"
+npm run cdk -- deploy MeterProof --profile "$AWS_PROFILE" --region "$AWS_REGION" --outputs-file outputs.json
 ```
 
 Record the actual agent-run connection/deployment results before claiming AWS integration in the submission. `evidence:aws` performs only `sts:GetCallerIdentity`, hashes the identity, and records success or failure without saving credentials. Use `EVIDENCE_ACTOR=Codex` only when Codex actually invokes it. Local verification does not prove cloud IAM, API Gateway behavior or Streams delivery.
