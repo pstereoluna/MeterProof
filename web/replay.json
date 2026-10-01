@@ -1,0 +1,1364 @@
+{
+  "schema_version": 1,
+  "mode": "recorded_aws_replay",
+  "recorded_at": "2026-10-01T04:03:48.629757+00:00",
+  "source_commit": "819c512",
+  "region": "us-east-1",
+  "notice": "Read-only replay of recorded AWS API responses. This walkthrough sends no usage writes and does not show live state. Reconstructed steps have no aggregate observation; a null receipt there means not observed, not proof of delayed processing.",
+  "steps": [
+    {
+      "id": "accept",
+      "title": "Accept 750 units",
+      "summary": "Three actual AWS ingestion responses accepted 100, 250 and 400 units. No period or processing observation was captured at this point.",
+      "view_basis": "reconstructed",
+      "period": {
+        "customer_id": "ACME",
+        "period": "2026-09",
+        "phase": "OPEN",
+        "rate_cents_per_unit": 1,
+        "epoch": 0,
+        "latest_version": 0,
+        "building": null,
+        "aggregate": null,
+        "snapshots": [],
+        "events": [
+          {
+            "event_id": "evt_001",
+            "occurred_at": "2026-09-01T12:00:00.000Z",
+            "accepted_at": "2026-10-01T04:03:44.314Z",
+            "units": 100,
+            "amount_cents": 100,
+            "classification": "ON_TIME",
+            "epoch": 0,
+            "processed_at": null
+          },
+          {
+            "event_id": "evt_002",
+            "occurred_at": "2026-09-02T12:00:00.000Z",
+            "accepted_at": "2026-10-01T04:03:44.754Z",
+            "units": 250,
+            "amount_cents": 250,
+            "classification": "ON_TIME",
+            "epoch": 0,
+            "processed_at": null
+          },
+          {
+            "event_id": "evt_003",
+            "occurred_at": "2026-09-03T12:00:00.000Z",
+            "accepted_at": "2026-10-01T04:03:45.134Z",
+            "units": 400,
+            "amount_cents": 400,
+            "classification": "ON_TIME",
+            "epoch": 0,
+            "processed_at": null
+          }
+        ],
+        "pending": {
+          "units": 0,
+          "amount_cents": 0,
+          "event_ids": []
+        }
+      },
+      "requests": [
+        {
+          "method": "POST",
+          "path": "/api/events",
+          "body": {
+            "event_id": "evt_001",
+            "occurred_at": "2026-09-01T12:00:00Z",
+            "units": 100
+          },
+          "status": 201,
+          "response": {
+            "event": {
+              "event_id": "evt_001",
+              "occurred_at": "2026-09-01T12:00:00.000Z",
+              "accepted_at": "2026-10-01T04:03:44.314Z",
+              "units": 100,
+              "amount_cents": 100,
+              "classification": "ON_TIME",
+              "epoch": 0
+            },
+            "duplicate": false
+          },
+          "at": "2026-10-01T04:03:44.008225+00:00"
+        },
+        {
+          "method": "POST",
+          "path": "/api/events",
+          "body": {
+            "event_id": "evt_002",
+            "occurred_at": "2026-09-02T12:00:00Z",
+            "units": 250
+          },
+          "status": 201,
+          "response": {
+            "event": {
+              "event_id": "evt_002",
+              "occurred_at": "2026-09-02T12:00:00.000Z",
+              "accepted_at": "2026-10-01T04:03:44.754Z",
+              "units": 250,
+              "amount_cents": 250,
+              "classification": "ON_TIME",
+              "epoch": 0
+            },
+            "duplicate": false
+          },
+          "at": "2026-10-01T04:03:44.420013+00:00"
+        },
+        {
+          "method": "POST",
+          "path": "/api/events",
+          "body": {
+            "event_id": "evt_003",
+            "occurred_at": "2026-09-03T12:00:00Z",
+            "units": 400
+          },
+          "status": 201,
+          "response": {
+            "event": {
+              "event_id": "evt_003",
+              "occurred_at": "2026-09-03T12:00:00.000Z",
+              "accepted_at": "2026-10-01T04:03:45.134Z",
+              "units": 400,
+              "amount_cents": 400,
+              "classification": "ON_TIME",
+              "epoch": 0
+            },
+            "duplicate": false
+          },
+          "at": "2026-10-01T04:03:44.812098+00:00"
+        }
+      ],
+      "checks": [
+        {
+          "label": "All seed requests accepted",
+          "actual": [
+            201,
+            201,
+            201
+          ],
+          "expected": [
+            201,
+            201,
+            201
+          ],
+          "passed": true
+        },
+        {
+          "label": "Accepted units",
+          "actual": 750,
+          "expected": 750,
+          "passed": true
+        },
+        {
+          "label": "Ingestion classification",
+          "actual": [
+            "ON_TIME",
+            "ON_TIME",
+            "ON_TIME"
+          ],
+          "expected": [
+            "ON_TIME",
+            "ON_TIME",
+            "ON_TIME"
+          ],
+          "passed": true
+        },
+        {
+          "label": "No duplicate ingestion",
+          "actual": [
+            false,
+            false,
+            false
+          ],
+          "expected": [
+            false,
+            false,
+            false
+          ],
+          "passed": true
+        }
+      ]
+    },
+    {
+      "id": "close",
+      "title": "Preserve snapshot v1",
+      "summary": "The recorded close response contains a 750-unit snapshot. The aggregate at close was not observed; this replay does not claim that processing lagged.",
+      "view_basis": "reconstructed",
+      "period": {
+        "customer_id": "ACME",
+        "period": "2026-09",
+        "phase": "CLOSED",
+        "rate_cents_per_unit": 1,
+        "epoch": 1,
+        "latest_version": 1,
+        "building": null,
+        "aggregate": null,
+        "snapshots": [
+          {
+            "version": 1,
+            "kind": "CLOSE",
+            "units": 750,
+            "amount_cents": 750,
+            "event_ids": [
+              "evt_001",
+              "evt_002",
+              "evt_003"
+            ],
+            "added_event_ids": [
+              "evt_001",
+              "evt_002",
+              "evt_003"
+            ],
+            "created_at": "2026-10-01T04:03:45.533Z",
+            "through_epoch": 0
+          }
+        ],
+        "events": [
+          {
+            "event_id": "evt_001",
+            "occurred_at": "2026-09-01T12:00:00.000Z",
+            "accepted_at": "2026-10-01T04:03:44.314Z",
+            "units": 100,
+            "amount_cents": 100,
+            "classification": "ON_TIME",
+            "epoch": 0,
+            "processed_at": null
+          },
+          {
+            "event_id": "evt_002",
+            "occurred_at": "2026-09-02T12:00:00.000Z",
+            "accepted_at": "2026-10-01T04:03:44.754Z",
+            "units": 250,
+            "amount_cents": 250,
+            "classification": "ON_TIME",
+            "epoch": 0,
+            "processed_at": null
+          },
+          {
+            "event_id": "evt_003",
+            "occurred_at": "2026-09-03T12:00:00.000Z",
+            "accepted_at": "2026-10-01T04:03:45.134Z",
+            "units": 400,
+            "amount_cents": 400,
+            "classification": "ON_TIME",
+            "epoch": 0,
+            "processed_at": null
+          }
+        ],
+        "pending": {
+          "units": 0,
+          "amount_cents": 0,
+          "event_ids": []
+        }
+      },
+      "requests": [
+        {
+          "method": "POST",
+          "path": "/api/close",
+          "body": {},
+          "status": 200,
+          "response": {
+            "snapshot": {
+              "version": 1,
+              "kind": "CLOSE",
+              "units": 750,
+              "amount_cents": 750,
+              "event_ids": [
+                "evt_001",
+                "evt_002",
+                "evt_003"
+              ],
+              "added_event_ids": [
+                "evt_001",
+                "evt_002",
+                "evt_003"
+              ],
+              "created_at": "2026-10-01T04:03:45.533Z",
+              "through_epoch": 0
+            }
+          },
+          "at": "2026-10-01T04:03:45.219329+00:00"
+        }
+      ],
+      "checks": [
+        {
+          "label": "Close response status",
+          "actual": 200,
+          "expected": 200,
+          "passed": true
+        },
+        {
+          "label": "Snapshot units equal accepted usage",
+          "actual": 750,
+          "expected": 750,
+          "passed": true
+        },
+        {
+          "label": "Snapshot membership",
+          "actual": [
+            "evt_001",
+            "evt_002",
+            "evt_003"
+          ],
+          "expected": [
+            "evt_001",
+            "evt_002",
+            "evt_003"
+          ],
+          "passed": true
+        },
+        {
+          "label": "Original snapshot version",
+          "actual": 1,
+          "expected": 1,
+          "passed": true
+        }
+      ]
+    },
+    {
+      "id": "late",
+      "title": "Make 100 late units explicit",
+      "summary": "A post-close event was accepted. The captured period response shows 100 pending units and the unchanged original snapshot.",
+      "view_basis": "recorded_period",
+      "period": {
+        "customer_id": "ACME",
+        "period": "2026-09",
+        "phase": "CLOSED",
+        "rate_cents_per_unit": 1,
+        "epoch": 1,
+        "latest_version": 1,
+        "building": null,
+        "aggregate": {
+          "units": 750,
+          "amount_cents": 750,
+          "processed_events": 3,
+          "last_processed_at": "2026-10-01T04:03:45.741Z"
+        },
+        "snapshots": [
+          {
+            "version": 1,
+            "kind": "CLOSE",
+            "units": 750,
+            "amount_cents": 750,
+            "event_ids": [
+              "evt_001",
+              "evt_002",
+              "evt_003"
+            ],
+            "added_event_ids": [
+              "evt_001",
+              "evt_002",
+              "evt_003"
+            ],
+            "created_at": "2026-10-01T04:03:45.533Z",
+            "through_epoch": 0
+          }
+        ],
+        "events": [
+          {
+            "event_id": "evt_001",
+            "occurred_at": "2026-09-01T12:00:00.000Z",
+            "accepted_at": "2026-10-01T04:03:44.314Z",
+            "units": 100,
+            "amount_cents": 100,
+            "classification": "ON_TIME",
+            "epoch": 0,
+            "processed_at": "2026-10-01T04:03:45.220Z"
+          },
+          {
+            "event_id": "evt_002",
+            "occurred_at": "2026-09-02T12:00:00.000Z",
+            "accepted_at": "2026-10-01T04:03:44.754Z",
+            "units": 250,
+            "amount_cents": 250,
+            "classification": "ON_TIME",
+            "epoch": 0,
+            "processed_at": "2026-10-01T04:03:45.719Z"
+          },
+          {
+            "event_id": "evt_003",
+            "occurred_at": "2026-09-03T12:00:00.000Z",
+            "accepted_at": "2026-10-01T04:03:45.134Z",
+            "units": 400,
+            "amount_cents": 400,
+            "classification": "ON_TIME",
+            "epoch": 0,
+            "processed_at": "2026-10-01T04:03:45.741Z"
+          },
+          {
+            "event_id": "evt_004",
+            "occurred_at": "2026-09-01T08:00:00.000Z",
+            "accepted_at": "2026-10-01T04:03:45.916Z",
+            "units": 100,
+            "amount_cents": 100,
+            "classification": "POST_CLOSE",
+            "epoch": 1,
+            "processed_at": null
+          }
+        ],
+        "pending": {
+          "units": 100,
+          "amount_cents": 100,
+          "event_ids": [
+            "evt_004"
+          ]
+        }
+      },
+      "requests": [
+        {
+          "method": "POST",
+          "path": "/api/events",
+          "body": {
+            "event_id": "evt_004",
+            "occurred_at": "2026-09-01T08:00:00Z",
+            "units": 100
+          },
+          "status": 201,
+          "response": {
+            "event": {
+              "event_id": "evt_004",
+              "occurred_at": "2026-09-01T08:00:00.000Z",
+              "accepted_at": "2026-10-01T04:03:45.916Z",
+              "units": 100,
+              "amount_cents": 100,
+              "classification": "POST_CLOSE",
+              "epoch": 1
+            },
+            "duplicate": false
+          },
+          "at": "2026-10-01T04:03:45.649986+00:00"
+        },
+        {
+          "method": "GET",
+          "path": "/api/period",
+          "body": null,
+          "status": 200,
+          "response": {
+            "customer_id": "ACME",
+            "period": "2026-09",
+            "phase": "CLOSED",
+            "rate_cents_per_unit": 1,
+            "epoch": 1,
+            "latest_version": 1,
+            "building": null,
+            "aggregate": {
+              "units": 750,
+              "amount_cents": 750,
+              "processed_events": 3,
+              "last_processed_at": "2026-10-01T04:03:45.741Z"
+            },
+            "snapshots": [
+              {
+                "version": 1,
+                "kind": "CLOSE",
+                "units": 750,
+                "amount_cents": 750,
+                "event_ids": [
+                  "evt_001",
+                  "evt_002",
+                  "evt_003"
+                ],
+                "added_event_ids": [
+                  "evt_001",
+                  "evt_002",
+                  "evt_003"
+                ],
+                "created_at": "2026-10-01T04:03:45.533Z",
+                "through_epoch": 0
+              }
+            ],
+            "events": [
+              {
+                "event_id": "evt_001",
+                "occurred_at": "2026-09-01T12:00:00.000Z",
+                "accepted_at": "2026-10-01T04:03:44.314Z",
+                "units": 100,
+                "amount_cents": 100,
+                "classification": "ON_TIME",
+                "epoch": 0,
+                "processed_at": "2026-10-01T04:03:45.220Z"
+              },
+              {
+                "event_id": "evt_002",
+                "occurred_at": "2026-09-02T12:00:00.000Z",
+                "accepted_at": "2026-10-01T04:03:44.754Z",
+                "units": 250,
+                "amount_cents": 250,
+                "classification": "ON_TIME",
+                "epoch": 0,
+                "processed_at": "2026-10-01T04:03:45.719Z"
+              },
+              {
+                "event_id": "evt_003",
+                "occurred_at": "2026-09-03T12:00:00.000Z",
+                "accepted_at": "2026-10-01T04:03:45.134Z",
+                "units": 400,
+                "amount_cents": 400,
+                "classification": "ON_TIME",
+                "epoch": 0,
+                "processed_at": "2026-10-01T04:03:45.741Z"
+              },
+              {
+                "event_id": "evt_004",
+                "occurred_at": "2026-09-01T08:00:00.000Z",
+                "accepted_at": "2026-10-01T04:03:45.916Z",
+                "units": 100,
+                "amount_cents": 100,
+                "classification": "POST_CLOSE",
+                "epoch": 1,
+                "processed_at": null
+              }
+            ],
+            "pending": {
+              "units": 100,
+              "amount_cents": 100,
+              "event_ids": [
+                "evt_004"
+              ]
+            }
+          },
+          "at": "2026-10-01T04:03:45.993677+00:00"
+        }
+      ],
+      "checks": [
+        {
+          "label": "Late event response status",
+          "actual": 201,
+          "expected": 201,
+          "passed": true
+        },
+        {
+          "label": "Late event classification",
+          "actual": "POST_CLOSE",
+          "expected": "POST_CLOSE",
+          "passed": true
+        },
+        {
+          "label": "Pending units",
+          "actual": 100,
+          "expected": 100,
+          "passed": true
+        },
+        {
+          "label": "Pending membership",
+          "actual": [
+            "evt_004"
+          ],
+          "expected": [
+            "evt_004"
+          ],
+          "passed": true
+        },
+        {
+          "label": "Original snapshot unchanged",
+          "actual": true,
+          "expected": true,
+          "passed": true
+        }
+      ]
+    },
+    {
+      "id": "retry",
+      "title": "Retry without changing the meaning",
+      "summary": "The duplicate returned its original event, a changed payload returned 409, and close returned v1. The view carries the last captured period forward; aggregate state was not observed during these requests.",
+      "view_basis": "reconstructed",
+      "period": {
+        "customer_id": "ACME",
+        "period": "2026-09",
+        "phase": "CLOSED",
+        "rate_cents_per_unit": 1,
+        "epoch": 1,
+        "latest_version": 1,
+        "building": null,
+        "aggregate": null,
+        "snapshots": [
+          {
+            "version": 1,
+            "kind": "CLOSE",
+            "units": 750,
+            "amount_cents": 750,
+            "event_ids": [
+              "evt_001",
+              "evt_002",
+              "evt_003"
+            ],
+            "added_event_ids": [
+              "evt_001",
+              "evt_002",
+              "evt_003"
+            ],
+            "created_at": "2026-10-01T04:03:45.533Z",
+            "through_epoch": 0
+          }
+        ],
+        "events": [
+          {
+            "event_id": "evt_001",
+            "occurred_at": "2026-09-01T12:00:00.000Z",
+            "accepted_at": "2026-10-01T04:03:44.314Z",
+            "units": 100,
+            "amount_cents": 100,
+            "classification": "ON_TIME",
+            "epoch": 0,
+            "processed_at": "2026-10-01T04:03:45.220Z"
+          },
+          {
+            "event_id": "evt_002",
+            "occurred_at": "2026-09-02T12:00:00.000Z",
+            "accepted_at": "2026-10-01T04:03:44.754Z",
+            "units": 250,
+            "amount_cents": 250,
+            "classification": "ON_TIME",
+            "epoch": 0,
+            "processed_at": "2026-10-01T04:03:45.719Z"
+          },
+          {
+            "event_id": "evt_003",
+            "occurred_at": "2026-09-03T12:00:00.000Z",
+            "accepted_at": "2026-10-01T04:03:45.134Z",
+            "units": 400,
+            "amount_cents": 400,
+            "classification": "ON_TIME",
+            "epoch": 0,
+            "processed_at": "2026-10-01T04:03:45.741Z"
+          },
+          {
+            "event_id": "evt_004",
+            "occurred_at": "2026-09-01T08:00:00.000Z",
+            "accepted_at": "2026-10-01T04:03:45.916Z",
+            "units": 100,
+            "amount_cents": 100,
+            "classification": "POST_CLOSE",
+            "epoch": 1,
+            "processed_at": null
+          }
+        ],
+        "pending": {
+          "units": 100,
+          "amount_cents": 100,
+          "event_ids": [
+            "evt_004"
+          ]
+        }
+      },
+      "requests": [
+        {
+          "method": "POST",
+          "path": "/api/events",
+          "body": {
+            "event_id": "evt_001",
+            "occurred_at": "2026-09-01T12:00:00Z",
+            "units": 100
+          },
+          "status": 200,
+          "response": {
+            "event": {
+              "event_id": "evt_001",
+              "occurred_at": "2026-09-01T12:00:00.000Z",
+              "accepted_at": "2026-10-01T04:03:44.314Z",
+              "units": 100,
+              "amount_cents": 100,
+              "classification": "ON_TIME",
+              "epoch": 0
+            },
+            "duplicate": true
+          },
+          "at": "2026-10-01T04:03:46.330780+00:00"
+        },
+        {
+          "method": "POST",
+          "path": "/api/events",
+          "body": {
+            "event_id": "evt_001",
+            "occurred_at": "2026-09-01T12:00:00Z",
+            "units": 101
+          },
+          "status": 409,
+          "response": {
+            "error": "IDEMPOTENCY_MISMATCH",
+            "message": "event_id already exists with a different payload."
+          },
+          "at": "2026-10-01T04:03:46.669680+00:00"
+        },
+        {
+          "method": "POST",
+          "path": "/api/close",
+          "body": {},
+          "status": 200,
+          "response": {
+            "snapshot": {
+              "version": 1,
+              "kind": "CLOSE",
+              "units": 750,
+              "amount_cents": 750,
+              "event_ids": [
+                "evt_001",
+                "evt_002",
+                "evt_003"
+              ],
+              "added_event_ids": [
+                "evt_001",
+                "evt_002",
+                "evt_003"
+              ],
+              "created_at": "2026-10-01T04:03:45.533Z",
+              "through_epoch": 0
+            }
+          },
+          "at": "2026-10-01T04:03:46.989180+00:00"
+        }
+      ],
+      "checks": [
+        {
+          "label": "Duplicate response status",
+          "actual": 200,
+          "expected": 200,
+          "passed": true
+        },
+        {
+          "label": "Duplicate flagged",
+          "actual": true,
+          "expected": true,
+          "passed": true
+        },
+        {
+          "label": "Original accepted event returned",
+          "actual": true,
+          "expected": true,
+          "passed": true
+        },
+        {
+          "label": "Changed payload status",
+          "actual": 409,
+          "expected": 409,
+          "passed": true
+        },
+        {
+          "label": "Changed payload error",
+          "actual": "IDEMPOTENCY_MISMATCH",
+          "expected": "IDEMPOTENCY_MISMATCH",
+          "passed": true
+        },
+        {
+          "label": "Close retry returns original snapshot",
+          "actual": true,
+          "expected": true,
+          "passed": true
+        }
+      ]
+    },
+    {
+      "id": "adjust",
+      "title": "Publish snapshot v2 at 850 units",
+      "summary": "The adjustment added only evt_004. Recorded retries returned the existing snapshots, and the captured period preserved v1 alongside v2.",
+      "view_basis": "recorded_period",
+      "period": {
+        "customer_id": "ACME",
+        "period": "2026-09",
+        "phase": "CLOSED",
+        "rate_cents_per_unit": 1,
+        "epoch": 2,
+        "latest_version": 2,
+        "building": null,
+        "aggregate": {
+          "units": 750,
+          "amount_cents": 750,
+          "processed_events": 3,
+          "last_processed_at": "2026-10-01T04:03:45.741Z"
+        },
+        "snapshots": [
+          {
+            "version": 1,
+            "kind": "CLOSE",
+            "units": 750,
+            "amount_cents": 750,
+            "event_ids": [
+              "evt_001",
+              "evt_002",
+              "evt_003"
+            ],
+            "added_event_ids": [
+              "evt_001",
+              "evt_002",
+              "evt_003"
+            ],
+            "created_at": "2026-10-01T04:03:45.533Z",
+            "through_epoch": 0
+          },
+          {
+            "version": 2,
+            "kind": "ADJUST",
+            "units": 850,
+            "amount_cents": 850,
+            "event_ids": [
+              "evt_001",
+              "evt_002",
+              "evt_003",
+              "evt_004"
+            ],
+            "added_event_ids": [
+              "evt_004"
+            ],
+            "created_at": "2026-10-01T04:03:47.594Z",
+            "through_epoch": 1
+          }
+        ],
+        "events": [
+          {
+            "event_id": "evt_001",
+            "occurred_at": "2026-09-01T12:00:00.000Z",
+            "accepted_at": "2026-10-01T04:03:44.314Z",
+            "units": 100,
+            "amount_cents": 100,
+            "classification": "ON_TIME",
+            "epoch": 0,
+            "processed_at": "2026-10-01T04:03:45.220Z"
+          },
+          {
+            "event_id": "evt_002",
+            "occurred_at": "2026-09-02T12:00:00.000Z",
+            "accepted_at": "2026-10-01T04:03:44.754Z",
+            "units": 250,
+            "amount_cents": 250,
+            "classification": "ON_TIME",
+            "epoch": 0,
+            "processed_at": "2026-10-01T04:03:45.719Z"
+          },
+          {
+            "event_id": "evt_003",
+            "occurred_at": "2026-09-03T12:00:00.000Z",
+            "accepted_at": "2026-10-01T04:03:45.134Z",
+            "units": 400,
+            "amount_cents": 400,
+            "classification": "ON_TIME",
+            "epoch": 0,
+            "processed_at": "2026-10-01T04:03:45.741Z"
+          },
+          {
+            "event_id": "evt_004",
+            "occurred_at": "2026-09-01T08:00:00.000Z",
+            "accepted_at": "2026-10-01T04:03:45.916Z",
+            "units": 100,
+            "amount_cents": 100,
+            "classification": "POST_CLOSE",
+            "epoch": 1,
+            "processed_at": "2026-10-01T04:03:46.360Z"
+          }
+        ],
+        "pending": {
+          "units": 0,
+          "amount_cents": 0,
+          "event_ids": []
+        }
+      },
+      "requests": [
+        {
+          "method": "POST",
+          "path": "/api/adjust",
+          "body": {
+            "expected_version": 1
+          },
+          "status": 200,
+          "response": {
+            "snapshot": {
+              "version": 2,
+              "kind": "ADJUST",
+              "units": 850,
+              "amount_cents": 850,
+              "event_ids": [
+                "evt_001",
+                "evt_002",
+                "evt_003",
+                "evt_004"
+              ],
+              "added_event_ids": [
+                "evt_004"
+              ],
+              "created_at": "2026-10-01T04:03:47.594Z",
+              "through_epoch": 1
+            }
+          },
+          "at": "2026-10-01T04:03:47.289697+00:00"
+        },
+        {
+          "method": "POST",
+          "path": "/api/adjust",
+          "body": {
+            "expected_version": 1
+          },
+          "status": 200,
+          "response": {
+            "snapshot": {
+              "version": 2,
+              "kind": "ADJUST",
+              "units": 850,
+              "amount_cents": 850,
+              "event_ids": [
+                "evt_001",
+                "evt_002",
+                "evt_003",
+                "evt_004"
+              ],
+              "added_event_ids": [
+                "evt_004"
+              ],
+              "created_at": "2026-10-01T04:03:47.594Z",
+              "through_epoch": 1
+            }
+          },
+          "at": "2026-10-01T04:03:47.689052+00:00"
+        },
+        {
+          "method": "POST",
+          "path": "/api/close",
+          "body": {},
+          "status": 200,
+          "response": {
+            "snapshot": {
+              "version": 1,
+              "kind": "CLOSE",
+              "units": 750,
+              "amount_cents": 750,
+              "event_ids": [
+                "evt_001",
+                "evt_002",
+                "evt_003"
+              ],
+              "added_event_ids": [
+                "evt_001",
+                "evt_002",
+                "evt_003"
+              ],
+              "created_at": "2026-10-01T04:03:45.533Z",
+              "through_epoch": 0
+            }
+          },
+          "at": "2026-10-01T04:03:47.989241+00:00"
+        },
+        {
+          "method": "GET",
+          "path": "/api/period",
+          "body": null,
+          "status": 200,
+          "response": {
+            "customer_id": "ACME",
+            "period": "2026-09",
+            "phase": "CLOSED",
+            "rate_cents_per_unit": 1,
+            "epoch": 2,
+            "latest_version": 2,
+            "building": null,
+            "aggregate": {
+              "units": 750,
+              "amount_cents": 750,
+              "processed_events": 3,
+              "last_processed_at": "2026-10-01T04:03:45.741Z"
+            },
+            "snapshots": [
+              {
+                "version": 1,
+                "kind": "CLOSE",
+                "units": 750,
+                "amount_cents": 750,
+                "event_ids": [
+                  "evt_001",
+                  "evt_002",
+                  "evt_003"
+                ],
+                "added_event_ids": [
+                  "evt_001",
+                  "evt_002",
+                  "evt_003"
+                ],
+                "created_at": "2026-10-01T04:03:45.533Z",
+                "through_epoch": 0
+              },
+              {
+                "version": 2,
+                "kind": "ADJUST",
+                "units": 850,
+                "amount_cents": 850,
+                "event_ids": [
+                  "evt_001",
+                  "evt_002",
+                  "evt_003",
+                  "evt_004"
+                ],
+                "added_event_ids": [
+                  "evt_004"
+                ],
+                "created_at": "2026-10-01T04:03:47.594Z",
+                "through_epoch": 1
+              }
+            ],
+            "events": [
+              {
+                "event_id": "evt_001",
+                "occurred_at": "2026-09-01T12:00:00.000Z",
+                "accepted_at": "2026-10-01T04:03:44.314Z",
+                "units": 100,
+                "amount_cents": 100,
+                "classification": "ON_TIME",
+                "epoch": 0,
+                "processed_at": "2026-10-01T04:03:45.220Z"
+              },
+              {
+                "event_id": "evt_002",
+                "occurred_at": "2026-09-02T12:00:00.000Z",
+                "accepted_at": "2026-10-01T04:03:44.754Z",
+                "units": 250,
+                "amount_cents": 250,
+                "classification": "ON_TIME",
+                "epoch": 0,
+                "processed_at": "2026-10-01T04:03:45.719Z"
+              },
+              {
+                "event_id": "evt_003",
+                "occurred_at": "2026-09-03T12:00:00.000Z",
+                "accepted_at": "2026-10-01T04:03:45.134Z",
+                "units": 400,
+                "amount_cents": 400,
+                "classification": "ON_TIME",
+                "epoch": 0,
+                "processed_at": "2026-10-01T04:03:45.741Z"
+              },
+              {
+                "event_id": "evt_004",
+                "occurred_at": "2026-09-01T08:00:00.000Z",
+                "accepted_at": "2026-10-01T04:03:45.916Z",
+                "units": 100,
+                "amount_cents": 100,
+                "classification": "POST_CLOSE",
+                "epoch": 1,
+                "processed_at": "2026-10-01T04:03:46.360Z"
+              }
+            ],
+            "pending": {
+              "units": 0,
+              "amount_cents": 0,
+              "event_ids": []
+            }
+          },
+          "at": "2026-10-01T04:03:48.292145+00:00"
+        }
+      ],
+      "checks": [
+        {
+          "label": "Adjusted units",
+          "actual": 850,
+          "expected": 850,
+          "passed": true
+        },
+        {
+          "label": "Added event membership",
+          "actual": [
+            "evt_004"
+          ],
+          "expected": [
+            "evt_004"
+          ],
+          "passed": true
+        },
+        {
+          "label": "Adjustment retry preserves v2",
+          "actual": true,
+          "expected": true,
+          "passed": true
+        },
+        {
+          "label": "Close after adjustment returns v1",
+          "actual": true,
+          "expected": true,
+          "passed": true
+        },
+        {
+          "label": "Original snapshot unchanged",
+          "actual": true,
+          "expected": true,
+          "passed": true
+        },
+        {
+          "label": "Captured v2 matches adjustment response",
+          "actual": true,
+          "expected": true,
+          "passed": true
+        },
+        {
+          "label": "No pending units",
+          "actual": 0,
+          "expected": 0,
+          "passed": true
+        }
+      ]
+    },
+    {
+      "id": "verify",
+      "title": "Inspect the recorded stream receipts",
+      "summary": "The final AWS period response contains all four processing receipts. The ON_TIME projection remains 750 units while adjusted snapshot v2 is 850 units.",
+      "view_basis": "recorded_period",
+      "period": {
+        "customer_id": "ACME",
+        "period": "2026-09",
+        "phase": "CLOSED",
+        "rate_cents_per_unit": 1,
+        "epoch": 2,
+        "latest_version": 2,
+        "building": null,
+        "aggregate": {
+          "units": 750,
+          "amount_cents": 750,
+          "processed_events": 3,
+          "last_processed_at": "2026-10-01T04:03:45.741Z"
+        },
+        "snapshots": [
+          {
+            "version": 1,
+            "kind": "CLOSE",
+            "units": 750,
+            "amount_cents": 750,
+            "event_ids": [
+              "evt_001",
+              "evt_002",
+              "evt_003"
+            ],
+            "added_event_ids": [
+              "evt_001",
+              "evt_002",
+              "evt_003"
+            ],
+            "created_at": "2026-10-01T04:03:45.533Z",
+            "through_epoch": 0
+          },
+          {
+            "version": 2,
+            "kind": "ADJUST",
+            "units": 850,
+            "amount_cents": 850,
+            "event_ids": [
+              "evt_001",
+              "evt_002",
+              "evt_003",
+              "evt_004"
+            ],
+            "added_event_ids": [
+              "evt_004"
+            ],
+            "created_at": "2026-10-01T04:03:47.594Z",
+            "through_epoch": 1
+          }
+        ],
+        "events": [
+          {
+            "event_id": "evt_001",
+            "occurred_at": "2026-09-01T12:00:00.000Z",
+            "accepted_at": "2026-10-01T04:03:44.314Z",
+            "units": 100,
+            "amount_cents": 100,
+            "classification": "ON_TIME",
+            "epoch": 0,
+            "processed_at": "2026-10-01T04:03:45.220Z"
+          },
+          {
+            "event_id": "evt_002",
+            "occurred_at": "2026-09-02T12:00:00.000Z",
+            "accepted_at": "2026-10-01T04:03:44.754Z",
+            "units": 250,
+            "amount_cents": 250,
+            "classification": "ON_TIME",
+            "epoch": 0,
+            "processed_at": "2026-10-01T04:03:45.719Z"
+          },
+          {
+            "event_id": "evt_003",
+            "occurred_at": "2026-09-03T12:00:00.000Z",
+            "accepted_at": "2026-10-01T04:03:45.134Z",
+            "units": 400,
+            "amount_cents": 400,
+            "classification": "ON_TIME",
+            "epoch": 0,
+            "processed_at": "2026-10-01T04:03:45.741Z"
+          },
+          {
+            "event_id": "evt_004",
+            "occurred_at": "2026-09-01T08:00:00.000Z",
+            "accepted_at": "2026-10-01T04:03:45.916Z",
+            "units": 100,
+            "amount_cents": 100,
+            "classification": "POST_CLOSE",
+            "epoch": 1,
+            "processed_at": "2026-10-01T04:03:46.360Z"
+          }
+        ],
+        "pending": {
+          "units": 0,
+          "amount_cents": 0,
+          "event_ids": []
+        }
+      },
+      "requests": [
+        {
+          "method": "GET",
+          "path": "/api/period",
+          "body": null,
+          "status": 200,
+          "response": {
+            "customer_id": "ACME",
+            "period": "2026-09",
+            "phase": "CLOSED",
+            "rate_cents_per_unit": 1,
+            "epoch": 2,
+            "latest_version": 2,
+            "building": null,
+            "aggregate": {
+              "units": 750,
+              "amount_cents": 750,
+              "processed_events": 3,
+              "last_processed_at": "2026-10-01T04:03:45.741Z"
+            },
+            "snapshots": [
+              {
+                "version": 1,
+                "kind": "CLOSE",
+                "units": 750,
+                "amount_cents": 750,
+                "event_ids": [
+                  "evt_001",
+                  "evt_002",
+                  "evt_003"
+                ],
+                "added_event_ids": [
+                  "evt_001",
+                  "evt_002",
+                  "evt_003"
+                ],
+                "created_at": "2026-10-01T04:03:45.533Z",
+                "through_epoch": 0
+              },
+              {
+                "version": 2,
+                "kind": "ADJUST",
+                "units": 850,
+                "amount_cents": 850,
+                "event_ids": [
+                  "evt_001",
+                  "evt_002",
+                  "evt_003",
+                  "evt_004"
+                ],
+                "added_event_ids": [
+                  "evt_004"
+                ],
+                "created_at": "2026-10-01T04:03:47.594Z",
+                "through_epoch": 1
+              }
+            ],
+            "events": [
+              {
+                "event_id": "evt_001",
+                "occurred_at": "2026-09-01T12:00:00.000Z",
+                "accepted_at": "2026-10-01T04:03:44.314Z",
+                "units": 100,
+                "amount_cents": 100,
+                "classification": "ON_TIME",
+                "epoch": 0,
+                "processed_at": "2026-10-01T04:03:45.220Z"
+              },
+              {
+                "event_id": "evt_002",
+                "occurred_at": "2026-09-02T12:00:00.000Z",
+                "accepted_at": "2026-10-01T04:03:44.754Z",
+                "units": 250,
+                "amount_cents": 250,
+                "classification": "ON_TIME",
+                "epoch": 0,
+                "processed_at": "2026-10-01T04:03:45.719Z"
+              },
+              {
+                "event_id": "evt_003",
+                "occurred_at": "2026-09-03T12:00:00.000Z",
+                "accepted_at": "2026-10-01T04:03:45.134Z",
+                "units": 400,
+                "amount_cents": 400,
+                "classification": "ON_TIME",
+                "epoch": 0,
+                "processed_at": "2026-10-01T04:03:45.741Z"
+              },
+              {
+                "event_id": "evt_004",
+                "occurred_at": "2026-09-01T08:00:00.000Z",
+                "accepted_at": "2026-10-01T04:03:45.916Z",
+                "units": 100,
+                "amount_cents": 100,
+                "classification": "POST_CLOSE",
+                "epoch": 1,
+                "processed_at": "2026-10-01T04:03:46.360Z"
+              }
+            ],
+            "pending": {
+              "units": 0,
+              "amount_cents": 0,
+              "event_ids": []
+            }
+          },
+          "at": "2026-10-01T04:03:48.629757+00:00"
+        }
+      ],
+      "checks": [
+        {
+          "label": "Final observation status",
+          "actual": 200,
+          "expected": 200,
+          "passed": true
+        },
+        {
+          "label": "Processing receipts observed",
+          "actual": [
+            "evt_001",
+            "evt_002",
+            "evt_003",
+            "evt_004"
+          ],
+          "expected": [
+            "evt_001",
+            "evt_002",
+            "evt_003",
+            "evt_004"
+          ],
+          "passed": true
+        },
+        {
+          "label": "ON_TIME aggregate units",
+          "actual": 750,
+          "expected": 750,
+          "passed": true
+        },
+        {
+          "label": "ON_TIME processed events",
+          "actual": 3,
+          "expected": 3,
+          "passed": true
+        },
+        {
+          "label": "Original snapshot unchanged",
+          "actual": true,
+          "expected": true,
+          "passed": true
+        },
+        {
+          "label": "Adjusted snapshot unchanged",
+          "actual": true,
+          "expected": true,
+          "passed": true
+        },
+        {
+          "label": "No active build",
+          "actual": null,
+          "expected": null,
+          "passed": true
+        }
+      ]
+    }
+  ]
+}

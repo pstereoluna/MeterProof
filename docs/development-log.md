@@ -39,3 +39,12 @@ Final executed verification is recorded in `evidence/local-verification.md`. Thi
 - Observed all four real stream-processing receipts, an ON_TIME-only aggregate of 750, immutable v1 at $7.50, and adjusted v2 at $8.50. No manual consumer invocation, data reset or cloud fault injection was performed.
 - Saved private deployment/API/log evidence and published a sanitized verification summary, assertion results and screenshot. Retained the executed standard-library API smoke verifier for reproducibility. Browser verification checked both snapshot derivations.
 - The execution used temporary root-session credentials with CDK same-account fallback after helper-role assumption warnings. No bootstrap permission changes were made. No cost alert, automatic shutdown, production authorization control or spending cap was added. See `evidence/cloud-verification.md` for evidence and limits.
+
+## 2026-10-01 — Recorded AWS walkthrough update (verified locally)
+
+- Public-project research identified an entry problem: a completed shared cloud period left the original mutation buttons disabled for new visitors. Chose a six-step read-only replay of the actual AWS run, with a separate live-record view and no global reset.
+- Scoped the walkthrough to accept, close, late usage, retry, adjust and verify. The source evidence is the September 30 Pacific / October 1 UTC run of commit `819c512`. Reconstructed early views must be labeled and leave unobserved aggregates null; full period captures retain their observed values.
+- Kept the local eight-step simulator and all metering transaction semantics unchanged. The update adds no AWS service and does not claim cloud-forced lag, races or crash recovery.
+- Documented the target hypothesis: a SaaS engineer and finance operator may find event-level derivation useful when investigating a preserved 750-unit report plus 100 later units. Existing competitors and the absence of customer validation remain explicit.
+- Prepared an English Builder Center update for review, without modifying the published project or creating a cover image. Agent evidence remains browser sign-in plus STS/CLI/CDK execution; no MCP connection is verified.
+- **Status:** 26 automated tests, typecheck, CDK synthesis, 29 browser assertions, and a complete eight-step local UI run passed. AWS deployment is pending renewal of the expired login. See `evidence/walkthrough-verification.md`. Historical cloud and local evidence files remain unchanged.

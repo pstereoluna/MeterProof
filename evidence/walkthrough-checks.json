@@ -1,0 +1,154 @@
+{
+  "date": "2026-10-01",
+  "environment": "local browser, recorded AWS artifact",
+  "status": "passed",
+  "checks": [
+    {
+      "name": "visitor one starts at accept",
+      "passed": true
+    },
+    {
+      "name": "unobserved projection is explicit",
+      "passed": true
+    },
+    {
+      "name": "early receipts are unknown, not claimed unprocessed",
+      "passed": true
+    },
+    {
+      "name": "close displays original 7.50",
+      "passed": true
+    },
+    {
+      "name": "late step displays explicit 1.00",
+      "passed": true
+    },
+    {
+      "name": "late step retains v1 7.50",
+      "passed": true
+    },
+    {
+      "name": "late event highlighted",
+      "passed": true
+    },
+    {
+      "name": "three timestamps available",
+      "passed": true
+    },
+    {
+      "name": "conflicting retry evidence exposed",
+      "passed": true
+    },
+    {
+      "name": "adjust displays latest 8.50",
+      "passed": true
+    },
+    {
+      "name": "adjust preserves original 7.50",
+      "passed": true
+    },
+    {
+      "name": "v1 derivation excludes late event",
+      "passed": true
+    },
+    {
+      "name": "v2 derivation includes late event",
+      "passed": true
+    },
+    {
+      "name": "verify selects preserved v1",
+      "passed": true
+    },
+    {
+      "name": "walkthrough ends clearly",
+      "passed": true
+    },
+    {
+      "name": "second independent visitor starts at accept",
+      "passed": true
+    },
+    {
+      "name": "first visitor stays at verify",
+      "passed": true
+    },
+    {
+      "name": "mobile has no horizontal overflow",
+      "passed": true
+    },
+    {
+      "name": "mobile late step has no horizontal overflow",
+      "passed": true
+    },
+    {
+      "name": "back returns to adjustment",
+      "passed": true
+    },
+    {
+      "name": "restart resets the story",
+      "passed": true
+    },
+    {
+      "name": "restart clears snapshot cards",
+      "passed": true
+    },
+    {
+      "name": "playback made no writes",
+      "passed": true
+    },
+    {
+      "name": "playback did not query live period",
+      "passed": true
+    },
+    {
+      "name": "live view separate",
+      "passed": true
+    },
+    {
+      "name": "live reads current API",
+      "passed": true
+    },
+    {
+      "name": "return to replay remains independent",
+      "passed": true
+    },
+    {
+      "name": "live and replay made no writes",
+      "passed": true
+    },
+    {
+      "name": "no JavaScript errors",
+      "passed": true
+    }
+  ],
+  "requests": [
+    {
+      "method": "GET",
+      "path": "/"
+    },
+    {
+      "method": "GET",
+      "path": "/api/health"
+    },
+    {
+      "method": "GET",
+      "path": "/api/replay"
+    },
+    {
+      "method": "GET",
+      "path": "/"
+    },
+    {
+      "method": "GET",
+      "path": "/api/health"
+    },
+    {
+      "method": "GET",
+      "path": "/api/replay"
+    },
+    {
+      "method": "GET",
+      "path": "/api/period"
+    }
+  ],
+  "javascript_errors": []
+}

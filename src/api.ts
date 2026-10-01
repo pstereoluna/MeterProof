@@ -1,5 +1,5 @@
 import { readFile } from 'node:fs/promises';
-import { join } from 'node:path';
+import { dirname, join } from 'node:path';
 import type { APIGatewayProxyEventV2, APIGatewayProxyStructuredResultV2 } from 'aws-lambda';
 import { ApiError, type MeterProof } from './domain.js';
 import { getRuntime } from './runtime.js';
@@ -25,6 +25,9 @@ export function createApiHandler(service: MeterProof, htmlPath = join(__dirname,
       if (method === 'GET' && path === '/') {
         const html = await readFile(htmlPath, 'utf8');
         return { statusCode: 200, headers: { 'content-type': 'text/html; charset=utf-8', 'cache-control': 'no-store' }, body: html };
+      }
+      if (method === 'GET' && path === '/api/replay') {
+        return json(200, JSON.parse(await readFile(join(dirname(htmlPath), 'replay.json'), 'utf8')));
       }
       if (method === 'GET' && path === '/api/period') return json(200, await service.view());
       if (method === 'POST' && path === '/api/events') {

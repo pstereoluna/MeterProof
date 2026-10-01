@@ -33,6 +33,11 @@ test('synthesized Lambda bundles serve the UI and complete the real local transa
     const health = await call('GET', '/api/health');
     assert.equal(JSON.parse(health.body).mode, 'local');
     assert.notEqual(JSON.parse(health.body).demo, true, 'deployed handler never enables local scenario controls');
+    const replay = await call('GET', '/api/replay');
+    assert.equal(replay.statusCode, 200);
+    assert.deepEqual(JSON.parse(replay.body), JSON.parse(readFileSync('web/replay.json', 'utf8')));
+    assert.equal((await call('POST', '/api/replay', {})).statusCode, 404);
+    assert.equal(JSON.parse((await call('GET', '/api/period')).body).events.length, 0, 'reading the recording does not seed the ledger');
     assert.equal((await call('GET', '/api/demo')).statusCode, 404);
     assert.equal((await call('POST', '/api/demo/start', {})).statusCode, 404);
     assert.equal((await call('POST', '/api/demo/step', { run_id: 'local-only', expected_step: 0 })).statusCode, 404);

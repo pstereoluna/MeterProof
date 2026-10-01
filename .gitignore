@@ -11,3 +11,5 @@ cdk.context.json
 outputs.json
 evidence/aws-connection*.json
 __pycache__/
+.playwright-cli/
+output/playwright/

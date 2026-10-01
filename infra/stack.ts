@@ -70,6 +70,7 @@ export class MeterProofStack extends Stack {
           afterBundling: (inputDir, outputDir) => [
             `mkdir -p ${shellQuote(path.join(outputDir, 'web'))}`,
             `cp ${shellQuote(path.join(inputDir, 'web/index.html'))} ${shellQuote(path.join(outputDir, 'web/index.html'))}`,
+            `cp ${shellQuote(path.join(inputDir, 'web/replay.json'))} ${shellQuote(path.join(outputDir, 'web/replay.json'))}`,
           ],
         },
       },
@@ -129,7 +130,7 @@ export class MeterProofStack extends Stack {
     api.addRoutes({
       path: '/', methods: [apigateway.HttpMethod.GET], integration,
     });
-    for (const route of ['/api/health', '/api/period']) {
+    for (const route of ['/api/health', '/api/period', '/api/replay']) {
       api.addRoutes({ path: route, methods: [apigateway.HttpMethod.GET], integration });
     }
     for (const route of ['/api/events', '/api/close', '/api/adjust']) {

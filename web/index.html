@@ -1,6 +1,7 @@
 <!doctype html>
 <html lang="en">
 <head>
+  <link rel="icon" href="data:,">
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="theme-color" content="#172f2a">
@@ -20,6 +21,9 @@
     @media(max-width:1050px){.scenario-top{align-items:flex-start;gap:16px}.scenario-controls{flex-direction:column;align-items:stretch}.scenario-step{padding:7px 5px}.scenario-step-label{font-size:9px}.scenario-evidence{gap:18px}.ledger-comparison{margin-left:16px;margin-right:16px}.scenario-controls .action{justify-content:center}}
     @media(max-width:760px){.scenario-top{padding:16px;flex-direction:column;gap:13px}.scenario-controls{flex-direction:row;width:100%;align-items:stretch}.scenario-controls .action{max-width:none}.scenario-controls .primary{flex:1}.scenario-controls .new-run{flex:0 0 auto}.scenario-progress{grid-template-columns:repeat(4,minmax(0,1fr));padding:0 16px 15px;gap:6px}.scenario-step{padding:8px}.scenario-step-label{font-size:10px}.scenario-evidence{grid-template-columns:1fr;padding:15px 16px;gap:15px}.scenario-run{padding:9px 16px;flex-direction:column;gap:4px}.scenario-title{font-size:15px}.scenario-mode .metric-value{font-size:29px}.scenario-mode .metric{min-height:145px}.ledger-comparison{gap:12px;padding:13px}.comparison-value{font-size:22px}.comparison-label{font-size:8px}.scenario-environment{font-size:9px}.scenario-mode .brand{font-size:18px}.scenario-mode .brand-mark{width:25px}.scenario-mode .connection{gap:5px}.scenario-mode #connection-label{font-size:9px}}
     .comparison-read-note{grid-column:1/-1;font-size:9px;line-height:1.65;color:var(--muted);margin-top:-7px}.record-notes{padding:13px 23px;border-top:1px solid var(--line);background:#fdfefa;font-size:10px;color:var(--muted);line-height:1.7}.record-notes summary{cursor:pointer;color:var(--ink);font-weight:600}.record-notes summary:focus-visible{outline:3px solid #4ba687;outline-offset:4px}.record-notes p{margin:10px 0 0}.record-notes strong{font-weight:600;color:var(--ink)}
+
+    .mode-switch{display:flex;align-items:center;gap:7px;margin-bottom:20px}.mode-switch .active{background:var(--ink);color:white}.mode-context{font-size:10px;color:var(--muted);margin-left:6px}.walkthrough{border:1px solid #d3e0ce;border-radius:var(--radius);background:#fffefb;margin-bottom:20px;overflow:hidden}.walkthrough-top{padding:20px 23px 16px}.walkthrough-meta{display:flex;align-items:center;gap:9px;flex-wrap:wrap;font-size:10px;color:var(--muted);margin-bottom:13px}.walkthrough-title{font-size:20px;line-height:1.3;letter-spacing:-.5px;font-weight:650;margin:0 0 7px}.walkthrough-summary{margin:0;font-size:12px;line-height:1.65;color:var(--muted);max-width:850px}.walkthrough-progress{display:grid;grid-template-columns:repeat(6,minmax(0,1fr));gap:7px;padding:0 23px 16px}.walkthrough-progress button{border:1px solid var(--line);border-radius:6px;background:#f8faf5;padding:8px 9px;color:var(--muted);font-size:11px;text-align:left}.walkthrough-progress button.active{background:var(--mint);border-color:#8db89b;color:var(--ink);font-weight:650}.walkthrough-progress button span{font-size:9px;margin-right:5px;opacity:.7}.walkthrough-bottom{display:flex;align-items:center;justify-content:space-between;gap:18px;border-top:1px solid var(--line);padding:13px 23px;background:#f5f8ef}.walkthrough-nav{display:flex;gap:7px;flex-shrink:0}.walkthrough-nav .action{padding:10px 13px}.walkthrough-checks{display:grid;grid-template-columns:1fr 1fr;gap:9px 22px;padding:15px 23px;border-top:1px solid var(--line)}.walkthrough-note{font-size:10px;line-height:1.6;color:var(--muted);max-width:620px}.request-list{margin-top:12px;display:grid;gap:7px}.request-detail{border:1px solid var(--line);border-radius:6px;background:#fff;padding:9px 11px}.request-detail summary{font:10px/1.6 ui-monospace,SFMono-Regular,Menlo,monospace;overflow-wrap:anywhere}.request-detail pre{white-space:pre-wrap;overflow-wrap:anywhere;max-height:260px;overflow:auto;font:10px/1.7 ui-monospace,SFMono-Regular,Menlo,monospace;padding:12px;background:#f4f7f0;border-radius:5px;color:var(--ink)}.ledger-item.highlighted{background:#fffbef;border-left:3px solid #c39848}.ledger-item.highlighted .ledger-row{padding-left:20px}.ledger-item.highlighted .event-id::after{content:'  + late usage';font:9px/1.4 -apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;color:var(--amber)}.evidence-boundary{margin-top:21px;border:1px solid var(--line);border-radius:11px;padding:15px 20px;background:#fffefb}.evidence-boundary h2{font-size:12px;margin:0 0 10px}.evidence-columns{display:grid;grid-template-columns:1fr 1fr;gap:24px}.evidence-columns p{font-size:10px;line-height:1.7;color:var(--muted);margin:0}.evidence-columns strong{color:var(--ink);font-weight:650}.evidence-columns a{color:var(--teal);text-underline-offset:3px}.replay-mode main.wrap{padding-top:24px}.replay-mode .heading{margin-bottom:21px;align-items:flex-start}.replay-mode h1{font-size:29px;line-height:1.3;max-width:900px}.replay-mode .subtitle{font-size:12px}.replay-mode .metric{min-height:147px;padding-top:18px;padding-bottom:18px}.replay-mode .metric-value{margin-top:11px;font-size:35px}.replay-mode .summary{margin-bottom:20px}.replay-mode .connection{max-width:250px;justify-content:flex-end;flex-wrap:wrap}.replay-mode .ledger-row{padding-top:13px;padding-bottom:13px}.read-only-note{margin-bottom:20px;font-size:12px;color:var(--muted)}
+    @media(max-width:760px){.mode-switch{flex-wrap:wrap;gap:6px}.mode-context{width:100%;margin:3px 0 0}.walkthrough-top{padding:16px}.walkthrough-title{font-size:18px}.walkthrough-progress{grid-template-columns:repeat(3,minmax(0,1fr));padding:0 16px 15px}.walkthrough-bottom{padding:13px 16px;flex-direction:column;align-items:stretch;gap:12px}.walkthrough-nav{justify-content:flex-end}.walkthrough-checks{grid-template-columns:1fr;padding:14px 16px;gap:10px}.replay-mode h1{font-size:25px}.replay-mode .heading{flex-direction:column;gap:8px}.replay-mode .heading-tools{align-self:flex-end;padding:0}.replay-mode .metric-value{font-size:29px}.evidence-columns{grid-template-columns:1fr;gap:12px}.replay-mode .connection{max-width:160px;font-size:9px}.replay-mode .brand{font-size:18px}.replay-mode .brand-mark{width:27px}.ledger-item.highlighted .ledger-row{padding-left:13px}.ledger-item.highlighted .event-id::after{display:block;margin-top:3px}}
     [hidden]{display:none!important}
     @media(min-width:1400px){main.wrap{padding-top:44px}.heading{margin-bottom:29px}.summary{margin-bottom:29px}.actions{margin-bottom:29px}.metric{min-height:175px;padding-top:23px}.metric-value{margin-top:18px}}
     @media(max-width:1050px){.wrap{padding-left:24px;padding-right:24px}.workarea{grid-template-columns:minmax(0,1fr) 285px;gap:15px}.actions{align-items:flex-start;flex-direction:column;gap:10px}.action-buttons{width:100%}.action{flex:1;justify-content:center}.ledger-row,.table-head{padding-left:16px;padding-right:16px;grid-template-columns:1fr 1fr 75px 48px 12px;gap:7px}.metric{padding-left:18px;padding-right:18px}.event-details{padding-left:16px;padding-right:16px}.brand-caption{display:none}}
@@ -34,9 +38,18 @@
   </div></header>
   <main class="wrap">
     <section class="heading" aria-label="Period overview">
-      <div><div class="eyebrow">Usage workspace / ACME</div><h1>September 2026</h1><p class="subtitle">API requests<span>·</span>$0.01 per unit<span>·</span>All times UTC</p></div>
+      <div><div class="eyebrow" id="page-eyebrow">Usage workspace / ACME</div><h1 id="page-title">September 2026</h1><p class="subtitle" id="page-subtitle">API requests<span>·</span>$0.01 per unit<span>·</span>All times UTC</p></div>
       <div class="heading-tools"><span class="badge open" id="period-badge">Loading</span><button class="refresh" id="refresh" aria-label="Refresh period" title="Refresh period"><svg width="14" height="14" viewBox="0 0 20 20" fill="none"><path d="M16.8 7a7 7 0 1 0 .2 5M17 2v5h-5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></button></div>
     </section>
+    <nav class="mode-switch" id="mode-switch" aria-label="Record view" hidden><button class="action" id="view-replay" type="button">Recorded walkthrough</button><button class="action" id="view-live" type="button">View live record</button><span class="mode-context" id="mode-context">Explore the evidence without changing usage records.</span></nav>
+    <section class="walkthrough" id="walkthrough" aria-label="Recorded AWS walkthrough" hidden>
+      <div class="walkthrough-top"><div class="walkthrough-meta"><span class="badge">Recorded AWS walkthrough</span><span id="recorded-date"></span><span id="replay-basis"></span></div><h2 class="walkthrough-title" id="replay-title"></h2><p class="walkthrough-summary" id="replay-summary"></p></div>
+      <div class="walkthrough-progress" id="replay-progress" aria-label="Walkthrough steps"></div>
+      <div class="walkthrough-bottom"><div class="walkthrough-note" id="replay-notice">These are saved AWS API responses. Step navigation runs no new AWS operations.</div><div class="walkthrough-nav"><button class="action" id="replay-restart" type="button">Restart</button><button class="action" id="replay-back" type="button">Back</button><button class="action primary" id="replay-next" type="button">Next step →</button></div></div>
+      <details class="record-notes" id="replay-check-details"><summary id="replay-check-summary">Recorded checks</summary><div class="walkthrough-checks" id="replay-checks"></div></details>
+      <details class="record-notes" id="replay-raw"><summary id="replay-request-summary">Inspect the recorded requests and responses</summary><div class="request-list" id="replay-requests"></div></details>
+    </section>
+    <p class="read-only-note" id="live-record-note" hidden>Current API record, read only. Refresh reads the latest saved state. Use the recorded walkthrough to follow how the usage estimate changed.</p>
     <section class="scenario" id="scenario" aria-label="Controlled local scenario" hidden>
       <div class="scenario-top"><div><div class="eyebrow" id="scenario-counter">Local scenario</div><h2 class="scenario-title" id="scenario-title">A complete usage record, under pressure.</h2><p class="scenario-description" id="scenario-description">Step through delayed delivery, retries, late usage, and an interrupted adjustment. Each step records its actual checks.</p></div><div class="scenario-controls"><button class="action primary" id="scenario-next" disabled>Start scenario</button><button class="action new-run" id="scenario-new" disabled>New run</button></div></div>
       <div class="scenario-progress" id="scenario-progress" aria-label="Scenario evidence history"></div>
@@ -48,27 +61,22 @@
       <article class="metric pending"><div class="metric-title"><span id="adjustment-title">Post-close usage</span><span class="metric-icon" aria-hidden="true"><svg width="16" height="16" viewBox="0 0 20 20" fill="none"><path d="M10 3v14M3 10h14" stroke="currentColor" stroke-width="1.3"/></svg></span></div><div class="metric-value empty" id="adjustment-value">—</div><div class="metric-foot" id="adjustment-foot">Explicitly recorded after close</div></article>
       <article class="metric latest"><div class="metric-title">Latest preserved snapshot<span class="metric-icon" aria-hidden="true"><svg width="17" height="17" viewBox="0 0 20 20" fill="none"><path d="m4 10 4 4 8-8" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/></svg></span></div><div class="metric-value empty" id="latest-value">—</div><div class="metric-foot" id="latest-foot">Every version remains available</div></article>
     </section>
-    <section class="actions" id="basic-actions" aria-label="Demo controls"><div class="action-label"><svg width="14" height="14" viewBox="0 0 20 20" fill="none" aria-hidden="true"><path d="m7 4 8 6-8 6V4Z" stroke="currentColor" stroke-width="1.4" stroke-linejoin="round"/></svg><span><b>Walk the record</b> <span id="live-view"></span></span></div><div class="action-buttons">
-      <button id="seed" class="action" disabled><span class="step">1</span>Load sample usage</button><button id="close" class="action" disabled><span class="step">2</span>Close snapshot</button><button id="late" class="action" disabled><span class="step">3</span>Add post-close usage</button><button id="adjust" class="action primary" disabled><span class="step">4</span>Create adjusted snapshot</button>
-    </div></section>
     <div class="status" id="status" role="status" aria-live="polite"></div>
     <div class="workarea">
       <section class="panel" aria-labelledby="ledger-title"><div class="panel-heading"><div><h2 class="panel-title" id="ledger-title">Event ledger</h2><div class="panel-subtitle" id="event-count">The source behind every snapshot</div></div><span class="subtle-tag"><svg width="12" height="12" viewBox="0 0 20 20" fill="none" aria-hidden="true"><path d="m4 10 4 4 8-8" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>Authoritative source</span></div><div class="ledger-comparison" id="ledger-comparison" hidden></div><div class="table-head" aria-hidden="true"><span>Event</span><span>Occurred at</span><span>Cutoff</span><span class="right">Units</span><span></span></div><div id="events"><div class="empty-ledger"><div class="empty-symbol" aria-hidden="true"><svg width="19" height="23" viewBox="0 0 20 24" fill="none"><rect x="3" y="2" width="14" height="20" rx="2" stroke="currentColor" stroke-width="1.2"/><path d="M7 8h6M7 12h6M7 16h4" stroke="currentColor" stroke-width="1.2"/></svg></div><div class="empty-title">Your evidence starts here</div><p class="empty-description">Load three sample usage events, then close the period to preserve its first snapshot.</p></div></div><div class="ledger-footer"><svg width="13" height="15" viewBox="0 0 16 18" fill="none" aria-hidden="true"><path d="M8 1 14 3.5V9c0 3.7-3.2 6.6-6 8-2.8-1.4-6-4.3-6-8V3.5L8 1Z" stroke="currentColor" stroke-width="1.2"/><path d="m5 8.5 2 2 4-4" stroke="currentColor" stroke-width="1.2"/></svg><span>Cutoff is decided at ingestion. Processing lag never changes an event’s classification. Select an event to inspect all three timestamps.</span></div><details class="record-notes"><summary>How to read this record</summary><p><strong>Cutoff and time.</strong> Classification is fixed when a report is accepted. “Accepted at” is server time sampled before acceptance finishes; it does not establish the exact save time or event order.</p><p><strong>Evidence and completeness.</strong> The ledger is authoritative for accepted reports. MeterProof does not verify whether the source reported all usage.</p><p><strong>Live view and preserved results.</strong> Live values can reflect different reads. Pending means usage outside the latest snapshot shown above. Preserved snapshots stay unchanged. Automatic projection alerts and cloud recovery are not implemented.</p><p><strong>Operator responsibility.</strong> An operator triggers close and adjustment. The demo does not enforce roles or approvals. Usage adjustments do not create or change invoices or payments.</p></details></section>
       <aside><section class="panel" aria-labelledby="derivation-title"><div class="derivation"><div class="derivation-header"><h2 class="panel-title" id="derivation-title">Show the math</h2><div class="snapshot-pills" id="snapshot-pills"></div></div><div id="derivation"><div class="empty-derivation">Close a snapshot to see exactly which ledger events make up its total.</div></div></div><div class="preservation"><svg width="14" height="16" viewBox="0 0 20 22" fill="none" aria-hidden="true"><path d="M5 8V5a5 5 0 0 1 10 0v3" stroke="currentColor" stroke-width="1.3"/><rect x="2" y="8" width="16" height="12" rx="2" stroke="currentColor" stroke-width="1.3"/><path d="M10 12v4" stroke="currentColor" stroke-width="1.3"/></svg><span><strong>History stays intact.</strong><br>Adjustments create a new snapshot. Prior versions are preserved.</span></div></section><div class="history" id="history"></div></aside>
     </div>
+    <section class="evidence-boundary" id="evidence-boundary" aria-labelledby="evidence-title" hidden><h2 id="evidence-title">What the evidence covers</h2><div class="evidence-columns"><p><strong>Recorded on AWS.</strong> Basic acceptance → close → late usage → adjustment, duplicate retries, and DynamoDB Streams processing receipts. <a href="https://github.com/pstereoluna/MeterProof/blob/main/evidence/cloud-verification.md" target="_blank" rel="noopener noreferrer">AWS verification</a> · <a href="https://github.com/pstereoluna/MeterProof/blob/main/evidence/cloud-checks.json" target="_blank" rel="noopener noreferrer">Recorded API evidence</a></p><p><strong>Exercised locally.</strong> Delayed delivery at close, concurrent arrivals, and interruption/recovery are covered by local scenarios and tests. They are not a live AWS failure demonstration. <a href="https://github.com/pstereoluna/MeterProof/blob/main/evidence/scenario-verification.md" target="_blank" rel="noopener noreferrer">Local scenario evidence</a> · <a href="https://github.com/pstereoluna/MeterProof/blob/main/test/integration/dynamodb.test.ts" target="_blank" rel="noopener noreferrer">Concurrency tests</a> · <a href="https://github.com/pstereoluna/MeterProof/blob/main/test/integration/scenario.test.ts" target="_blank" rel="noopener noreferrer">Recovery tests</a></p></div></section>
     <footer class="footnote"><span><strong>MeterProof</strong> · Upstream usage metering</span><span>Estimated usage charges · Ledger-backed snapshots</span></footer>
   </main>
   <script>
     'use strict';
     const $ = id => document.getElementById(id);
-    const seedEvents = [
-      {event_id:'evt_001',occurred_at:'2026-09-02T10:15:00.000Z',units:100},
-      {event_id:'evt_002',occurred_at:'2026-09-12T14:30:00.000Z',units:250},
-      {event_id:'evt_003',occurred_at:'2026-09-28T18:45:00.000Z',units:400}
-    ];
-    const lateEvent = {event_id:'evt_004',occurred_at:'2026-09-29T09:00:00.000Z',units:100};
-    let period = null, busy = false, booting = true, selectedVersion = null, userSelectedVersion = false, pollGeneration = 0;
+    let period = null, busy = false, booting = true, selectedVersion = null, userSelectedVersion = false;
     let scenarioMode = false, scenario = null, selectedStep = null, viewedRunId = null, modeKnown = false;
+    let replayMode = false, replay = null, replayIndex = 0, replayRenderedStep = null, localScenarioAvailable = false, viewGeneration = 0;
+    const requestedView = new URLSearchParams(window.location.search).get('view');
+    const replayStepNames = ['Accept usage','Close period','Late event','Retry safely','Adjust','Verify v1'];
     const emptyLedgerHTML = $('events').innerHTML;
     const emptyDerivationHTML = $('derivation').innerHTML;
     const stepNames = ['Delivery lag','Close','Replay','Late usage','Interrupt','Recover','Adjust','Conflict'];
@@ -87,6 +95,7 @@
       $('status').className = 'status' + (message ? ' visible' : '') + (error ? ' error' : '');
     }
     async function api(path, body) {
+      if (body !== undefined && !scenarioMode) throw new Error('This record is read only. Walkthrough navigation does not submit usage operations.');
       const controller = new AbortController();
       const timeout = setTimeout(() => controller.abort(), path.startsWith('demo/') ? 45000 : 18000);
       try {
@@ -137,18 +146,17 @@
       $('latest-value').textContent = latest ? money(latest.amount_cents) : '—';
       $('latest-value').className = 'metric-value' + (latest ? '' : ' empty');
       $('latest-foot').innerHTML = latest ? '<span class="version">v' + latest.version + '</span> ' + number(latest.units) + ' units · ' + (period.building ? 'v' + period.building.version + ' unfinished' : latest.kind === 'ADJUST' ? 'adjusted' : 'closed') : 'Every version remains available';
-      $('live-view').textContent = period.phase === 'OPEN' ? '· live view ' + money(period.aggregate.amount_cents) : '';
       $('event-count').textContent = count(period.events.length,'event') + ' · ' + count(period.events.reduce((sum,e) => sum + e.units, 0),'unit') + ' accepted';
       if (period.events.length) {
         $('events').innerHTML = [...period.events].sort((a,b) => a.accepted_at.localeCompare(b.accepted_at) || a.event_id.localeCompare(b.event_id)).map((event,index) => {
           const isExpanded = expanded.has(event.event_id);
-          return '<div class="ledger-item"><button class="ledger-row" data-event="' + esc(event.event_id) + '" aria-expanded="' + isExpanded + '" aria-controls="event-details-' + index + '"><span><span class="event-id">' + esc(event.event_id) + '</span><span class="event-caption"><span class="dot ' + (event.processed_at ? 'ok' : '') + '"></span>' + (event.processed_at ? 'Processed' : scenarioMode ? 'Delivery held' : 'Unprocessed') + '</span></span><span class="date-short">' + compactDate(event.occurred_at) + '</span><span><span class="class-tag' + (event.classification === 'POST_CLOSE' ? ' post-close' : '') + '">' + (event.classification === 'POST_CLOSE' ? 'Post-close' : 'On time') + '</span></span><span class="units right">' + number(event.units) + '<br><small>' + money(event.amount_cents) + '</small></span><svg class="chevron" width="10" height="12" viewBox="0 0 10 12" fill="none" aria-hidden="true"><path d="m3 2 4 4-4 4" stroke="currentColor" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"/></svg></button><div class="event-details" id="event-details-' + index + '"' + (isExpanded ? '' : ' hidden') + '><div class="event-details-inner"><div><div class="time-label">Occurred at</div><div class="time-value">' + esc(date(event.occurred_at)) + '</div><div class="time-note">Usage time reported by the source</div></div><div><div class="time-label">Accepted at</div><div class="time-value">' + esc(date(event.accepted_at)) + '</div><div class="time-note">Server sample before acceptance finishes; not exact save time or event order.</div></div><div><div class="time-label">Processed at</div><div class="time-value">' + (event.processed_at ? esc(date(event.processed_at)) : '<em>' + (scenarioMode ? 'Delivery held by scenario' : 'No processing receipt') + '</em>') + '</div><div class="time-note">' + (event.processed_at ? 'Async metering recorded' : 'Processing completion not recorded') + '</div></div></div></div></div>';
+          return '<div class="ledger-item' + (replayMode && event.classification === 'POST_CLOSE' ? ' highlighted' : '') + '"><button class="ledger-row" data-event="' + esc(event.event_id) + '" aria-expanded="' + isExpanded + '" aria-controls="event-details-' + index + '"><span><span class="event-id">' + esc(event.event_id) + '</span><span class="event-caption"><span class="dot ' + (event.processed_at ? 'ok' : '') + '"></span>' + receiptLabel(event) + '</span></span><span class="date-short">' + compactDate(event.occurred_at) + '</span><span><span class="class-tag' + (event.classification === 'POST_CLOSE' ? ' post-close' : '') + '">' + (event.classification === 'POST_CLOSE' ? 'Post-close' : 'On time') + '</span></span><span class="units right">' + number(event.units) + '<br><small>' + money(event.amount_cents) + '</small></span><svg class="chevron" width="10" height="12" viewBox="0 0 10 12" fill="none" aria-hidden="true"><path d="m3 2 4 4-4 4" stroke="currentColor" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"/></svg></button><div class="event-details" id="event-details-' + index + '"' + (isExpanded ? '' : ' hidden') + '><div class="event-details-inner"><div><div class="time-label">Occurred at</div><div class="time-value">' + esc(date(event.occurred_at)) + '</div><div class="time-note">Usage time reported by the source</div></div><div><div class="time-label">Accepted at</div><div class="time-value">' + esc(date(event.accepted_at)) + '</div><div class="time-note">Server sample before acceptance finishes; not exact save time or event order.</div></div><div><div class="time-label">Processed at</div><div class="time-value">' + (event.processed_at ? esc(date(event.processed_at)) : '<em>' + (replayMode ? 'Not observed in this step' : scenarioMode ? 'Delivery held by scenario' : 'No processing receipt') + '</em>') + '</div><div class="time-note">' + (event.processed_at ? 'Async metering recorded' : replayMode ? 'This saved response does not establish processing time' : 'Processing completion not recorded') + '</div></div></div></div></div>';
         }).join('');
       } else {
         $('events').innerHTML = emptyLedgerHTML;
         if (scenarioMode) $('events').querySelector('.empty-description').textContent = 'Run the first step to accept three events while deliberately holding one delivery.';
       }
-      if (!userSelectedVersion || !snapshots.some(s => s.version === selectedVersion)) selectedVersion = period.latest_version;
+      if (!userSelectedVersion || !snapshots.some(s => s.version === selectedVersion)) selectedVersion = replayMode && currentReplayStep()?.id === 'verify' && !userSelectedVersion ? 1 : period.latest_version;
       const selected = snapshots.find(s => s.version === selectedVersion);
       $('snapshot-pills').innerHTML = snapshots.map(s => '<button class="snapshot-pill' + (selectedVersion === s.version ? ' active' : '') + '" data-version="' + s.version + '" aria-label="Show snapshot version ' + s.version + '" aria-pressed="' + (selectedVersion === s.version) + '">v' + s.version + '</button>').join('');
       if (selected) {
@@ -160,6 +168,7 @@
       $('history').innerHTML = snapshots.length ? '<div class="history-heading"><span>Snapshot history</span><span>' + snapshots.length + ' preserved</span></div>' + snapshots.map(s => '<div class="history-item"><span class="history-dot"></span><span class="history-text">v' + s.version + ' · ' + (s.kind === 'ADJUST' ? 'Adjusted snapshot' : 'Original closed snapshot') + '<small>' + number(s.units) + ' units · ' + s.event_ids.length + ' events</small></span><span class="history-amount">' + money(s.amount_cents) + '</span></div>').join('') : '';
       renderComparison();
       renderScenario();
+      renderReplayPanel();
       renderButtons();
     }
     function renderComparison() {
@@ -170,6 +179,10 @@
       const ledgerCents = period.events.reduce((sum,event) => sum + event.amount_cents,0);
       const onTimeUnits = period.events.filter(event => event.classification === 'ON_TIME').reduce((sum,event) => sum + event.units,0);
       const postCloseUnits = ledgerUnits - onTimeUnits;
+      if (!period.aggregate) {
+        target.innerHTML = '<div><div class="comparison-label">Ledger · accepted reports</div><div class="comparison-value">' + number(ledgerUnits) + ' <small>units</small></div><div class="comparison-detail">' + money(ledgerCents) + ' estimated usage charge</div></div><div><div class="comparison-label">On-time projection</div><div class="comparison-value" style="font-size:18px">Not observed</div><div class="comparison-detail">No aggregate observation in this step</div></div><div class="comparison-read-note">This view is reconstructed from saved API responses. A missing projection sample does not demonstrate processing lag.</div>';
+        return;
+      }
       const gap = onTimeUnits - period.aggregate.units;
       const unprocessedOnTime = period.events.filter(event => event.classification === 'ON_TIME' && !event.processed_at);
       const unprocessedPostClose = period.events.filter(event => event.classification === 'POST_CLOSE' && !event.processed_at);
@@ -183,6 +196,98 @@
       if (postCloseUnits) explanation += ' The ' + count(postCloseUnits,'post-close unit') + (postCloseUnits === 1 ? ' stays' : ' stay') + ' outside this projection.';
       if (unprocessedPostClose.length) explanation += '<br>' + count(unprocessedPostClose.length,'post-close event') + (scenarioMode ? (unprocessedPostClose.length === 1 ? ' has' : ' have') + ' delivery controlled by the scenario' : (unprocessedPostClose.length === 1 ? ' has' : ' have') + ' no processing receipt') + '; processing receipts do not determine snapshot totals.';
       target.innerHTML = '<div><div class="comparison-label">Ledger · all accepted usage</div><div class="comparison-value">' + number(ledgerUnits) + ' <small>' + (ledgerUnits === 1 ? 'unit' : 'units') + '</small></div><div class="comparison-detail">' + money(ledgerCents) + ' · ' + number(onTimeUnits) + ' on time + ' + number(postCloseUnits) + ' post-close</div></div><div><div class="comparison-label">On-time projection · async</div><div class="comparison-value">' + number(period.aggregate.units) + ' <small>' + (period.aggregate.units === 1 ? 'unit' : 'units') + '</small></div><div class="comparison-detail">' + money(period.aggregate.amount_cents) + ' · materialized view only</div></div><div class="comparison-lag' + (gap !== 0 ? ' waiting' : '') + '">' + explanation + '</div><div class="comparison-read-note">Live values may briefly reflect different reads. Pending refers to the latest snapshot shown above. Preserved snapshots stay unchanged.</div>';
+    }
+    function currentReplayStep() {
+      return replay?.steps[replayIndex] ?? null;
+    }
+    function receiptLabel(event) {
+      if (event.processed_at) return 'Processed';
+      if (replayMode) return currentReplayStep()?.view_basis === 'reconstructed' ? 'Not observed in this step' : 'No receipt in saved response';
+      return scenarioMode ? 'Delivery held' : 'Unprocessed';
+    }
+    function updateViewMode() {
+      document.body.classList.toggle('replay-mode',replayMode);
+      document.body.classList.toggle('scenario-mode',scenarioMode);
+      $('scenario').hidden = !scenarioMode;
+      $('mode-switch').hidden = scenarioMode;
+      $('walkthrough').hidden = !replayMode;
+      $('live-record-note').hidden = scenarioMode || replayMode;
+      $('evidence-boundary').hidden = scenarioMode;
+      $('view-replay').classList.toggle('active',replayMode);
+      $('view-live').classList.toggle('active',!replayMode);
+      $('view-replay').setAttribute('aria-pressed',String(replayMode));
+      $('view-live').setAttribute('aria-pressed',String(!replayMode));
+      $('mode-context').textContent = replayMode ? 'Saved evidence · no new usage operations' : 'Current API data · read only';
+      $('page-eyebrow').textContent = replayMode ? 'For SaaS engineers & finance operators' : 'Usage workspace / ACME';
+      $('page-title').textContent = replayMode ? 'September closed at $7.50. Why did the estimate become $8.50?' : 'September 2026';
+      $('page-subtitle').innerHTML = replayMode ? 'ACME · Estimated usage charges<span>·</span>$0.01 per unit<span>·</span>All times UTC' : 'API requests<span>·</span>$0.01 per unit<span>·</span>All times UTC';
+      if (!scenarioMode) {
+        $('environment-badge').textContent = replayMode ? 'Recorded AWS' : 'Live record · read only';
+        $('environment-badge').title = replayMode ? 'Saved responses from an AWS verification run; navigation does not issue usage operations' : 'Read-only API period view';
+        $('environment-badge').hidden = false;
+      }
+    }
+    async function loadReplay() {
+      if (replay) return;
+      const generation = viewGeneration;
+      const result = await api('replay');
+      if (generation !== viewGeneration || !replayMode) return;
+      if (result.schema_version !== 1 || result.mode !== 'recorded_aws_replay' || !Array.isArray(result.steps) || !result.steps.length || result.steps.some(step => !step.period || !Array.isArray(step.requests) || !Array.isArray(step.checks))) throw new Error('The recording is unavailable or has an unsupported format. You can still view the live record.');
+      replay = result;
+    }
+    function showReplayStep(index) {
+      if (!replay || !replayMode) return;
+      const nextIndex = Math.max(0,Math.min(index,replay.steps.length - 1));
+      if (nextIndex !== replayIndex) userSelectedVersion = false;
+      replayIndex = nextIndex;
+      period = replay.steps[replayIndex].period;
+      updateViewMode();
+      $('connection-dot').className = 'dot ok';
+      $('connection-label').textContent = 'Saved API evidence';
+      setStatus('');
+      render();
+    }
+    function renderReplayPanel() {
+      if (!replayMode || !replay) return;
+      const step = currentReplayStep();
+      $('recorded-date').textContent = new Intl.DateTimeFormat('en-US',{timeZone:'UTC',month:'short',day:'numeric',year:'numeric'}).format(new Date(replay.recorded_at)) + ' UTC';
+      $('replay-basis').textContent = step.view_basis === 'reconstructed' ? 'Reconstructed from recorded responses' : 'Recorded period response';
+      $('replay-title').textContent = (replayIndex + 1) + ' / ' + replay.steps.length + ' · ' + step.title;
+      $('replay-summary').textContent = step.summary;
+      $('replay-notice').textContent = 'Saved AWS API responses. Step navigation runs no new AWS operations. Open the evidence below to inspect what was observed.';
+      $('replay-progress').innerHTML = replay.steps.map((item,index) => '<button type="button" data-replay-step="' + index + '" class="' + (index === replayIndex ? 'active' : '') + '" aria-current="' + (index === replayIndex ? 'step' : 'false') + '"><span>' + (index + 1) + '</span>' + esc(replayStepNames[index] ?? item.title) + '</button>').join('');
+      $('replay-next').textContent = replayIndex === replay.steps.length - 1 ? 'Walkthrough complete' : replayIndex === 0 ? 'See the close →' : 'Next: ' + (replayStepNames[replayIndex + 1] ?? 'continue') + ' →';
+      $('replay-check-summary').textContent = step.checks.filter(check => check.passed === true).length + ' / ' + step.checks.length + ' recorded checks matched · inspect evidence';
+      $('replay-checks').innerHTML = step.checks.map(check => '<div class="evidence-check' + (check.passed === true ? '' : ' failed') + '"><span class="check-symbol" aria-hidden="true">' + (check.passed === true ? '✓' : '!') + '</span><div><div class="check-label">' + esc(check.label) + '<span class="check-result">' + (check.passed === true ? 'matches recording' : 'mismatch') + '</span></div><div class="check-values"><b>Recorded:</b> ' + esc(checkValue(check.actual)) + ' &nbsp;·&nbsp; <b>Expected:</b> ' + esc(checkValue(check.expected)) + '</div></div></div>').join('');
+      if (replayRenderedStep !== step.id) {
+        $('replay-raw').open = false;
+        $('replay-check-details').open = false;
+        $('replay-request-summary').textContent = 'Inspect ' + count(step.requests.length,'recorded request') + ' and ' + (step.requests.length === 1 ? 'response' : 'responses');
+        $('replay-requests').innerHTML = step.requests.map(request => '<details class="request-detail"><summary>' + esc(request.method + ' ' + request.path + ' · HTTP ' + request.status) + (request.at ? ' · ' + esc(date(request.at)) : '') + '</summary><pre>' + esc(JSON.stringify({request:{method:request.method,path:request.path,body:request.body},status:request.status,response:request.response},null,2)) + '</pre></details>').join('') + '<p>Recording source: <a href="https://github.com/pstereoluna/MeterProof/commit/' + encodeURIComponent(replay.source_commit) + '" target="_blank" rel="noopener noreferrer">' + esc(replay.source_commit) + '</a> · ' + esc(replay.region) + '</p>';
+        replayRenderedStep = step.id;
+      }
+    }
+    async function switchRecordView(nextMode) {
+      if (busy || booting) return;
+      viewGeneration++;
+      busy = true;
+      scenarioMode = false;
+      replayMode = nextMode === 'replay';
+      period = null;
+      userSelectedVersion = false;
+      selectedVersion = null;
+      expanded.clear();
+      updateViewMode();
+      render();
+      renderButtons();
+      const url = new URL(window.location.href);
+      url.searchParams.set('view',nextMode);
+      window.history.replaceState(null,'',url);
+      try {
+        await refresh();
+        setStatus('');
+      } catch (error) {setStatus(error.message || 'This view could not be loaded. Try another view or refresh.',true);}
+      finally {busy = false;renderButtons();}
     }
     function checkValue(value) {
       if (value === undefined) return 'not reported';
@@ -218,22 +323,24 @@
       } else $('scenario-evidence').innerHTML = '';
     }
     function renderButtons() {
-      const blocked = busy || booting || !period || scenarioMode;
-      const building = period?.building;
-      const allSeeded = period && seedEvents.every(seed => period.events.some(event => event.event_id === seed.event_id));
-      $('seed').disabled = blocked || !!building || period?.phase !== 'OPEN' || allSeeded;
-      $('close').disabled = blocked || (building ? building.kind !== 'CLOSE' : period?.phase !== 'OPEN' || !period?.events.length);
-      $('late').disabled = blocked || !!building || period?.phase !== 'CLOSED' || !period?.latest_version || period?.events.some(e => e.event_id === lateEvent.event_id);
-      $('adjust').disabled = blocked || (building ? building.kind !== 'ADJUST' : period?.phase !== 'CLOSED' || !period?.pending.event_ids.length);
       $('scenario-next').disabled = busy || booting || !scenarioMode || (!!scenario && !scenario.next_action);
       $('scenario-new').disabled = busy || booting || !scenarioMode;
       $('scenario-new').hidden = !scenario;
+      $('view-replay').disabled = busy || booting;
+      $('view-live').disabled = busy || booting;
+      $('replay-next').disabled = busy || booting || !replay || replayIndex >= replay.steps.length - 1;
+      $('replay-back').disabled = busy || booting || replayIndex === 0;
+      $('replay-restart').disabled = busy || booting || !replay;
       $('refresh').disabled = busy || booting;
+      $('refresh').hidden = replayMode && !!replay;
       $('refresh').querySelector('svg').classList.toggle('spinner', busy);
     }
     async function refresh() {
+      if (replayMode) {await loadReplay();showReplayStep(replayIndex);return replay;}
+      const generation = viewGeneration;
       try {
         const result = await api(scenarioMode ? 'demo' : 'period');
+        if (generation !== viewGeneration || replayMode) return null;
         if (scenarioMode) {
           if (result !== null && (!result.run_id || !Array.isArray(result.history) || !result.period)) throw new Error('The API response does not contain a MeterProof scenario.');
           scenario = result;
@@ -258,19 +365,8 @@
         throw error;
       }
     }
-    async function pollReceipts() {
-      if (scenarioMode) return;
-      const generation = ++pollGeneration;
-      for (let attempt = 0; attempt < 6; attempt++) {
-        if (generation !== pollGeneration || !period?.events.some(event => !event.processed_at)) return;
-        await new Promise(resolve => setTimeout(resolve, 1500));
-        if (generation !== pollGeneration) return;
-        try { await refresh(); } catch { return; }
-      }
-    }
     async function act(operation, pendingMessage, successMessage) {
       if (busy) return;
-      pollGeneration++;
       busy = true;
       renderButtons();
       setStatus(pendingMessage);
@@ -278,16 +374,11 @@
         await operation();
         await refresh();
         setStatus(typeof successMessage === 'function' ? successMessage() : successMessage, scenarioMode && !!scenario?.history.at(-1)?.checks.some(check => check.passed !== true));
-        void pollReceipts();
       } catch (error) {
         setStatus(error.message || 'Something went wrong. Refresh and retry safely.', true);
         try { await refresh(); } catch { /* Preserve the original action error. */ }
       } finally { busy = false; renderButtons(); }
     }
-    $('seed').addEventListener('click', () => act(async () => { for (const event of seedEvents) await api('events',event); }, 'Recording sample events in the ledger…', 'Three sample events recorded. The live aggregate catches up asynchronously; close always reads the ledger.'));
-    $('close').addEventListener('click', () => act(async () => {await api('close',{});userSelectedVersion = false;}, 'Closing the ingestion boundary and deriving the snapshot…', 'Original snapshot preserved. New usage for September will be recorded as a post-close adjustment.'));
-    $('late').addEventListener('click', () => act(() => api('events',lateEvent), 'Recording post-close usage…', '100 post-close units recorded. The original snapshot is unchanged.'));
-    $('adjust').addEventListener('click', () => act(async () => {await api('adjust',{expected_version:period.latest_version});userSelectedVersion = false;}, 'Creating a new snapshot from the ledger…', 'Adjusted snapshot preserved. Select v1 to inspect the original result.'));
     $('refresh').addEventListener('click', () => {
       if (!modeKnown) {booting = true;renderButtons();void initialize();return;}
       void act(async () => {}, 'Refreshing the saved record…', scenarioMode ? 'Scenario progress and period refreshed from the API.' : 'Period refreshed from the API.');
@@ -318,23 +409,36 @@
       renderScenario();
       document.querySelector('[data-scenario-step="' + selectedStep + '"]')?.focus({preventScroll:true});
     });
+    $('view-replay').addEventListener('click',() => void switchRecordView('replay'));
+    $('view-live').addEventListener('click',() => void switchRecordView('live'));
+    $('replay-next').addEventListener('click',() => {if (!busy && !booting) showReplayStep(replayIndex + 1);});
+    $('replay-back').addEventListener('click',() => {if (!busy && !booting) showReplayStep(replayIndex - 1);});
+    $('replay-restart').addEventListener('click',() => {if (busy || booting) return;userSelectedVersion = false;selectedVersion = null;expanded.clear();showReplayStep(0);});
+    $('replay-progress').addEventListener('click',event => {
+      const button = event.target.closest('[data-replay-step]');
+      if (!button || busy || booting) return;
+      showReplayStep(Number(button.dataset.replayStep));
+      document.querySelector('[data-replay-step="' + replayIndex + '"]')?.focus({preventScroll:true});
+    });
     async function initialize() {
       try {
         const health = await api('health');
-        scenarioMode = health.demo === true;
+        localScenarioAvailable = health.demo === true;
+        scenarioMode = localScenarioAvailable && requestedView !== 'replay' && requestedView !== 'live';
+        replayMode = !scenarioMode && requestedView !== 'live';
         modeKnown = true;
         document.body.classList.toggle('scenario-mode', scenarioMode);
         $('scenario').hidden = !scenarioMode;
-        $('basic-actions').hidden = scenarioMode;
+          updateViewMode();
         $('adjustment-title').textContent = scenarioMode ? 'Pending adjustment' : 'Post-close usage';
-        if (health.mode === 'local' || scenarioMode) {
+        if (!replayMode && (health.mode === 'local' || scenarioMode)) {
           $('environment-badge').textContent = scenarioMode ? 'Local scenario' : 'Local demo';
           $('environment-badge').title = scenarioMode ? 'Real DynamoDB Local · controlled event delivery and injected interruption' : 'DynamoDB Local · Stream delivery simulated by the local worker';
           $('environment-badge').hidden = false;
         }
         await refresh();
         setStatus('');
-        if (!scenarioMode) void pollReceipts();
+        // Read only on entry or explicit refresh; replay navigation uses the loaded recording.
       } catch (error) {
         setStatus(error.message || 'Cannot connect to MeterProof. Start the server, then refresh.',true);
         $('period-badge').textContent = 'Not connected';

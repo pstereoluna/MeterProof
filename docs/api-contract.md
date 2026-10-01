@@ -2,6 +2,16 @@
 
 This contract describes the current fixed ACME / September 2026 demonstration. All amounts are integer cents at one cent per unit. Requests are unauthenticated; no identity, role, approval or operator audit is enforced. Use synthetic data only. See [operating policy](operating-policy.md) for human responsibilities and explicitly unimplemented controls.
 
+## Recorded walkthrough and live record
+
+**Update status: implemented and verified locally; AWS deployment is pending reauthentication.** The following describes the intended read-only interface for this update, separately from the already executed cloud run.
+
+`GET /api/replay` returns sanitized recorded requests, responses and their presentation provenance for six steps: accept, close, late usage, retry, adjust and verify. The source is the actual September 30, 2026 Pacific / October 1 UTC AWS run of commit `819c512`, not requests issued by the visitor. Advancing or restarting the walkthrough does not call metering POST endpoints, alter the ledger, or reset the shared period.
+
+Views assembled from successful API replies are identified as reconstructed views. For early steps without an observed aggregate, the walkthrough represents it as `null` / **not observed**, not a fabricated zero or a claim of processing lag. Captured full period responses are used where available. In reconstructed steps, `processed_at: null` means processing was not observed at that point, not proof of missing or delayed delivery. The recorded timeline does not establish cloud timing, races or failures beyond the observations in those responses.
+
+**View live record** uses `GET /api/period` independently. The recorded result does not refresh itself from the live record, and a successful replay request does not verify DynamoDB or Streams health. Existing period responses keep their current aggregate shape; the recorded view's nullable aggregate is presentation provenance, not a change to live metering semantics. See [the walkthrough guide](demo-walkthrough.md) and [historical cloud verification](../evidence/cloud-verification.md).
+
 ## Accepting usage
 
 `POST /api/events` accepts only `event_id`, `occurred_at` and `units`. The ID is 1–64 ASCII letters, digits, underscores or hyphens; occurrence must be a valid UTC ISO timestamp in September 2026 ending in `Z`; units must be a positive safe integer. The server owns classification, epoch, acceptance time and estimated amount. Additional fields are rejected.

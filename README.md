@@ -11,6 +11,18 @@ MeterProof is an upstream usage-metering trust layer. Its frozen demonstration c
 
 These are usage snapshots of accepted reports and estimated charges. Source truth and completeness are not independently verified. MeterProof does not issue invoices or move money. Read the [operating policy and responsibility matrix](docs/operating-policy.md) for the demonstration controls and their limits.
 
+## Follow the recorded AWS result
+
+**Walkthrough update: verified locally; AWS deployment is pending reauthentication.** The existing AWS deployment and its September 30 verification remain a separate, completed milestone.
+
+The updated public screen provides a six-step, **read-only recorded AWS walkthrough**: accept → close → late usage → retry → adjust → verify. It uses sanitized requests and responses from the actual September 30, 2026 Pacific / October 1 UTC cloud run of source commit [`819c512`](https://github.com/pstereoluna/MeterProof/tree/819c512). Visitors can revisit the evidence without submitting new usage, closing a period, or resetting shared data. Early views reconstructed from successful replies are labeled; an aggregate that was not captured is **not observed**, not zero. Full period captures are used where available.
+
+**View live record** separately reads the current deployed `/api/period`. A recorded result is not a claim about current service health. The local eight-step simulator below remains available for controlled delivery and interruption testing. See the [walkthrough and evidence boundaries](docs/demo-walkthrough.md).
+
+The target situation is narrow: a SaaS engineer and finance operator need to explain why a closed 750-unit report now has another 100 units, while proving the original report stayed unchanged. Existing metering and billing products already serve this market; MeterProof is a focused reference implementation of cutoff guarantees, not a claim of commercial uniqueness or validated customer demand.
+
+Public review links: [source](https://github.com/pstereoluna/MeterProof/tree/main/src), [tests](https://github.com/pstereoluna/MeterProof/tree/main/test), [executed cloud evidence](https://github.com/pstereoluna/MeterProof/blob/main/evidence/cloud-verification.md), and the [Builder Center project](https://builder.aws.com/project/3JzE9LF8ZJamr5T1eQDm6uNGngR/meterproof-explain-every-change-in-reported-usage). A proposed project-page update is in [submission.md](docs/submission.md); it has not been posted automatically.
+
 ## Run locally
 
 Requires Node.js 22+ and Java 17+. The lockfile pins JavaScript dependencies.
@@ -26,6 +38,8 @@ Keep DynamoDB Local running. In a second terminal:
 ```sh
 npm run dev
 ```
+
+Preview the recorded walkthrough locally at **http://127.0.0.1:3000/?view=replay**.
 
 Open **http://127.0.0.1:3000**. The local page offers an **eight-step correctness scenario**: ledger 750 / projection 350, close, five retries, older post-close events, an interrupted adjustment, recovery to **$10.50**, a final **$11.00** snapshot, and a rejected conflicting payload. Follow the next-step button and inspect the returned evidence.
 
@@ -67,6 +81,7 @@ evidence/            Verification record and honest AWS evidence status
 | --- | --- | --- |
 | GET | `/` | Single demo screen |
 | GET | `/api/health` | Process health and environment label |
+| GET | `/api/replay` | Recorded AWS walkthrough evidence; implemented locally, not yet deployed |
 | GET | `/api/period` | ACME September state, snapshots, events, receipts and pending adjustments |
 | POST | `/api/events` | `{ "event_id": "evt_001", "occurred_at": "2026-09-01T12:00:00Z", "units": 100 }` |
 | POST | `/api/close` | `{}`; creates or recovers v1, always returns original v1 on retry |
@@ -100,7 +115,7 @@ npm run cdk -- deploy MeterProof --profile "$AWS_PROFILE" --region "$AWS_REGION"
 
 Record the actual agent-run connection/deployment results before claiming AWS integration in the submission. `evidence:aws` performs only `sts:GetCallerIdentity`, hashes the identity, and records success or failure without saving credentials. Use `EVIDENCE_ACTOR=Codex` only when Codex actually invokes it. Local verification does not prove cloud IAM, API Gateway behavior or Streams delivery.
 
-Auth is intentionally absent: a deployed endpoint permits any caller to change the demo data. Use synthetic data. Tables are retained on stack deletion to preserve ledger/snapshot history; deleting the stack alone will not remove them. This behavior and cloud costs must be considered when retiring the demo.
+Auth is intentionally absent: the existing deployed POST endpoints permit any caller to change the demo data. Read-only walkthrough controls do not secure those endpoints. Use synthetic data. Tables are retained on stack deletion to preserve ledger/snapshot history; deleting the stack alone will not remove them. This behavior and cloud costs must be considered when retiring the demo.
 
 ## Frozen boundary
 

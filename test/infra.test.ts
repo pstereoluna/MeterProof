@@ -39,7 +39,7 @@ test('deployable stack preserves the frozen serverless scope and metering safegu
   template.hasResourceProperties('AWS::ApiGatewayV2::Stage', {
     DefaultRouteSettings: { ThrottlingBurstLimit: 20, ThrottlingRateLimit: 10 },
   });
-  for (const route of ['GET /', 'GET /api/health', 'GET /api/period', 'POST /api/events', 'POST /api/close', 'POST /api/adjust']) {
+  for (const route of ['GET /', 'GET /api/health', 'GET /api/period', 'GET /api/replay', 'POST /api/events', 'POST /api/close', 'POST /api/adjust']) {
     template.hasResourceProperties('AWS::ApiGatewayV2::Route', { RouteKey: route });
   }
   template.hasOutput('ApiUrl', { Value: Match.anyValue() });
