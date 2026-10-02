@@ -48,3 +48,12 @@ Final executed verification is recorded in `evidence/local-verification.md`. Thi
 - Documented the target hypothesis: a SaaS engineer and finance operator may find event-level derivation useful when investigating a preserved 750-unit report plus 100 later units. Existing competitors and the absence of customer validation remain explicit.
 - Prepared an English Builder Center update for review, without modifying the published project or creating a cover image. Agent evidence remains browser sign-in plus STS/CLI/CDK execution; no MCP connection is verified.
 - **Status:** 26 automated tests, typecheck, synthesis, 30 browser assertions locally and again on AWS, and a complete eight-step local UI run passed. Renewed the expired AWS session and deployed application revision `5abec3f` to the existing stack. Fixed an initial-loading control issue discovered during public-browser verification. CloudFormation reached `UPDATE_COMPLETE`; 11 read-only cloud checks confirmed deployed artifacts and an unchanged period. See `evidence/walkthrough-verification.md`. Historical evidence files remain unchanged.
+
+
+## 2026-10-01 — Make each recorded action visible
+
+- Visitor feedback identified redundant mode buttons and visually indistinguishable steps. Removed the primary mode selector, made the current-record link secondary, and moved ledger/derivation details into an expandable inspector.
+- Added separate acceptance, close, late-arrival, retry, adjustment and preservation-comparison scenes. Values and outcomes come from the existing saved AWS responses. Retry visibly returns/rejects requests; the final comparison does not pretend to mutate state.
+- Used the close recording for the before column and the final recording for the after column. Deliberate navigation focuses and reveals the new scene, including on mobile and with reduced motion.
+- Typecheck, synthesis and 26 automated tests passed. The existing eight-step local UI scenario completed. Thirty-six browser assertions passed locally and against AWS; 11 read-only cloud assertions confirmed matching artifacts and unchanged period data. A browser navigation assertion was synchronized to the destination page's ready state before final verification.
+- Deployed application revision `ddf8de0` to the existing stack, reaching `UPDATE_COMPLETE`. The deployment changed only the API page bundle. No metering writes, record resets, services or core transaction changes were introduced. See `evidence/visual-scenes-verification.md`.

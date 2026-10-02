@@ -15,7 +15,7 @@ One demo screen → API Gateway → API Lambda → DynamoDB ledger + state
 
 The updated public UI's default is a read-only six-step walkthrough served by `GET /api/replay`. Its sanitized artifact comes from the actual AWS API run of source commit `819c512` on September 30, 2026 Pacific / October 1 UTC. Full period captures are used where available; earlier views reconstructed from successful replies are labeled and leave an unobserved aggregate null. Browsing these records does not execute the recorded POSTs or reset cloud data.
 
-The separate **View live record** action reads `/api/period`. The existing local eight-step controller still runs against DynamoDB Local and deliberately controls delivery and injects an interruption. Recorded AWS evidence, current AWS reads and local fault simulation remain distinguishable. See [the walkthrough guide](demo-walkthrough.md).
+A secondary **Inspect the current record** link reads `/api/period`; the main demo uses distinct visual scenes, with ledger details available in an expandable inspector. The existing local eight-step controller still runs against DynamoDB Local and deliberately controls delivery and injects an interruption. Recorded AWS evidence, current AWS reads and local fault simulation remain distinguishable. See [the walkthrough guide](demo-walkthrough.md).
 
 ## Three times, one cutoff
 

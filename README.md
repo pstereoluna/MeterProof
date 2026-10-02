@@ -2,7 +2,7 @@
 
 **Preserve the reported usage. Explain what changed.**
 
-[Open the recorded AWS walkthrough](https://iqqd5bi25e.execute-api.us-east-1.amazonaws.com/) · [Prior walkthrough verification](evidence/walkthrough-verification.md)
+[Open the recorded AWS walkthrough](https://iqqd5bi25e.execute-api.us-east-1.amazonaws.com/) · [Latest verification](evidence/visual-scenes-verification.md)
 
 MeterProof is an upstream usage-metering trust layer. Its frozen demonstration covers **ACME · September 2026**, at **1 cent per unit**:
 
@@ -15,7 +15,7 @@ These are usage snapshots of accepted reports and estimated charges. Source trut
 
 ## Follow the recorded AWS result
 
-**Presentation revision in progress locally; deployment verification pending.** The preceding walkthrough was verified and deployed on October 1, 2026. That result and the original September 30 cloud verification remain completed historical milestones.
+**Visual revision deployed and verified on October 1, 2026.** See the [latest verification](evidence/visual-scenes-verification.md). The preceding walkthrough was verified and deployed on October 1, 2026. That result and the original September 30 cloud verification remain completed historical milestones.
 
 The revision makes the action and result of each recorded step visible: three events total **$7.50** → their members form **v1** → a late **+$1.00** remains outside v1 → duplicate and conflicting retries add **no usage** → a separate **v2 reaches $8.50** → compare the original v1 before and after adjustment. The last step verifies preservation; it does not imply another state change. Ledger membership, derivations, raw requests and detailed checks are expandable beneath the story.
 

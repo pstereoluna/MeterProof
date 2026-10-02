@@ -1,6 +1,6 @@
 # Builder Center project copy
 
-**Draft for the existing project page; not published automatically.** The action-focused presentation revision is in progress locally and awaits deployment verification. The [preceding walkthrough verification](../evidence/walkthrough-verification.md) remains a historical result.
+**Draft for the existing project page; not published automatically.** The visual presentation is deployed and verified. See the [latest verification](../evidence/visual-scenes-verification.md).
 
 Target: [existing Builder Center project](https://builder.aws.com/project/3JzE9LF8ZJamr5T1eQDm6uNGngR/meterproof-explain-every-change-in-reported-usage).
 
@@ -41,10 +41,10 @@ The implementation uses API Gateway, Lambda, DynamoDB and DynamoDB Streams, depl
 
 ### What was verified
 
-The historical AWS run demonstrated ingestion, idempotent retries, conflict rejection, preserved snapshots and real Streams receipts. The preceding public walkthrough passed 30 browser assertions across two independent visitors and desktop/mobile layouts, plus eleven read-only cloud checks and 26 automated tests. Those results precede this presentation revision; its verification is pending. Controlled lag, concurrency and interruption/recovery exercises run locally against DynamoDB Local.
+The historical AWS run demonstrated ingestion, idempotent retries, conflict rejection, preserved snapshots and real Streams receipts. The current visual walkthrough passed 36 browser assertions across independent visitors and desktop/mobile layouts, eleven read-only cloud checks, and 26 automated tests. The original live period remained unchanged. Controlled lag, concurrency and interruption/recovery exercises run locally against DynamoDB Local.
 
 Codex helped implement, review, verify and deploy the project. The documented AWS connection used browser sign-in, STS, AWS CLI and CDK. No AWS MCP connection is claimed.
 
 MeterProof reports estimated usage charges; it does not issue invoices or move money. The demo has no authentication or approval workflow, and accepted reports do not independently prove source truth or completeness. Existing metering and billing products already serve this market. This project is a focused reference implementation of cutoff guarantees; its usefulness to the target users remains a hypothesis awaiting user feedback.
 
-[GitHub repository](https://github.com/pstereoluna/MeterProof) · [Latest verification](https://github.com/pstereoluna/MeterProof/blob/main/evidence/walkthrough-verification.md) · [Original AWS evidence](https://github.com/pstereoluna/MeterProof/blob/main/evidence/cloud-verification.md) · [Local scenario evidence](https://github.com/pstereoluna/MeterProof/blob/main/evidence/scenario-verification.md)
+[GitHub repository](https://github.com/pstereoluna/MeterProof) · [Latest verification](https://github.com/pstereoluna/MeterProof/blob/main/evidence/visual-scenes-verification.md) · [Original AWS evidence](https://github.com/pstereoluna/MeterProof/blob/main/evidence/cloud-verification.md) · [Local scenario evidence](https://github.com/pstereoluna/MeterProof/blob/main/evidence/scenario-verification.md)

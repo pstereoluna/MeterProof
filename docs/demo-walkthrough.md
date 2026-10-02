@@ -1,6 +1,6 @@
 # Recorded AWS walkthrough
 
-**Presentation revision in progress locally; deployment verification pending.** The preceding walkthrough was verified locally and on the public AWS endpoint on October 1, 2026. Its [verification record](../evidence/walkthrough-verification.md) and the [original cloud evidence](../evidence/cloud-verification.md) remain historical results, not verification of this revision.
+**Visual revision deployed and verified on October 1, 2026.** See the [latest verification](../evidence/visual-scenes-verification.md). The preceding walkthrough was verified locally and on the public AWS endpoint on October 1, 2026. Its [verification record](../evidence/walkthrough-verification.md) and the [original cloud evidence](../evidence/cloud-verification.md) remain historical results, not verification of this revision.
 
 The walkthrough follows one question: **September usage closed at 750 units. Another 100 units arrived later. Why is the latest estimate 850, and did the original change?** A SaaS engineer and finance operator can inspect the accepted events and both snapshots to answer it. This is a target-user hypothesis, not evidence of customer adoption.
 

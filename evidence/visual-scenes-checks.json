@@ -1,0 +1,456 @@
+{
+  "verified_on": "2026-10-01 America/Los_Angeles",
+  "application_revision": "ddf8de0",
+  "recording_source_revision": "819c512",
+  "stack_status": "UPDATE_COMPLETE",
+  "local_browser": {
+    "status": "passed",
+    "checks": [
+      {
+        "name": "controls disabled while recording loads",
+        "passed": true
+      },
+      {
+        "name": "primary mode buttons removed",
+        "passed": true
+      },
+      {
+        "name": "ledger starts collapsed",
+        "passed": true
+      },
+      {
+        "name": "accept shows three incoming events and open report",
+        "passed": true
+      },
+      {
+        "name": "close transforms open report into preserved v1",
+        "passed": true
+      },
+      {
+        "name": "late arrival sits across visible cutoff from v1",
+        "passed": true
+      },
+      {
+        "name": "late arrival preserves 7.50 original",
+        "passed": true
+      },
+      {
+        "name": "retry visibly returns duplicate and rejects changed payload",
+        "passed": true
+      },
+      {
+        "name": "close retry visibly returns same original",
+        "passed": true
+      },
+      {
+        "name": "real conflicting response remains inspectable",
+        "passed": true
+      },
+      {
+        "name": "adjustment displays two separate preserved documents",
+        "passed": true
+      },
+      {
+        "name": "only late event marked new",
+        "passed": true
+      },
+      {
+        "name": "adjustment clears pending explicitly",
+        "passed": true
+      },
+      {
+        "name": "original derivation remains inspectable",
+        "passed": true
+      },
+      {
+        "name": "adjusted derivation marks late event",
+        "passed": true
+      },
+      {
+        "name": "verify compares original at close versus after adjustment",
+        "passed": true
+      },
+      {
+        "name": "before and after v1 both 7.50",
+        "passed": true
+      },
+      {
+        "name": "verify explains where extra dollar went",
+        "passed": true
+      },
+      {
+        "name": "new visitor independently starts at accept",
+        "passed": true
+      },
+      {
+        "name": "mobile close visible without horizontal overflow",
+        "passed": true
+      },
+      {
+        "name": "mobile close navigation reveals new scene heading",
+        "passed": true
+      },
+      {
+        "name": "mobile late visible without horizontal overflow",
+        "passed": true
+      },
+      {
+        "name": "mobile late navigation reveals new scene heading",
+        "passed": true
+      },
+      {
+        "name": "mobile retry visible without horizontal overflow",
+        "passed": true
+      },
+      {
+        "name": "mobile retry navigation reveals new scene heading",
+        "passed": true
+      },
+      {
+        "name": "mobile adjust visible without horizontal overflow",
+        "passed": true
+      },
+      {
+        "name": "mobile adjust navigation reveals new scene heading",
+        "passed": true
+      },
+      {
+        "name": "mobile verify visible without horizontal overflow",
+        "passed": true
+      },
+      {
+        "name": "mobile verify navigation reveals new scene heading",
+        "passed": true
+      },
+      {
+        "name": "back returns to adjustment scene",
+        "passed": true
+      },
+      {
+        "name": "restart resets story and closes inspector",
+        "passed": true
+      },
+      {
+        "name": "story requests no live period and performs no writes",
+        "passed": true
+      },
+      {
+        "name": "secondary link opens real current record",
+        "passed": true
+      },
+      {
+        "name": "back link returns to first scene",
+        "passed": true
+      },
+      {
+        "name": "all visits remain read only",
+        "passed": true
+      },
+      {
+        "name": "no JavaScript errors",
+        "passed": true
+      }
+    ],
+    "requests": [
+      {
+        "method": "GET",
+        "path": "/"
+      },
+      {
+        "method": "GET",
+        "path": "/api/health"
+      },
+      {
+        "method": "GET",
+        "path": "/api/replay"
+      },
+      {
+        "method": "GET",
+        "path": "/"
+      },
+      {
+        "method": "GET",
+        "path": "/api/health"
+      },
+      {
+        "method": "GET",
+        "path": "/api/replay"
+      },
+      {
+        "method": "GET",
+        "path": "/"
+      },
+      {
+        "method": "GET",
+        "path": "/api/health"
+      },
+      {
+        "method": "GET",
+        "path": "/api/period"
+      },
+      {
+        "method": "GET",
+        "path": "/"
+      },
+      {
+        "method": "GET",
+        "path": "/api/health"
+      },
+      {
+        "method": "GET",
+        "path": "/api/replay"
+      }
+    ],
+    "errors": []
+  },
+  "aws_browser": {
+    "status": "passed",
+    "checks": [
+      {
+        "name": "controls disabled while recording loads",
+        "passed": true
+      },
+      {
+        "name": "primary mode buttons removed",
+        "passed": true
+      },
+      {
+        "name": "ledger starts collapsed",
+        "passed": true
+      },
+      {
+        "name": "accept shows three incoming events and open report",
+        "passed": true
+      },
+      {
+        "name": "close transforms open report into preserved v1",
+        "passed": true
+      },
+      {
+        "name": "late arrival sits across visible cutoff from v1",
+        "passed": true
+      },
+      {
+        "name": "late arrival preserves 7.50 original",
+        "passed": true
+      },
+      {
+        "name": "retry visibly returns duplicate and rejects changed payload",
+        "passed": true
+      },
+      {
+        "name": "close retry visibly returns same original",
+        "passed": true
+      },
+      {
+        "name": "real conflicting response remains inspectable",
+        "passed": true
+      },
+      {
+        "name": "adjustment displays two separate preserved documents",
+        "passed": true
+      },
+      {
+        "name": "only late event marked new",
+        "passed": true
+      },
+      {
+        "name": "adjustment clears pending explicitly",
+        "passed": true
+      },
+      {
+        "name": "original derivation remains inspectable",
+        "passed": true
+      },
+      {
+        "name": "adjusted derivation marks late event",
+        "passed": true
+      },
+      {
+        "name": "verify compares original at close versus after adjustment",
+        "passed": true
+      },
+      {
+        "name": "before and after v1 both 7.50",
+        "passed": true
+      },
+      {
+        "name": "verify explains where extra dollar went",
+        "passed": true
+      },
+      {
+        "name": "new visitor independently starts at accept",
+        "passed": true
+      },
+      {
+        "name": "mobile close visible without horizontal overflow",
+        "passed": true
+      },
+      {
+        "name": "mobile close navigation reveals new scene heading",
+        "passed": true
+      },
+      {
+        "name": "mobile late visible without horizontal overflow",
+        "passed": true
+      },
+      {
+        "name": "mobile late navigation reveals new scene heading",
+        "passed": true
+      },
+      {
+        "name": "mobile retry visible without horizontal overflow",
+        "passed": true
+      },
+      {
+        "name": "mobile retry navigation reveals new scene heading",
+        "passed": true
+      },
+      {
+        "name": "mobile adjust visible without horizontal overflow",
+        "passed": true
+      },
+      {
+        "name": "mobile adjust navigation reveals new scene heading",
+        "passed": true
+      },
+      {
+        "name": "mobile verify visible without horizontal overflow",
+        "passed": true
+      },
+      {
+        "name": "mobile verify navigation reveals new scene heading",
+        "passed": true
+      },
+      {
+        "name": "back returns to adjustment scene",
+        "passed": true
+      },
+      {
+        "name": "restart resets story and closes inspector",
+        "passed": true
+      },
+      {
+        "name": "story requests no live period and performs no writes",
+        "passed": true
+      },
+      {
+        "name": "secondary link opens real current record",
+        "passed": true
+      },
+      {
+        "name": "back link returns to first scene",
+        "passed": true
+      },
+      {
+        "name": "all visits remain read only",
+        "passed": true
+      },
+      {
+        "name": "no JavaScript errors",
+        "passed": true
+      }
+    ],
+    "requests": [
+      {
+        "method": "GET",
+        "path": "/"
+      },
+      {
+        "method": "GET",
+        "path": "/api/health"
+      },
+      {
+        "method": "GET",
+        "path": "/api/replay"
+      },
+      {
+        "method": "GET",
+        "path": "/"
+      },
+      {
+        "method": "GET",
+        "path": "/api/health"
+      },
+      {
+        "method": "GET",
+        "path": "/api/replay"
+      },
+      {
+        "method": "GET",
+        "path": "/"
+      },
+      {
+        "method": "GET",
+        "path": "/api/health"
+      },
+      {
+        "method": "GET",
+        "path": "/api/period"
+      },
+      {
+        "method": "GET",
+        "path": "/"
+      },
+      {
+        "method": "GET",
+        "path": "/api/health"
+      },
+      {
+        "method": "GET",
+        "path": "/api/replay"
+      }
+    ],
+    "errors": []
+  },
+  "aws_read_checks": {
+    "status": "passed",
+    "checks": [
+      {
+        "name": "cloud-index.html HTTP 200",
+        "passed": true
+      },
+      {
+        "name": "served HTML matches the committed scenes",
+        "passed": true
+      },
+      {
+        "name": "cloud-replay.json HTTP 200",
+        "passed": true
+      },
+      {
+        "name": "recorded AWS artifact is unchanged",
+        "passed": true
+      },
+      {
+        "name": "cloud-health.json HTTP 200",
+        "passed": true
+      },
+      {
+        "name": "health remains in AWS mode",
+        "passed": true
+      },
+      {
+        "name": "period-after.json HTTP 200",
+        "passed": true
+      },
+      {
+        "name": "complete live period unchanged by this revision",
+        "passed": true
+      },
+      {
+        "name": "original and adjusted snapshots preserved",
+        "passed": true
+      },
+      {
+        "name": "four accepted events with zero pending",
+        "passed": true
+      },
+      {
+        "name": "ON_TIME projection remains750",
+        "passed": true
+      }
+    ],
+    "cloud_metering_writes": 0
+  }
+}
