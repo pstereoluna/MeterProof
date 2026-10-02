@@ -2,7 +2,7 @@
 
 **Preserve the reported usage. Explain what changed.**
 
-[Open the recorded AWS walkthrough](https://iqqd5bi25e.execute-api.us-east-1.amazonaws.com/) · [View the live record](https://iqqd5bi25e.execute-api.us-east-1.amazonaws.com/?view=live) · [Latest verification](evidence/walkthrough-verification.md)
+[Open the recorded AWS walkthrough](https://iqqd5bi25e.execute-api.us-east-1.amazonaws.com/) · [Prior walkthrough verification](evidence/walkthrough-verification.md)
 
 MeterProof is an upstream usage-metering trust layer. Its frozen demonstration covers **ACME · September 2026**, at **1 cent per unit**:
 
@@ -15,11 +15,13 @@ These are usage snapshots of accepted reports and estimated charges. Source trut
 
 ## Follow the recorded AWS result
 
-**Walkthrough update: verified and deployed to AWS on October 1, 2026.** The existing AWS deployment and its September 30 verification remain a separate, completed milestone.
+**Presentation revision in progress locally; deployment verification pending.** The preceding walkthrough was verified and deployed on October 1, 2026. That result and the original September 30 cloud verification remain completed historical milestones.
 
-The updated public screen provides a six-step, **read-only recorded AWS walkthrough**: accept → close → late usage → retry → adjust → verify. It uses sanitized requests and responses from the actual September 30, 2026 Pacific / October 1 UTC cloud run of source commit [`819c512`](https://github.com/pstereoluna/MeterProof/tree/819c512). Visitors can revisit the evidence without submitting new usage, closing a period, or resetting shared data. Early views reconstructed from successful replies are labeled; an aggregate that was not captured is **not observed**, not zero. Full period captures are used where available.
+The revision makes the action and result of each recorded step visible: three events total **$7.50** → their members form **v1** → a late **+$1.00** remains outside v1 → duplicate and conflicting retries add **no usage** → a separate **v2 reaches $8.50** → compare the original v1 before and after adjustment. The last step verifies preservation; it does not imply another state change. Ledger membership, derivations, raw requests and detailed checks are expandable beneath the story.
 
-**View live record** separately reads the current deployed `/api/period`. A recorded result is not a claim about current service health. The local eight-step simulator below remains available for controlled delivery and interruption testing. See the [walkthrough and evidence boundaries](docs/demo-walkthrough.md).
+This six-step, **read-only recorded AWS walkthrough** uses sanitized requests and responses from the actual September 30, 2026 Pacific / October 1 UTC cloud run of source commit [`819c512`](https://github.com/pstereoluna/MeterProof/tree/819c512). Visitors can revisit the evidence without submitting new usage, closing a period, or resetting shared data. Early views reconstructed from successful replies are labeled; an aggregate that was not captured is **not observed**, not zero. Full period captures are used where available.
+
+The primary mode selector is replaced by a secondary [current AWS record link](https://iqqd5bi25e.execute-api.us-east-1.amazonaws.com/?view=live), which separately reads the deployed `/api/period`. A recorded result is not a claim about current service health. The local eight-step simulator below remains available for controlled delivery and interruption testing. See the [walkthrough and evidence boundaries](docs/demo-walkthrough.md).
 
 The target situation is narrow: a SaaS engineer and finance operator need to explain why a closed 750-unit report now has another 100 units, while proving the original report stayed unchanged. Existing metering and billing products already serve this market; MeterProof is a focused reference implementation of cutoff guarantees, not a claim of commercial uniqueness or validated customer demand.
 

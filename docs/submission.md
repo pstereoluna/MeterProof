@@ -1,6 +1,6 @@
 # Builder Center project copy
 
-**Draft for the existing project page; not published automatically.** The walkthrough is deployed and verified. [Verification record](../evidence/walkthrough-verification.md).
+**Draft for the existing project page; not published automatically.** The action-focused presentation revision is in progress locally and awaits deployment verification. The [preceding walkthrough verification](../evidence/walkthrough-verification.md) remains a historical result.
 
 Target: [existing Builder Center project](https://builder.aws.com/project/3JzE9LF8ZJamr5T1eQDm6uNGngR/meterproof-explain-every-change-in-reported-usage).
 
@@ -24,14 +24,14 @@ MeterProof explores this problem for a SaaS engineer and finance operator invest
 
 [Open MeterProof](https://iqqd5bi25e.execute-api.us-east-1.amazonaws.com/). The six-step recorded AWS walkthrough follows acceptance, close, late usage, retries, adjustment and verification:
 
-1. Three events contribute 750 units, or $7.50 in estimated usage charges.
-2. Closing the period preserves snapshot v1.
-3. A September event accepted after close adds 100 units as an explicit pending adjustment.
-4. An identical retry returns the original accepted event. Reusing its ID with a different payload returns HTTP 409.
-5. Snapshot v2 includes the additional $1.00, reaching $8.50.
-6. Snapshot v1 still contains its original three events and $7.50 total.
+1. Three event cards combine into 750 units, or $7.50 in estimated usage charges.
+2. Closing places those three members into a saved v1 snapshot at $7.50.
+3. A September event accepted after close appears outside v1: +100 units / +$1.00 awaiting adjustment.
+4. Compare two retries: the identical 100-unit report returns the original event; changing the same ID to 101 units returns HTTP 409. Neither adds usage.
+5. The original $7.50 plus the late $1.00 produces a separate v2 at $8.50, leaving no pending usage.
+6. Compare v1 at close with v1 after adjustment: the same three events and $7.50 total remain beside v2.
 
-Visitors can go back, restart and inspect saved requests and responses without changing shared data. **View live record** separately reads the current API state. The walkthrough is clearly labeled as a recording; early views reconstructed from successful responses identify unobserved processing values.
+Each step shows the action and its result before the detailed evidence. Visitors can go back, restart and expand the ledger, derivations, saved requests and checks without changing shared data. A secondary [current AWS record](https://iqqd5bi25e.execute-api.us-east-1.amazonaws.com/?view=live) link separately reads the API state. The walkthrough remains visibly labeled as a recording; early views reconstructed from successful responses identify unobserved processing values. The final comparison verifies preservation rather than claiming another state change.
 
 ### The control behind the numbers
 
@@ -41,7 +41,7 @@ The implementation uses API Gateway, Lambda, DynamoDB and DynamoDB Streams, depl
 
 ### What was verified
 
-The historical AWS run demonstrated ingestion, idempotent retries, conflict rejection, preserved snapshots and real Streams receipts. The new public walkthrough passed 30 browser assertions across two independent visitors and desktop/mobile layouts. Eleven read-only cloud checks confirmed the deployed artifacts and an unchanged live period. The repository also passes 26 automated tests. Controlled lag, concurrency and interruption/recovery exercises run locally against DynamoDB Local.
+The historical AWS run demonstrated ingestion, idempotent retries, conflict rejection, preserved snapshots and real Streams receipts. The preceding public walkthrough passed 30 browser assertions across two independent visitors and desktop/mobile layouts, plus eleven read-only cloud checks and 26 automated tests. Those results precede this presentation revision; its verification is pending. Controlled lag, concurrency and interruption/recovery exercises run locally against DynamoDB Local.
 
 Codex helped implement, review, verify and deploy the project. The documented AWS connection used browser sign-in, STS, AWS CLI and CDK. No AWS MCP connection is claimed.
 

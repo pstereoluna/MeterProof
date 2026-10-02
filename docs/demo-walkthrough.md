@@ -1,6 +1,6 @@
 # Recorded AWS walkthrough
 
-**Status: verified locally and on the public AWS endpoint on October 1, 2026.** The underlying application was deployed and smoke-tested previously; this presentation is deployed and has passed public-browser verification. [Historical evidence](../evidence/cloud-verification.md) remains unchanged.
+**Presentation revision in progress locally; deployment verification pending.** The preceding walkthrough was verified locally and on the public AWS endpoint on October 1, 2026. Its [verification record](../evidence/walkthrough-verification.md) and the [original cloud evidence](../evidence/cloud-verification.md) remain historical results, not verification of this revision.
 
 The walkthrough follows one question: **September usage closed at 750 units. Another 100 units arrived later. Why is the latest estimate 850, and did the original change?** A SaaS engineer and finance operator can inspect the accepted events and both snapshots to answer it. This is a target-user hypothesis, not evidence of customer adoption.
 
@@ -8,12 +8,14 @@ The walkthrough follows one question: **September usage closed at 750 units. Ano
 
 | Step | What the visitor inspects | What the historical AWS evidence supports |
 | --- | --- | --- |
-| Accept | Three accepted events: 100 + 250 + 400 units | Successful ingestion replies and original acceptance/classification; unobserved early projection values are not invented |
-| Close | Original v1: 750 units / $7.50 estimated charge | Published snapshot membership and the captured closed-period response |
-| Late usage | Another September event: +100 units / +$1.00 pending | POST_CLOSE classification despite its older occurrence time, with v1 unchanged |
-| Retry | Identical retry, changed-payload rejection and original close result | The accepted event is returned unchanged; conflicting ID reuse produces `IDEMPOTENCY_MISMATCH`; close returns v1 |
-| Adjust | v2: 850 units / $8.50 estimated charge | Cumulative membership adds only the 100-unit event; prior v1 is preserved |
-| Verify | Saved retry results, final period and processing receipts | Two preserved snapshots, no pending usage, all four real processing receipts, and ON_TIME projection 750 rather than 850 |
+| Accept | Three event cards combine: 100 + 250 + 400 = 750 units / $7.50; no snapshot yet | Successful ingestion replies and original acceptance/classification; unobserved early projection values are not invented |
+| Close | Those three members form a saved v1 snapshot: 750 units / $7.50 | The recorded close response supplies the snapshot and its membership |
+| Late usage | An amber +100-unit event appears outside v1, alongside +$1.00 awaiting adjustment | POST_CLOSE classification despite its older occurrence time, with v1 unchanged |
+| Retry | Same ID + same 100 units returns the original; same ID + changed 101 units is rejected | The duplicate reply contributes no new event; conflicting ID reuse produces HTTP 409 / `IDEMPOTENCY_MISMATCH`; close returns v1 |
+| Adjust | v1 $7.50 + the late $1.00 produces a separate v2 $8.50; pending becomes zero | Cumulative membership adds only the 100-unit event; prior v1 is preserved |
+| Verify | Compare v1 at close with v1 after adjustment: the same $7.50 and three members, beside the separate v2 | The final read preserves both snapshots and all four processing receipts; it does not represent a new mutation or newly completed processing |
+
+Each step puts its action and visible result first. The next-step control names the next action. Ledger membership, derivations, raw requests and detailed checks are expandable supporting evidence. The primary mode selector is removed; a secondary [current AWS record link](https://iqqd5bi25e.execute-api.us-east-1.amazonaws.com/?view=live) remains available with the evidence. The saved-recording label remains visible throughout.
 
 The updated public default loads `GET /api/replay`. Step navigation only changes the displayed recorded step. Replaying the explanation does not submit another event, call close/adjust, rerun the cloud verification, or reset a shared ledger. Existing public mutation endpoints remain unauthenticated; a read-only viewer is not an access-control mechanism.
 
@@ -30,7 +32,7 @@ The timestamps remain the server observations recorded during that run. `accepte
 | Mode | Source | Meaning |
 | --- | --- | --- |
 | Recorded AWS walkthrough | Sanitized historical requests/responses from the verified run | Inspect a repeatable explanation without new metering writes; does not establish current service health |
-| View live record | Current `GET /api/period` from the deployed application | Inspect today's saved record; separate reads may briefly differ during concurrent work |
+| Current AWS record (`?view=live`) | Current `GET /api/period` from the deployed application | Inspect today's saved record through a secondary evidence link; separate reads may briefly differ during concurrent work |
 | Local eight-step scenario | Real DynamoDB Local transactions with controlled delivery and an injected interruption | Exercise local retry, cutoff and recovery behavior; not evidence of a forced AWS race or Lambda crash |
 
 The original cloud smoke observed real Streams processing. It did not deliberately cause cloud processing lag, ingestion/close races, redelivery, or a Lambda crash. The local simulator remains unchanged and its stronger fault exercises retain their local label. No AWS services are added for the walkthrough.
