@@ -1,6 +1,6 @@
 # Recorded AWS walkthrough
 
-**Status: local verification passed. AWS deployment is pending reauthentication.** The underlying application was deployed and smoke-tested previously; this new presentation has been verified locally and is awaiting deployment. [Historical evidence](../evidence/cloud-verification.md) remains unchanged.
+**Status: verified locally and on the public AWS endpoint on October 1, 2026.** The underlying application was deployed and smoke-tested previously; this presentation is deployed and has passed public-browser verification. [Historical evidence](../evidence/cloud-verification.md) remains unchanged.
 
 The walkthrough follows one question: **September usage closed at 750 units. Another 100 units arrived later. Why is the latest estimate 850, and did the original change?** A SaaS engineer and finance operator can inspect the accepted events and both snapshots to answer it. This is a target-user hypothesis, not evidence of customer adoption.
 

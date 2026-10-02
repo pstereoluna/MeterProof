@@ -4,7 +4,7 @@ This contract describes the current fixed ACME / September 2026 demonstration. A
 
 ## Recorded walkthrough and live record
 
-**Update status: implemented and verified locally; AWS deployment is pending reauthentication.** The following describes the intended read-only interface for this update, separately from the already executed cloud run.
+**Update status: verified and deployed to AWS on October 1, 2026.** The following describes the deployed read-only interface, separately from the already executed cloud run.
 
 `GET /api/replay` returns sanitized recorded requests, responses and their presentation provenance for six steps: accept, close, late usage, retry, adjust and verify. The source is the actual September 30, 2026 Pacific / October 1 UTC AWS run of commit `819c512`, not requests issued by the visitor. Advancing or restarting the walkthrough does not call metering POST endpoints, alter the ledger, or reset the shared period.
 
@@ -43,7 +43,7 @@ The ingestion transaction's **phase and epoch membership** decide cutoff. An eve
 
 Both operations first reserve a durable build and advance the ingestion epoch, then read the fixed ledger range and publish the snapshot atomically with its latest-version pointer. `phase: "CLOSED"` can therefore coexist with an unfinished build and no v1 yet. Consume an actually published snapshot, not the phase flag alone. A recovery finishes the same reserved range; events beyond that range remain pending.
 
-Snapshots are cumulative totals. `event_ids` identifies their complete membership; `added_event_ids` identifies additions relative to the prior version. An adjusted snapshot is not a command to charge its cumulative amount again. Downstream systems must track the version they already consumed and decide how to handle the difference. Current adjustments only add accepted positive usage; no negative correction, reversal, invoice or payment is implemented. The UI avoids starting an adjustment with no pending usage, but the API does not reject an empty-delta adjustment.
+Snapshots are cumulative totals. `event_ids` identifies their complete membership; `added_event_ids` identifies additions relative to the prior version. An adjusted snapshot is not a command to charge its cumulative amount again. Downstream systems must track the version they already consumed and decide how to handle the difference. Current adjustments only add accepted positive usage; no negative correction, reversal, invoice or payment is implemented. The recorded/live UI does not issue adjustments; the API does not reject an empty-delta adjustment.
 
 ## Period view and processing status
 

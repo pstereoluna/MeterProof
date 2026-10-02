@@ -2,6 +2,8 @@
 
 **Preserve the reported usage. Explain what changed.**
 
+[Open the recorded AWS walkthrough](https://iqqd5bi25e.execute-api.us-east-1.amazonaws.com/) · [View the live record](https://iqqd5bi25e.execute-api.us-east-1.amazonaws.com/?view=live) · [Latest verification](evidence/walkthrough-verification.md)
+
 MeterProof is an upstream usage-metering trust layer. Its frozen demonstration covers **ACME · September 2026**, at **1 cent per unit**:
 
 1. Accept `evt_001` (100), `evt_002` (250), and `evt_003` (400).
@@ -13,7 +15,7 @@ These are usage snapshots of accepted reports and estimated charges. Source trut
 
 ## Follow the recorded AWS result
 
-**Walkthrough update: verified locally; AWS deployment is pending reauthentication.** The existing AWS deployment and its September 30 verification remain a separate, completed milestone.
+**Walkthrough update: verified and deployed to AWS on October 1, 2026.** The existing AWS deployment and its September 30 verification remain a separate, completed milestone.
 
 The updated public screen provides a six-step, **read-only recorded AWS walkthrough**: accept → close → late usage → retry → adjust → verify. It uses sanitized requests and responses from the actual September 30, 2026 Pacific / October 1 UTC cloud run of source commit [`819c512`](https://github.com/pstereoluna/MeterProof/tree/819c512). Visitors can revisit the evidence without submitting new usage, closing a period, or resetting shared data. Early views reconstructed from successful replies are labeled; an aggregate that was not captured is **not observed**, not zero. Full period captures are used where available.
 
@@ -81,7 +83,7 @@ evidence/            Verification record and honest AWS evidence status
 | --- | --- | --- |
 | GET | `/` | Single demo screen |
 | GET | `/api/health` | Process health and environment label |
-| GET | `/api/replay` | Recorded AWS walkthrough evidence; implemented locally, not yet deployed |
+| GET | `/api/replay` | Recorded AWS walkthrough evidence; sanitized saved responses; no metering writes |
 | GET | `/api/period` | ACME September state, snapshots, events, receipts and pending adjustments |
 | POST | `/api/events` | `{ "event_id": "evt_001", "occurred_at": "2026-09-01T12:00:00Z", "units": 100 }` |
 | POST | `/api/close` | `{}`; creates or recovers v1, always returns original v1 on retry |

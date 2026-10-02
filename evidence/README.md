@@ -9,7 +9,7 @@
 | Review closeout: policy, API contract and both UI modes | [Verified locally; 22 tests passed](review-closeout.md) |
 | Authenticated coding-agent-to-AWS connection | **Verified by Codex** on September 30, 2026; sanitized identity record retained privately |
 | Deployment and cloud end-to-end smoke test | **Passed** — [29 infrastructure assertions, 33 API/data assertions, real Streams receipts](cloud-verification.md) |
-| Recorded AWS walkthrough update | **Verified locally**; sanitized historical replay, AWS deployment pending reauthentication — [executed verification](walkthrough-verification.md) · [scope and provenance](../docs/demo-walkthrough.md) |
+| Recorded AWS walkthrough update | **Deployed and verified**; 26 tests, 30 public-browser assertions, 11 read-only cloud checks — [executed verification](walkthrough-verification.md) · [scope and provenance](../docs/demo-walkthrough.md) |
 | Builder Center project | [Project page exists](https://builder.aws.com/project/3JzE9LF8ZJamr5T1eQDm6uNGngR/meterproof-explain-every-change-in-reported-usage); proposed walkthrough update is an unpublished [draft](../docs/submission.md) |
 | Hackathon eligibility / final submission | Not independently verified; an existing project page alone does not establish eligibility or final submission |
 

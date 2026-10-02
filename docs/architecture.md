@@ -11,7 +11,7 @@ One demo screen → API Gateway → API Lambda → DynamoDB ledger + state
 
 ## Presentation paths
 
-**The recorded-walkthrough update is verified locally; AWS deployment is pending reauthentication.** It adds no AWS services and does not change ingestion, fencing or snapshot transactions.
+**The recorded-walkthrough update is verified and deployed to AWS on October 1, 2026.** It adds no AWS services and does not change ingestion, fencing or snapshot transactions.
 
 The updated public UI's default is a read-only six-step walkthrough served by `GET /api/replay`. Its sanitized artifact comes from the actual AWS API run of source commit `819c512` on September 30, 2026 Pacific / October 1 UTC. Full period captures are used where available; earlier views reconstructed from successful replies are labeled and leave an unobserved aggregate null. Browsing these records does not execute the recorded POSTs or reset cloud data.
 
@@ -69,7 +69,7 @@ The [operating policy](operating-policy.md) separates source completeness, human
 - DynamoDB Streams expires records after 24 hours. A long consumer outage can leave the aggregate incomplete. Ledger-derived close still works. The UI can compare ON_TIME ledger usage with the projection and show missing receipts, but cannot diagnose the cause from that difference alone. Automated alerting, repair and dead-letter infrastructure are outside the frozen MVP.
 - The UI is a read of current observations, not a cross-table read transaction. Immutable displayed snapshots remain reproducible; concurrent actions may require refresh.
 - Application ledger writes use conditional creates. The application roles are not granted ledger UpdateItem/DeleteItem, but PutItem permission itself does not enforce append-only storage: other code or administrators with sufficient permissions can replace records. Immutability relies on the trusted application path and administration; this is not cryptographic tamper resistance.
-- Domain tests and DynamoDB Local cannot prove AWS IAM enforcement or cloud delivery. The [September 30 AWS smoke](../evidence/cloud-verification.md) verified the recorded deployed sequence, actual wiring and real processing receipts for commit `819c512`; it did not force cloud lag, races, redelivery or a Lambda crash. Local verification of the newer walkthrough passed; AWS deployment is pending reauthentication.
+- Domain tests and DynamoDB Local cannot prove AWS IAM enforcement or cloud delivery. The [September 30 AWS smoke](../evidence/cloud-verification.md) verified the recorded deployed sequence, actual wiring and real processing receipts for commit `819c512`; it did not force cloud lag, races, redelivery or a Lambda crash. The newer walkthrough was also [deployed and verified](../evidence/walkthrough-verification.md) on October 1, 2026.
 
 ## Primary references used during implementation
 
