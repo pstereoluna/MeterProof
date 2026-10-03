@@ -1,12 +1,12 @@
 # Builder Center project copy
 
-**Ready-to-paste update for the existing project page; this file does not publish it.** The October 2 release is deployed and verified. The user confirmed that the competition submission was already made. See the [latest verification](../evidence/release-2026-10-02.md).
+**Published to the existing Builder Center project on October 2, 2026.** The platform displayed its publication-success notification. The user confirmed that the competition submission had already been made. See the [latest verification](../evidence/release-2026-10-02.md).
 
 Target: [existing Builder Center project](https://builder.aws.com/project/3JzE9LF8ZJamr5T1eQDm6uNGngR/meterproof-explain-every-change-in-reported-usage).
 
 ## Title
 
-MeterProof — Explain every change in reported usage
+MeterProof: Explain Every Change in Reported Usage
 
 ## Description
 
@@ -50,3 +50,6 @@ Codex helped implement, review, verify and deploy the project. The documented AW
 MeterProof reports estimated usage charges; it does not issue invoices or move money. The demo has no authentication or approval workflow, and accepted reports do not independently prove source truth or completeness. Existing metering and billing products already serve this market. This project is a focused reference implementation of cutoff guarantees; its usefulness to the target users remains a hypothesis awaiting user feedback.
 
 [GitHub repository](https://github.com/pstereoluna/MeterProof) · [Latest verification](https://github.com/pstereoluna/MeterProof/blob/main/evidence/release-2026-10-02.md) · [Original AWS evidence](https://github.com/pstereoluna/MeterProof/blob/main/evidence/cloud-verification.md) · [Local scenario evidence](https://github.com/pstereoluna/MeterProof/blob/main/evidence/scenario-verification.md)
+
+Category: Commercial Potential
+Track: Startup
