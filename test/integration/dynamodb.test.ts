@@ -4,6 +4,8 @@ import { randomUUID } from 'node:crypto';
 import { DeleteTableCommand } from '@aws-sdk/client-dynamodb';
 import { DynamoDBDocumentClient, QueryCommand } from '@aws-sdk/lib-dynamodb';
 import { MeterProof, type UsageEvent } from '../../src/domain';
+import { createApiHandler } from '../../src/api';
+import { quantityInteger } from '../../src/quantity';
 import { DynamoStore } from '../../src/store';
 import { ensureTables, localClient } from '../../scripts/local-db';
 
@@ -131,6 +133,89 @@ test('DynamoDB Local: concurrent ingest and close exactly partition accepted eve
     const onTime = all.filter((item: UsageEvent) => item.classification === 'ON_TIME');
     assert.deepEqual([...snapshot.event_ids].sort(), onTime.map(item => item.event_id).sort());
     assert.equal(all.length, 8);
-    assert.equal(snapshot.units + (await f.service.view()).pending.units, 80);
+    assert.equal(quantityInteger(snapshot.units) + quantityInteger((await f.service.view()).pending.units), 80n);
+  } finally { await f.cleanup(); }
+});
+
+test('DynamoDB Local: large totals survive exact ADD, redelivery, snapshot storage and API JSON', async () => {
+  const f = await fixture();
+  try {
+    for (const [id, units] of [['large', Number.MAX_SAFE_INTEGER], ['small_a', 1], ['small_b', 1]] as const) {
+      const { event: item } = await f.service.ingest(event(id, units));
+      assert.equal(await f.store.processEvent(item, '2026-10-01T00:01:00Z'), true);
+      assert.equal(await f.store.processEvent(item, '2026-10-01T00:02:00Z'), false);
+    }
+    const raw = await f.store.client.send(new QueryCommand({
+      TableName: f.store.stateTable,
+      KeyConditionExpression: 'pk = :pk AND sk = :sk',
+      ExpressionAttributeValues: { ':pk': f.store.partition, ':sk': 'AGGREGATE' },
+      ConsistentRead: true,
+    }));
+    assert.equal(raw.Items?.[0].units, 9007199254740993n, 'real SDK decoding must preserve the DynamoDB numeric ADD');
+    const closed = await f.service.close();
+    assert.equal(closed.units, '9007199254740993');
+    assert.deepEqual(await f.store.getSnapshot(1), closed, 'large snapshot totals round-trip through storage');
+    const handler = createApiHandler(f.service);
+    const response = await handler({ rawPath: '/api/period', requestContext: { http: { method: 'GET' } } } as any);
+    assert.equal(response.statusCode, 200, 'SDK bigint must not leak into JSON.stringify');
+    const view = JSON.parse(response.body!);
+    assert.equal(view.aggregate.units, '9007199254740993');
+    assert.equal(view.aggregate.amount_cents, '9007199254740993');
+    assert.equal(view.aggregate.processed_events, 3);
+    assert.equal(view.snapshots[0].amount_cents, '9007199254740993');
+    assert.equal(view.pending.units, 0);
+  } finally { await f.cleanup(); }
+});
+
+test('DynamoDB Local: a previously reserved overflowing close recovers its original fence', async () => {
+  const f = await fixture();
+  try {
+    await f.service.ingest(event('large', Number.MAX_SAFE_INTEGER));
+    await f.service.ingest(event('small', 2));
+    const period = await f.store.getPeriod();
+    // Persist the same build shape left behind by the old 422 overflow path.
+    const build = { version: 1, base_version: 0, kind: 'CLOSE' as const, fence_epoch: period.epoch,
+      started_at: '2026-10-01T00:00:00Z', operation_id: randomUUID() };
+    assert.equal(await f.store.reserveBuild(period, build), true);
+    await f.service.ingest(event('after_fence', 5));
+    const recovered = await new MeterProof(f.store).close();
+    assert.equal(recovered.units, '9007199254740993');
+    assert.equal(recovered.through_epoch, build.fence_epoch);
+    assert.equal(recovered.created_at, build.started_at);
+    assert.deepEqual(recovered.event_ids, ['large', 'small']);
+    assert.deepEqual(await f.service.close(), recovered);
+    assert.equal((await f.store.getPeriod()).building, undefined);
+    assert.deepEqual((await f.service.view()).pending.event_ids, ['after_fence']);
+    assert.equal((await f.service.view()).pending.units, 5);
+  } finally { await f.cleanup(); }
+});
+
+test('DynamoDB Local: a previously reserved overflowing adjustment preserves prior snapshots and later arrivals', async () => {
+  const f = await fixture();
+  try {
+    await f.service.ingest(event('base', 750));
+    const original = await f.service.close();
+    await f.service.ingest(event('late_large', Number.MAX_SAFE_INTEGER));
+    await f.service.ingest(event('late_small', 2));
+    assert.equal((await f.service.view()).pending.units, '9007199254740993');
+    const period = await f.store.getPeriod();
+    const build = { version: 2, base_version: 1, kind: 'ADJUST' as const, fence_epoch: period.epoch,
+      started_at: '2026-10-01T00:01:00Z', operation_id: randomUUID() };
+    assert.equal(await f.store.reserveBuild(period, build), true);
+    await f.service.ingest(event('after_fence', 5));
+    const recovered = await new MeterProof(f.store).adjust({ expected_version: 1 });
+    assert.equal(recovered.units, '9007199254741743');
+    assert.equal(recovered.amount_cents, '9007199254741743');
+    assert.equal(recovered.through_epoch, build.fence_epoch);
+    assert.equal(recovered.created_at, build.started_at);
+    assert.deepEqual(recovered.added_event_ids, ['late_large', 'late_small']);
+    assert.deepEqual(await f.service.adjust({ expected_version: 1 }), recovered);
+    assert.deepEqual(await f.service.close(), original);
+    assert.equal((await f.store.getPeriod()).building, undefined);
+    assert.deepEqual((await f.service.view()).pending.event_ids, ['after_fence']);
+    const next = await f.service.adjust({ expected_version: 2 });
+    assert.equal(next.units, '9007199254741748');
+    assert.deepEqual((await f.service.view()).snapshots.slice(0, 2), [original, recovered]);
+    assert.equal((await f.service.view()).pending.units, 0);
   } finally { await f.cleanup(); }
 });

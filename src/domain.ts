@@ -1,4 +1,5 @@
 import { createHash, randomUUID } from 'node:crypto';
+import { exactQuantity, quantityInteger, sumQuantities, type Quantity } from './quantity.js';
 
 export const CUSTOMER = 'ACME';
 export const PERIOD = '2026-09';
@@ -32,16 +33,16 @@ export interface PeriodState {
 export interface Snapshot {
   version: number;
   kind: Build['kind'];
-  units: number;
-  amount_cents: number;
+  units: Quantity;
+  amount_cents: Quantity;
   event_ids: string[];
   added_event_ids: string[];
   created_at: string;
   through_epoch: number;
 }
 export interface Aggregate {
-  units: number;
-  amount_cents: number;
+  units: Quantity;
+  amount_cents: Quantity;
   processed_events: number;
   last_processed_at: string | null;
 }
@@ -183,10 +184,11 @@ export class MeterProof {
     const prior = build.base_version ? await this.store.getSnapshot(build.base_version) : undefined;
     if (build.base_version && !prior) throw new ApiError(503, 'Prior snapshot is unavailable. Retry the same operation.', 'MISSING_PRIOR');
     const priorIds = new Set(prior?.event_ids ?? []);
-    const units = events.reduce((sum, event) => sum + event.units, 0);
-    if (!Number.isSafeInteger(units)) throw new ApiError(422, 'Snapshot exceeds safe integer arithmetic.');
+    // Exact arithmetic also lets a previously overflowed build resume its original fence.
+    const units = sumQuantities(events.map((event) => event.units));
     const snapshot: Snapshot = {
-      version: build.version, kind: build.kind, units, amount_cents: units * RATE_CENTS,
+      version: build.version, kind: build.kind, units,
+      amount_cents: exactQuantity(quantityInteger(units) * BigInt(RATE_CENTS)),
       event_ids: events.map((event) => event.event_id),
       added_event_ids: events.filter((event) => !priorIds.has(event.event_id)).map((event) => event.event_id),
       created_at: build.started_at, through_epoch: build.fence_epoch,
@@ -208,7 +210,7 @@ export class MeterProof {
     const latest = snapshots.at(-1);
     const included = new Set(latest?.event_ids ?? []);
     const pending = events.filter((event) => event.classification === 'POST_CLOSE' && !included.has(event.event_id));
-    const pendingUnits = pending.reduce((sum, event) => sum + event.units, 0);
+    const pendingUnits = sumQuantities(pending.map((event) => event.units));
     const receiptById = new Map(contents.receipts.map((receipt) => [receipt.event_id, receipt.processed_at]));
     return {
       customer_id: CUSTOMER, period: PERIOD, phase: period.phase, rate_cents_per_unit: RATE_CENTS,
@@ -219,7 +221,10 @@ export class MeterProof {
       } : null,
       aggregate: contents.aggregate, snapshots,
       events: events.map((event) => ({ ...event, processed_at: receiptById.get(event.event_id) ?? null })),
-      pending: { units: pendingUnits, amount_cents: pendingUnits * RATE_CENTS, event_ids: pending.map((event) => event.event_id) },
+      pending: {
+        units: pendingUnits, amount_cents: exactQuantity(quantityInteger(pendingUnits) * BigInt(RATE_CENTS)),
+        event_ids: pending.map((event) => event.event_id),
+      },
     };
   }
 }

@@ -57,3 +57,10 @@ Final executed verification is recorded in `evidence/local-verification.md`. Thi
 - Used the close recording for the before column and the final recording for the after column. Deliberate navigation focuses and reveals the new scene, including on mobile and with reduced motion.
 - Typecheck, synthesis and 26 automated tests passed. The existing eight-step local UI scenario completed. Thirty-six browser assertions passed locally and against AWS; 11 read-only cloud assertions confirmed matching artifacts and unchanged period data. A browser navigation assertion was synchronized to the destination page's ready state before final verification.
 - Deployed application revision `ddf8de0` to the existing stack, reaching `UPDATE_COMPLETE`. The deployment changed only the API page bundle. No metering writes, record resets, services or core transaction changes were introduced. See `evidence/visual-scenes-verification.md`.
+
+## 2026-10-02 — Exact totals and overflow recovery (local)
+
+- Reproduced the external review's numeric-overflow finding and rejected its unknown-field finding against the actual code. Two individually valid events could strand a fenced close/adjust build; unknown input fields already return 400.
+- Replaced floating-point accumulation with exact integer totals and documented the JSON number/decimal-string boundary. Normal totals retain their numeric representation. Normalized large DynamoDB aggregate values before serialization and corrected page arithmetic/cent formatting, including long-value layout.
+- Preserved the ingestion and publication transactions, existing epoch fences and prior snapshots. A build left by the old overflow path can complete on a same-operation retry after the code update; no ledger reset, fence rollback, new admission counter or service was added.
+- Typecheck, CDK synthesis, 24 unit/display/infrastructure/replay tests and 12 local integration tests passed. Browser checks covered large values and all six saved scenes on desktop and mobile. This revision was verified locally only; see `evidence/numeric-overflow-verification.md` for coverage and limits.

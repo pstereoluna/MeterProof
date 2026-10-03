@@ -7,6 +7,7 @@ import {
   type Aggregate, type Build, type ExistingEvent, type PeriodState,
   type Snapshot, type StateContents, type Store, type UsageEvent,
 } from './domain.js';
+import { exactQuantity } from './quantity.js';
 
 const periodKey = (partition = PARTITION) => ({ pk: partition, sk: 'PERIOD' });
 const snapshotKey = (version: number, partition = PARTITION) => ({ pk: partition, sk: `SNAPSHOT#${String(version).padStart(12, '0')}` });
@@ -172,7 +173,8 @@ export class DynamoStore implements Store {
       for (const item of result.Items ?? []) {
         if (item.entity === 'SNAPSHOT') snapshots.push(item.snapshot as Snapshot);
         if (item.entity === 'AGGREGATE') aggregate = {
-          units: item.units, amount_cents: item.amount_cents,
+          // DynamoDB ADD remains exact; the SDK reads large N values as bigint.
+          units: exactQuantity(item.units), amount_cents: exactQuantity(item.amount_cents),
           processed_events: item.processed_events, last_processed_at: null,
         };
         if (item.entity === 'PROCESSED') {

@@ -31,7 +31,7 @@ Ingestion reads the period and atomically performs three operations: check the o
 
 Future ingestion cannot write epoch 0. A **strongly consistent, paginated base-table Query** can now read a stable, bounded set of immutable events. This is why it is safe to derive v1 without waiting for the stream. Strong consistency by itself would not make an arbitrary moving multi-page query a point-in-time snapshot.
 
-Publication is a transaction: conditionally put a previously nonexistent snapshot, advance the latest-version pointer only for that build operation, and clear the build record. A process failure after fencing can be recovered by calling the same close or adjustment operation. A close retry always returns v1, even after later adjustments.
+Publication is a transaction: conditionally put a previously nonexistent snapshot, advance the latest-version pointer only for that build operation, and clear the build record. A process interruption after fencing can be recovered by calling the same close or adjustment operation, provided the underlying work can complete. Durable build state does not remove permanent storage or execution limits. A close retry always returns v1, even after later adjustments.
 
 Adjustment follows the same procedure: fence the current epoch and advance it, derive the complete next snapshot from all bounded epochs, and record the new event IDs relative to the prior immutable version. Events accepted after the adjustment fence remain pending for the next adjustment. The period remains closed throughout.
 
@@ -50,6 +50,12 @@ Both tables use `pk` / `sk`; the demo partition is `CUSTOMER#ACME#PERIOD#2026-09
 
 The fingerprint detects a reused ID with changed content; it is not a hash chain or tamper-evidence claim. Snapshot amounts use integer cents at the fixed rate of one cent per unit.
 
+## Exact arithmetic and recovery
+
+Each accepted event still supplies a positive safe integer JSON number. Snapshot and pending totals are computed with `BigInt`, then represented as numbers within JavaScript's safe integer range or canonical nonnegative decimal strings above it. Both `units` and `amount_cents` follow that rule. The ON_TIME aggregate still uses DynamoDB's numeric `ADD`; unsafe integer values decoded by the SDK as `bigint` are normalized to the same JSON representation when read. Existing small totals and preserved snapshots retain their representation. API consumers and the UI must keep exact integer arithmetic instead of converting large strings to `Number`.
+
+This fixes the arithmetic boundary without a quota, a new admission counter or a change to the ingestion transaction or epoch fence. A build stranded by the old safe-integer overflow check retains a valid fixed ledger range: after updating the code, retrying the same operation derives its exact total and publishes it through the existing transaction. Earlier snapshots remain unchanged, and events accepted beyond the reserved fence remain pending. Clearing the build or rolling back its epoch would discard recovery context and is not part of this procedure.
+
 ## Asynchronous metering
 
 The stream mapping accepts only `INSERT` records with `NewImage.entity.S = EVENT`. The worker retains ingestion classification. For ON_TIME events, one transaction claims the processing receipt and increments the aggregate. POST_CLOSE events get a receipt but cannot mutate the ON_TIME aggregate or any snapshot. Duplicate receipts fail the conditional put, so the entire increment is rolled back. Operational transaction conflicts are retried, not misclassified as duplicates.
@@ -65,7 +71,7 @@ The [operating policy](operating-policy.md) separates source completeness, human
 ## Intentional limits
 
 - The period control item and per-customer aggregate are contention points. This is a small correctness demonstration, not a high-throughput or multi-region system.
-- Snapshot membership lists must fit DynamoDB's 400 KB item limit; recomputation must fit the API/Lambda timeout. The base demonstration has four events and the combined local scenario has six. Large-period pagination and scalable membership storage are outside this milestone.
+- Snapshot membership lists must fit DynamoDB's 400 KB item limit; recomputation must fit the API/Lambda timeout. Exact totals do not remove these limits or DynamoDB's numeric storage limits for the aggregate. A persistently oversized or slow build can remain unfinished; bounded retries and investigation are required, with no automatic cancellation or repair implemented. The base demonstration has four events and the combined local scenario has six. Large-period pagination and scalable membership storage are outside this milestone.
 - DynamoDB Streams expires records after 24 hours. A long consumer outage can leave the aggregate incomplete. Ledger-derived close still works. The UI can compare ON_TIME ledger usage with the projection and show missing receipts, but cannot diagnose the cause from that difference alone. Automated alerting, repair and dead-letter infrastructure are outside the frozen MVP.
 - The UI is a read of current observations, not a cross-table read transaction. Immutable displayed snapshots remain reproducible; concurrent actions may require refresh.
 - Application ledger writes use conditional creates. The application roles are not granted ledger UpdateItem/DeleteItem, but PutItem permission itself does not enforce append-only storage: other code or administrators with sufficient permissions can replace records. Immutability relies on the trusted application path and administration; this is not cryptographic tamper resistance.

@@ -9,6 +9,7 @@ import {
 } from '../src/domain.js';
 import { createMeterHandler } from '../src/meter.js';
 import { createRuntime } from '../src/runtime.js';
+import { sumQuantities } from '../src/quantity.js';
 
 const clone = <T>(value: T): T => structuredClone(value);
 class MemoryStore implements Store {
@@ -56,8 +57,8 @@ class MemoryStore implements Store {
     if (this.receipts.has(event.event_id)) return false;
     this.receipts.set(event.event_id, { event_id: event.event_id, processed_at: processedAt });
     if (event.classification === 'ON_TIME') {
-      this.aggregate.units += event.units;
-      this.aggregate.amount_cents += event.amount_cents;
+      this.aggregate.units = sumQuantities([this.aggregate.units, event.units]);
+      this.aggregate.amount_cents = sumQuantities([this.aggregate.amount_cents, event.amount_cents]);
       this.aggregate.processed_events++;
       this.aggregate.last_processed_at = processedAt;
     }
@@ -88,6 +89,34 @@ test('frozen demo derives 750 → 850 cents from ledger and preserves original s
   assert.deepEqual(adjusted.added_event_ids, ['evt_004']);
   assert.deepEqual(await store.getSnapshot(1), original);
   assert.equal((await service.view()).pending.units, 0);
+});
+
+test('close and adjustment preserve exact totals across the safe integer boundary', async () => {
+  const { store, service } = setup();
+  await service.ingest(input('large', Number.MAX_SAFE_INTEGER));
+  const boundary = await service.close();
+  assert.equal(boundary.units, Number.MAX_SAFE_INTEGER, 'safe totals keep their numeric API type');
+  await service.ingest(input('late_large', Number.MAX_SAFE_INTEGER));
+  await service.ingest(input('late_small', 2));
+  const pending = (await service.view()).pending;
+  assert.equal(pending.units, '9007199254740993');
+  assert.equal(pending.amount_cents, '9007199254740993');
+  const adjusted = await service.adjust({ expected_version: 1 });
+  assert.equal(adjusted.units, '18014398509481984');
+  assert.equal(adjusted.amount_cents, '18014398509481984');
+  assert.deepEqual(await service.close(), boundary);
+  assert.deepEqual(await service.adjust({ expected_version: 1 }), adjusted);
+  assert.equal(store.period.building, undefined);
+  assert.equal((await service.view()).pending.units, 0);
+  assert.equal(JSON.parse(JSON.stringify(await service.view())).snapshots[1].units, adjusted.units);
+
+  const fresh = setup();
+  await fresh.service.ingest(input('large', Number.MAX_SAFE_INTEGER));
+  await fresh.service.ingest(input('small', 2));
+  const closed = await fresh.service.close();
+  assert.equal(closed.units, '9007199254740993', 'close must not round MAX_SAFE + 2');
+  assert.equal(closed.amount_cents, '9007199254740993');
+  assert.deepEqual(await fresh.service.close(), closed);
 });
 
 test('same event replay returns the original acceptance without another ledger write', async () => {
@@ -191,14 +220,17 @@ test('replayed stream events apply aggregate once and POST_CLOSE only writes a r
   assert.equal(store.receipts.size, 2);
 });
 
-test('validation rejects invalid date, non-integral units, reserved fields, and wrong expected version', async () => {
-  const { service } = setup();
+test('validation rejects invalid date, non-integral units, unknown fields, and wrong expected version', async () => {
+  const { store, service } = setup();
   for (const invalid of [
     { ...input(), occurred_at: '2026-09-31T12:00:00Z' },
     { ...input(), occurred_at: '2026-10-01T00:00:00Z' },
     { ...input(), units: 0 }, { ...input(), units: 1.5 },
+    { ...input(), units: Number.MAX_SAFE_INTEGER + 1 }, { ...input(), units: '100' },
     { ...input(), accepted_at: '2026-01-01T00:00:00Z' },
+    { ...input(), foo: 'bar' },
   ]) await assert.rejects(service.ingest(invalid), (error: unknown) => error instanceof ApiError && error.status === 400);
+  assert.equal(store.events.size, 0, 'invalid inputs must never reach the ledger');
   await assert.rejects(service.adjust({ expected_version: 1 }), (error: unknown) => error instanceof ApiError && error.status === 409);
 });
 

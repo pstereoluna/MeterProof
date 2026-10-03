@@ -59,6 +59,21 @@ test('synthesized Lambda bundles serve the UI and complete the real local transa
     const final = JSON.parse((await call('GET', '/api/period')).body);
     assert.equal(final.aggregate.units, 750);
     assert.deepEqual(final.snapshots.map((item: any) => item.amount_cents), [750, 850]);
+
+    // The actual Lambda bundle must also serialize large totals and preserve older versions.
+    for (const [event_id, units] of [['late_large', Number.MAX_SAFE_INTEGER], ['late_small', 2]] as const) {
+      assert.equal((await call('POST', '/api/events', { ...originalEvent, event_id, units })).statusCode, 201);
+    }
+    const pending = await call('GET', '/api/period');
+    assert.equal(pending.statusCode, 200);
+    assert.equal(JSON.parse(pending.body).pending.amount_cents, '9007199254740993');
+    const largeAdjustment = await call('POST', '/api/adjust', { expected_version: 2 });
+    assert.equal(largeAdjustment.statusCode, 200);
+    assert.equal(JSON.parse(largeAdjustment.body).snapshot.amount_cents, '9007199254741843');
+    const afterLarge = JSON.parse((await call('GET', '/api/period')).body);
+    assert.deepEqual(afterLarge.snapshots.slice(0, 2), final.snapshots);
+    assert.equal(afterLarge.building, null);
+    assert.equal(afterLarge.pending.units, 0);
   } finally {
     for (const TableName of names) await localClient.send(new DeleteTableCommand({ TableName }));
   }

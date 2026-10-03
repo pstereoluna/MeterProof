@@ -14,7 +14,7 @@ Views assembled from successful API replies are identified as reconstructed view
 
 ## Accepting usage
 
-`POST /api/events` accepts only `event_id`, `occurred_at` and `units`. The ID is 1–64 ASCII letters, digits, underscores or hyphens; occurrence must be a valid UTC ISO timestamp in September 2026 ending in `Z`; units must be a positive safe integer. The server owns classification, epoch, acceptance time and estimated amount. Additional fields are rejected.
+`POST /api/events` accepts only `event_id`, `occurred_at` and `units`. The ID is 1–64 ASCII letters, digits, underscores or hyphens; occurrence must be a valid UTC ISO timestamp in September 2026 ending in `Z`; units must be a positive safe integer JSON number, at most `9007199254740991`. A string is not accepted as event input. The server owns classification, epoch, acceptance time and estimated amount. Additional fields are rejected.
 
 ```json
 {"event_id":"evt_001","occurred_at":"2026-09-10T12:00:00Z","units":100}
@@ -23,6 +23,12 @@ Views assembled from successful API replies are identified as reconstructed view
 A successful first acceptance returns `201` with `{ "event": ..., "duplicate": false }`. Repeating the same canonical payload with the same ID returns `200`, `duplicate: true`, and the original event, including its original classification and timestamp. Reusing that ID with different content returns `409 IDEMPOTENCY_MISMATCH` and preserves the accepted event.
 
 An event is accepted when its ledger write and ID claim commit together with the period condition. A sent request or a lost response does not establish whether acceptance succeeded. After an ambiguous timeout, retry the identical payload with the same ID; do not invent a new ID. Different IDs for the same real-world usage are not deduplicated. Acceptance does not establish that the source reported true or complete usage.
+
+## Exact totals and JSON representation
+
+The `units` and `amount_cents` fields on snapshots, the aggregate and pending usage are exact nonnegative integers. A total at or below `Number.MAX_SAFE_INTEGER` (`9007199254740991`) is a JSON number; a larger total is a canonical decimal string containing only digits, with no sign, exponent, decimal point or leading zero. For example, accepting events of `9007199254740991` and `2` units produces the exact total `"9007199254740993"`. Individual event quantities and amounts remain safe integer JSON numbers at the fixed one-cent rate. The existing 750 / 850 demo responses retain their numeric representation.
+
+Callers must preserve decimal strings or use exact integer arithmetic such as `BigInt`; coercing a large total to JavaScript `Number` loses precision. The UI also sums and formats quantities and cents exactly. This representation change adds no quota or usage threshold and does not change event membership, cutoff or snapshot immutability. Storage-size and execution-time limits still apply.
 
 ## Time fields and cutoff
 
@@ -41,7 +47,7 @@ The ingestion transaction's **phase and epoch membership** decide cutoff. An eve
 
 `POST /api/adjust` with `{ "expected_version": 1 }` creates or recovers version 2. The supplied base version is also the operation's retry identity. If that operation's resulting snapshot already exists, the API returns it even when newer versions exist. Otherwise a noncurrent base version returns `409 VERSION_CONFLICT`. On an ambiguous failure, retry with the same base version; changing it can start a different operation.
 
-Both operations first reserve a durable build and advance the ingestion epoch, then read the fixed ledger range and publish the snapshot atomically with its latest-version pointer. `phase: "CLOSED"` can therefore coexist with an unfinished build and no v1 yet. Consume an actually published snapshot, not the phase flag alone. A recovery finishes the same reserved range; events beyond that range remain pending.
+Both operations first reserve a durable build and advance the ingestion epoch, then read the fixed ledger range and publish the snapshot atomically with its latest-version pointer. `phase: "CLOSED"` can therefore coexist with an unfinished build and no v1 yet. Consume an actually published snapshot, not the phase flag alone. A recovery finishes the same reserved range; events beyond that range remain pending. A build left unfinished by the older safe-integer overflow check can finish through the same close or adjustment request after updating the code. No build reset, fence rollback or rewrite of prior snapshots is required. This does not repair a snapshot too large for DynamoDB or a workload that persistently exceeds the execution timeout.
 
 Snapshots are cumulative totals. `event_ids` identifies their complete membership; `added_event_ids` identifies additions relative to the prior version. An adjusted snapshot is not a command to charge its cumulative amount again. Downstream systems must track the version they already consumed and decide how to handle the difference. Current adjustments only add accepted positive usage; no negative correction, reversal, invoice or payment is implemented. The recorded/live UI does not issue adjustments; the API does not reject an empty-delta adjustment.
 
@@ -65,10 +71,9 @@ The aggregate covers only ON_TIME events. Compare it with ON_TIME ledger usage, 
 | `400` | Correct malformed JSON, event fields, timestamp, units or expected version |
 | `409` | Inspect payload/version conflict; preserve the original event; refresh before intentionally requesting a new operation |
 | `413` | Request body exceeds 16,384 bytes |
-| `422` | Snapshot total exceeds safe integer arithmetic; investigate rather than retrying unchanged indefinitely |
-| `503` | Retry the same event ID/payload, close, or adjustment base version; response includes `Retry-After: 1` |
+| `503` | Use bounded retries with the same event ID/payload, close, or adjustment base version; response includes `Retry-After: 1`. Investigate persistent failure. |
 | `500`, network failure, lost response | Completion may be ambiguous; use the same operation identity with bounded retries and investigate persistent failure |
 
-Retries are not an approval workflow. An authorized business decision and a technically idempotent request are different controls; only the latter is implemented here.
+Retries are not an approval workflow. An authorized business decision and a technically idempotent request are different controls; only the latter is implemented here. Durable build state supports recovery from an interruption or transient failure; it does not guarantee that every failed operation will eventually succeed. Storage item-size limits, persistent execution-time limits and other unresolved failures require investigation. There is no automatic build cancellation, rollback or manual-unlock API; deleting a build record or changing its epoch is not a supported recovery procedure.
 
 Implementation: `src/domain.ts`, `src/store.ts`, `src/api.ts`. AWS delivery retention: [DynamoDB Streams documentation](https://docs.aws.amazon.com/amazondynamodb/latest/developerguide/Streams.html).
