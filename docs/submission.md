@@ -1,6 +1,6 @@
 # Builder Center project copy
 
-**Draft for the existing project page; not published automatically.** The visual presentation is deployed and verified. See the [latest verification](../evidence/visual-scenes-verification.md).
+**Ready-to-paste update for the existing project page; this file does not publish it.** The October 2 release is deployed and verified. The user confirmed that the competition submission was already made. See the [latest verification](../evidence/release-2026-10-02.md).
 
 Target: [existing Builder Center project](https://builder.aws.com/project/3JzE9LF8ZJamr5T1eQDm6uNGngR/meterproof-explain-every-change-in-reported-usage).
 
@@ -41,10 +41,12 @@ The implementation uses API Gateway, Lambda, DynamoDB and DynamoDB Streams, depl
 
 ### What was verified
 
-The historical AWS run demonstrated ingestion, idempotent retries, conflict rejection, preserved snapshots and real Streams receipts. The current visual walkthrough passed 36 browser assertions across independent visitors and desktop/mobile layouts, eleven read-only cloud checks, and 26 automated tests. The original live period remained unchanged. Controlled lag, concurrency and interruption/recovery exercises run locally against DynamoDB Local.
+The historical AWS run demonstrated ingestion, idempotent retries, conflict rejection, preserved snapshots and real Streams receipts. The October 2 release passed 36 automated tests, 36 public-browser assertions across independent visitors and desktop/mobile layouts, and 17 read-only cloud checks. Both deployed Lambda code bundles matched the tested artifacts, and the original live period remained unchanged. Controlled lag, concurrency and interruption/recovery exercises run locally against DynamoDB Local.
+
+An independent review also identified a numeric boundary that could prevent a snapshot build from completing. The fix calculates totals exactly and lets an unfinished build resume its original cutoff boundary; earlier snapshots remain intact. Large-total and recovery cases were verified locally, including the generated Lambda bundle, without injecting large usage into the shared AWS demonstration.
 
 Codex helped implement, review, verify and deploy the project. The documented AWS connection used browser sign-in, STS, AWS CLI and CDK. No AWS MCP connection is claimed.
 
 MeterProof reports estimated usage charges; it does not issue invoices or move money. The demo has no authentication or approval workflow, and accepted reports do not independently prove source truth or completeness. Existing metering and billing products already serve this market. This project is a focused reference implementation of cutoff guarantees; its usefulness to the target users remains a hypothesis awaiting user feedback.
 
-[GitHub repository](https://github.com/pstereoluna/MeterProof) · [Latest verification](https://github.com/pstereoluna/MeterProof/blob/main/evidence/visual-scenes-verification.md) · [Original AWS evidence](https://github.com/pstereoluna/MeterProof/blob/main/evidence/cloud-verification.md) · [Local scenario evidence](https://github.com/pstereoluna/MeterProof/blob/main/evidence/scenario-verification.md)
+[GitHub repository](https://github.com/pstereoluna/MeterProof) · [Latest verification](https://github.com/pstereoluna/MeterProof/blob/main/evidence/release-2026-10-02.md) · [Original AWS evidence](https://github.com/pstereoluna/MeterProof/blob/main/evidence/cloud-verification.md) · [Local scenario evidence](https://github.com/pstereoluna/MeterProof/blob/main/evidence/scenario-verification.md)

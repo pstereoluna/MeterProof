@@ -64,3 +64,10 @@ Final executed verification is recorded in `evidence/local-verification.md`. Thi
 - Replaced floating-point accumulation with exact integer totals and documented the JSON number/decimal-string boundary. Normal totals retain their numeric representation. Normalized large DynamoDB aggregate values before serialization and corrected page arithmetic/cent formatting, including long-value layout.
 - Preserved the ingestion and publication transactions, existing epoch fences and prior snapshots. A build left by the old overflow path can complete on a same-operation retry after the code update; no ledger reset, fence rollback, new admission counter or service was added.
 - Typecheck, CDK synthesis, 24 unit/display/infrastructure/replay tests and 12 local integration tests passed. Browser checks covered large values and all six saved scenes on desktop and mobile. This revision was verified locally only; see `evidence/numeric-overflow-verification.md` for coverage and limits.
+
+## 2026-10-02 — Final release deployment
+
+- User requested finalization for the deadline and confirmed the competition submission was already made. Committed and pushed the reviewed fix as `a7b18cf`, renewed the existing AWS login, and verified the account matched the original stack.
+- Reviewed a CDK diff containing only the two existing Lambda code bundles, then deployed to the same us-east-1 stack. CloudFormation reached `UPDATE_COMPLETE`; no service, table, route or IAM change was introduced.
+- Passed 17 read-only cloud checks, including downloaded deployed-code comparison with both tested local bundles, and 36 public-browser assertions on desktop/mobile. The complete original live period and recorded replay remained unchanged; browser verification issued only GET requests.
+- Updated README, submission copy and evidence links. Large-total fault cases remain local tests, distinct from this read-only deployment verification. See `evidence/release-2026-10-02.md`.

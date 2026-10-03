@@ -11,8 +11,9 @@
 | Deployment and cloud end-to-end smoke test | **Passed** — [29 infrastructure assertions, 33 API/data assertions, real Streams receipts](cloud-verification.md) |
 | Recorded AWS walkthrough update | **Deployed and verified**; 26 tests, 30 public-browser assertions, 11 read-only cloud checks — [executed verification](walkthrough-verification.md) · [scope and provenance](../docs/demo-walkthrough.md) |
 | Visual action/result scenes | **Deployed and verified** — 26 tests, 36 public-browser assertions, 11 cloud checks; [latest results](visual-scenes-verification.md) |
+| Exact totals and overflow recovery | **Deployed and verified October 2** — 36 automated tests, 36 public-browser assertions, 17 read-only cloud/artifact checks; [latest release](release-2026-10-02.md) |
 | Builder Center project | [Project page exists](https://builder.aws.com/project/3JzE9LF8ZJamr5T1eQDm6uNGngR/meterproof-explain-every-change-in-reported-usage); proposed walkthrough update is an unpublished [draft](../docs/submission.md) |
-| Hackathon eligibility / final submission | Not independently verified; an existing project page alone does not establish eligibility or final submission |
+| Hackathon eligibility / final submission | User confirmed final submission on October 2. Eligibility/judging status is not independently verified; this release updates the existing project. |
 
 Do not present local synthesis or DynamoDB Local as a cloud deployment. When the user selects an AWS target, Codex can run `EVIDENCE_ACTOR=Codex npm run evidence:aws` with explicit `AWS_PROFILE` and `AWS_REGION`. The script records a sanitized read-only STS result, including failure if verification fails. Generated identity evidence is git-ignored for review before any public submission.
 

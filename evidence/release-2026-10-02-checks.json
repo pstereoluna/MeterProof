@@ -1,0 +1,282 @@
+{
+  "application_commit": "a7b18cf",
+  "region": "us-east-1",
+  "cloud": {
+    "executor": "Codex",
+    "verified_at": "2026-10-03T01:07:02.858011+00:00",
+    "application_commit": "a7b18cf",
+    "region": "us-east-1",
+    "status": "passed",
+    "checks": [
+      {
+        "name": "same selected stack reached UPDATE_COMPLETE",
+        "passed": true
+      },
+      {
+        "name": "existing API URL retained",
+        "passed": true
+      },
+      {
+        "name": "ApiFunction update active and successful",
+        "passed": true
+      },
+      {
+        "name": "ApiFunction downloaded artifact hash matches AWS",
+        "passed": true
+      },
+      {
+        "name": "ApiFunction deployed code equals tested local bundle",
+        "passed": true
+      },
+      {
+        "name": "MeterFunction update active and successful",
+        "passed": true
+      },
+      {
+        "name": "MeterFunction downloaded artifact hash matches AWS",
+        "passed": true
+      },
+      {
+        "name": "MeterFunction deployed code equals tested local bundle",
+        "passed": true
+      },
+      {
+        "name": "API health responds in AWS mode",
+        "passed": true
+      },
+      {
+        "name": "served HTML matches release source",
+        "passed": true
+      },
+      {
+        "name": "saved replay content is unchanged",
+        "passed": true
+      },
+      {
+        "name": "entire live period equals pre-deployment observation",
+        "passed": true
+      },
+      {
+        "name": "four accepted events retained",
+        "passed": true
+      },
+      {
+        "name": "preserved snapshot totals remain 750 and 850",
+        "passed": true
+      },
+      {
+        "name": "ON_TIME aggregate remains 750 with three processed events",
+        "passed": true
+      },
+      {
+        "name": "no pending usage or unfinished build",
+        "passed": true
+      },
+      {
+        "name": "four original stream receipts remain present",
+        "passed": true
+      }
+    ],
+    "limits": "Read-only cloud verification; no new cloud usage, forced failure, overflow workload or Streams delivery was generated."
+  },
+  "browser": {
+    "status": "passed",
+    "checks": [
+      {
+        "name": "controls disabled while recording loads",
+        "passed": true
+      },
+      {
+        "name": "primary mode buttons removed",
+        "passed": true
+      },
+      {
+        "name": "ledger starts collapsed",
+        "passed": true
+      },
+      {
+        "name": "accept shows three incoming events and open report",
+        "passed": true
+      },
+      {
+        "name": "close transforms open report into preserved v1",
+        "passed": true
+      },
+      {
+        "name": "late arrival sits across visible cutoff from v1",
+        "passed": true
+      },
+      {
+        "name": "late arrival preserves 7.50 original",
+        "passed": true
+      },
+      {
+        "name": "retry visibly returns duplicate and rejects changed payload",
+        "passed": true
+      },
+      {
+        "name": "close retry visibly returns same original",
+        "passed": true
+      },
+      {
+        "name": "real conflicting response remains inspectable",
+        "passed": true
+      },
+      {
+        "name": "adjustment displays two separate preserved documents",
+        "passed": true
+      },
+      {
+        "name": "only late event marked new",
+        "passed": true
+      },
+      {
+        "name": "adjustment clears pending explicitly",
+        "passed": true
+      },
+      {
+        "name": "original derivation remains inspectable",
+        "passed": true
+      },
+      {
+        "name": "adjusted derivation marks late event",
+        "passed": true
+      },
+      {
+        "name": "verify compares original at close versus after adjustment",
+        "passed": true
+      },
+      {
+        "name": "before and after v1 both 7.50",
+        "passed": true
+      },
+      {
+        "name": "verify explains where extra dollar went",
+        "passed": true
+      },
+      {
+        "name": "new visitor independently starts at accept",
+        "passed": true
+      },
+      {
+        "name": "mobile close visible without horizontal overflow",
+        "passed": true
+      },
+      {
+        "name": "mobile close navigation reveals new scene heading",
+        "passed": true
+      },
+      {
+        "name": "mobile late visible without horizontal overflow",
+        "passed": true
+      },
+      {
+        "name": "mobile late navigation reveals new scene heading",
+        "passed": true
+      },
+      {
+        "name": "mobile retry visible without horizontal overflow",
+        "passed": true
+      },
+      {
+        "name": "mobile retry navigation reveals new scene heading",
+        "passed": true
+      },
+      {
+        "name": "mobile adjust visible without horizontal overflow",
+        "passed": true
+      },
+      {
+        "name": "mobile adjust navigation reveals new scene heading",
+        "passed": true
+      },
+      {
+        "name": "mobile verify visible without horizontal overflow",
+        "passed": true
+      },
+      {
+        "name": "mobile verify navigation reveals new scene heading",
+        "passed": true
+      },
+      {
+        "name": "back returns to adjustment scene",
+        "passed": true
+      },
+      {
+        "name": "restart resets story and closes inspector",
+        "passed": true
+      },
+      {
+        "name": "story requests no live period and performs no writes",
+        "passed": true
+      },
+      {
+        "name": "secondary link opens real current record",
+        "passed": true
+      },
+      {
+        "name": "back link returns to first scene",
+        "passed": true
+      },
+      {
+        "name": "all visits remain read only",
+        "passed": true
+      },
+      {
+        "name": "no JavaScript errors",
+        "passed": true
+      }
+    ],
+    "requests": [
+      {
+        "method": "GET",
+        "path": "/"
+      },
+      {
+        "method": "GET",
+        "path": "/api/health"
+      },
+      {
+        "method": "GET",
+        "path": "/api/replay"
+      },
+      {
+        "method": "GET",
+        "path": "/"
+      },
+      {
+        "method": "GET",
+        "path": "/api/health"
+      },
+      {
+        "method": "GET",
+        "path": "/api/replay"
+      },
+      {
+        "method": "GET",
+        "path": "/"
+      },
+      {
+        "method": "GET",
+        "path": "/api/health"
+      },
+      {
+        "method": "GET",
+        "path": "/api/period"
+      },
+      {
+        "method": "GET",
+        "path": "/"
+      },
+      {
+        "method": "GET",
+        "path": "/api/health"
+      },
+      {
+        "method": "GET",
+        "path": "/api/replay"
+      }
+    ],
+    "errors": []
+  }
+}
